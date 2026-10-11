@@ -1,0 +1,76 @@
+{
+  "business_name": "HidroLav 507 Panamá",
+  "brand_short": "HidroLav 507",
+  "whatsapp": "50762730591",
+  "tagline": "Potencia que transforma tus espacios",
+  "hero_eyebrow": "Hidrolavado profesional en Panamá",
+  "hero_title": "Espacios más limpios.",
+  "hero_highlight": "Mejor impresión.",
+  "hero_text": "Servicio de limpieza a alta presión para residencias, PH y áreas comerciales. Atendemos Ciudad de Panamá y Panamá Oeste con cotizaciones rápidas por WhatsApp.",
+  "hero_image": "/assets/hero.webp",
+  "hero_image_description": "Imagen ilustrativa de limpieza con hidrolavadora",
+  "intro_services": "Atención para hogares, pequeños comercios y áreas comunes, según las condiciones de cada superficie.",
+  "services": [
+    {
+      "icon": "🏡",
+      "title": "Aceras y entradas",
+      "description": "Retiramos lodo y suciedad acumulada de accesos peatonales y entradas vehiculares."
+    },
+    {
+      "icon": "🌿",
+      "title": "Patios y terrazas",
+      "description": "Limpieza exterior de espacios de convivencia y áreas recreativas."
+    },
+    {
+      "icon": "🚗",
+      "title": "Estacionamientos",
+      "description": "Lavado de pisos resistentes en áreas de estacionamiento residencial o comercial."
+    },
+    {
+      "icon": "🧱",
+      "title": "Pisos de concreto",
+      "description": "Atención a manchas superficiales y suciedad adherida, según su composición."
+    },
+    {
+      "icon": "🏢",
+      "title": "Áreas comunes de PH",
+      "description": "Servicio puntual o programado para aceras, pasos y otras áreas exteriores."
+    },
+    {
+      "icon": "🏬",
+      "title": "Exteriores comerciales",
+      "description": "Limpieza de accesos y superficies exteriores de locales y pequeños negocios."
+    }
+  ],
+  "gallery_title": "La diferencia que hace el hidrolavado",
+  "gallery_intro": "Ejemplos del tipo de limpieza que puede realizarse a presión; cada trabajo requiere evaluar la superficie y el equipo.",
+  "gallery": [
+    {
+      "image": "/assets/hero.webp",
+      "title": "Adoquines y accesos",
+      "description": "Imagen ilustrativa de adoquines limpiados a presión",
+      "is_real": false
+    },
+    {
+      "image": "/assets/adoquines.webp",
+      "title": "Pisos exteriores",
+      "description": "Fotografía referencial de limpieza de piso",
+      "is_real": false
+    },
+    {
+      "image": "/assets/fachada.webp",
+      "title": "Áreas residenciales",
+      "description": "Imagen ilustrativa de limpieza exterior de vivienda",
+      "is_real": false
+    }
+  ],
+  "coverage_title": "Ciudad de Panamá y Panamá Oeste",
+  "coverage_text": "Base de operaciones en La Chorrera. Confirma la disponibilidad y costos de traslado para tu ubicación.",
+  "areas": [
+    "La Chorrera",
+    "Arraiján",
+    "Ciudad de Panamá",
+    "Otras zonas a consultar"
+  ],
+  "announcement": ""
+}

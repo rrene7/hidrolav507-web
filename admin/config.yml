@@ -1,0 +1,52 @@
+backend:
+  name: github
+  repo: rrene7/hidrolav507-web
+  branch: main
+  auth_methods: [token]
+
+media_folder: assets/uploads
+public_folder: /assets/uploads
+
+collections:
+  - name: web
+    label: Mi página web
+    files:
+      - name: inicio
+        label: Editar HidroLav 507
+        file: content/site.json
+        format: json
+        fields:
+          - {label: Nombre de la empresa, name: business_name, widget: string}
+          - {label: Marca corta, name: brand_short, widget: string}
+          - {label: WhatsApp (incluye 507 sin símbolos), name: whatsapp, widget: string}
+          - {label: Lema, name: tagline, widget: string}
+          - {label: Etiqueta superior, name: hero_eyebrow, widget: string}
+          - {label: Título principal, name: hero_title, widget: string}
+          - {label: Título destacado, name: hero_highlight, widget: string}
+          - {label: Descripción de portada, name: hero_text, widget: text}
+          - {label: Fotografía de portada, name: hero_image, widget: image}
+          - {label: Descripción de portada, name: hero_image_description, widget: string}
+          - {label: Introducción de servicios, name: intro_services, widget: text}
+          - label: Servicios
+            name: services
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - {label: Icono, name: icon, widget: string}
+              - {label: Servicio, name: title, widget: string}
+              - {label: Descripción, name: description, widget: text}
+          - {label: Título de galería, name: gallery_title, widget: string}
+          - {label: Introducción de galería, name: gallery_intro, widget: text}
+          - label: Fotografías y trabajos
+            name: gallery
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - {label: Fotografía, name: image, widget: image}
+              - {label: Título, name: title, widget: string}
+              - {label: Descripción accesible, name: description, widget: string}
+              - {label: ¿Trabajo real de HidroLav 507?, name: is_real, widget: boolean, default: false}
+          - {label: Título de cobertura, name: coverage_title, widget: string}
+          - {label: Texto de cobertura, name: coverage_text, widget: text}
+          - {label: Zonas atendidas, name: areas, widget: list, field: {label: Zona, name: area, widget: string}}
+          - {label: Promoción o aviso, name: announcement, widget: string, required: false}

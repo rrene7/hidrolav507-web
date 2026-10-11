@@ -1,0 +1,52 @@
+name: Importar web publicada a GitHub
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/importar-web.yml"
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Copiar web actual de Netlify sin modificar Netlify
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f index.html ]; then
+            echo "La web ya está importada; no se sobrescribe."
+            exit 0
+          fi
+          BASE="https://hidrolav507.netlify.app"
+          curl --fail --location --retry 3 --retry-delay 2 --max-time 45 "$BASE/" -o index.html
+          grep -qi 'HidroLav 507' index.html
+          grep -qi '</html>' index.html
+          mkdir -p assets
+          for n in logo hero adoquines fachada estructura; do
+            curl --fail --location --retry 3 --retry-delay 2 --max-time 45 "$BASE/assets/$n.webp" -o "assets/$n.webp"
+            test "$(wc -c < "assets/$n.webp")" -gt 2000
+          done
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          html=p.read_text(encoding='utf-8')
+          tag='<script defer src="/assets/site-content.js"></script>'
+          if tag not in html:
+              assert '</body>' in html
+              html=html.replace('</body>', '  '+tag+'\n</body>')
+              p.write_text(html,encoding='utf-8')
+          PY
+      - name: Guardar sitio y fotografías en GitHub
+        run: |
+          git add index.html assets/logo.webp assets/hero.webp assets/adoquines.webp assets/fachada.webp assets/estructura.webp
+          if git diff --cached --quiet; then
+            echo "No hay cambios."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "feat: importar web e imágenes desde sitio público"
+            git push
+          fi
