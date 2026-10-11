@@ -31,6 +31,12 @@ jobs:
           d=json.loads(Path('content/site.json').read_text())
           assert d['whatsapp']=='50762730591'
           assert len(d['services'])>=4
+          promo=d['christmas_campaign']
+          assert promo['enabled'] is False, 'La campaña debe iniciar desactivada'
+          assert promo['headline'] and promo['description'] and promo['cta_label']
+          assert 'name: christmas_campaign' in Path('admin/config.yml').read_text()
+          assert 'seasonal-campaign' in Path('assets/site-content.js').read_text()
+          assert 'seasonal-campaign' in Path('index.html').read_text()
           assert all(Path('.'+p).is_file() for p in (d['hero_image'], *(x['image'] for x in d['gallery'])))
           print('HTML, JS, JSON, CMS, WhatsApp y fotos OK')
           PY
