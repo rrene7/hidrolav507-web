@@ -1,0 +1,33 @@
+name: Validar sitio y administrador
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar archivos y enlaces locales
+        run: |
+          set -euo pipefail
+          for p in index.html admin/index.html admin/config.yml content/site.json assets/site-content.js netlify.toml assets/logo.webp assets/hero.webp assets/adoquines.webp assets/fachada.webp assets/estructura.webp; do
+            test -s "$p" || { echo "Falta archivo $p"; exit 1; }
+          done
+          grep -q '/assets/site-content.js' index.html
+          grep -q 'sveltia-cms.js' admin/index.html
+          grep -q 'repo: rrene7/hidrolav507-web' admin/config.yml
+          grep -q '50762730591' index.html
+          node --check assets/site-content.js
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          d=json.loads(Path('content/site.json').read_text())
+          assert d['whatsapp']=='50762730591'
+          assert len(d['services'])>=4
+          assert all(Path('.'+p).is_file() for p in (d['hero_image'], *(x['image'] for x in d['gallery'])))
+          print('HTML, JS, JSON, CMS, WhatsApp y fotos OK')
+          PY
