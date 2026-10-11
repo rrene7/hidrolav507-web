@@ -32,7 +32,8 @@ collections:
             widget: list
             summary: "{{fields.title}}"
             fields:
-              - {label: Icono, name: icon, widget: string}
+              - {label: Fotografía del servicio (reemplaza al icono), name: image, widget: image, required: false, hint: "Sube una foto horizontal JPG, PNG o WebP."}
+              - {label: Icono si todavía no hay fotografía, name: icon, widget: string, required: false, default: "💧"}
               - {label: Servicio, name: title, widget: string}
               - {label: Descripción, name: description, widget: text}
           - {label: Título de galería, name: gallery_title, widget: string}
