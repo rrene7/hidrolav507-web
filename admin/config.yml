@@ -51,3 +51,13 @@ collections:
           - {label: Texto de cobertura, name: coverage_text, widget: text}
           - {label: Zonas atendidas, name: areas, widget: list, field: {label: Zona, name: area, widget: string}}
           - {label: Promoción o aviso, name: announcement, widget: string, required: false}
+          - label: Campaña Navidad 2026 (opcional)
+            name: christmas_campaign
+            widget: object
+            fields:
+              - {label: Mostrar campaña en mi página, name: enabled, widget: boolean, default: false, hint: "Desactivada por defecto. Actívala cuando quieras publicarla."}
+              - {label: Texto superior, name: eyebrow, widget: string}
+              - {label: Título navideño, name: headline, widget: string}
+              - {label: Descripción comercial, name: description, widget: text}
+              - {label: Texto del botón, name: cta_label, widget: string}
+              - {label: Fotografía navideña (opcional), name: photo, widget: image, required: false}

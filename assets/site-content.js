@@ -38,6 +38,33 @@ const note=q("#galeria .fineprint"),anyReal=c.gallery.some(x=>x.is_real),anyDemo
 t(".coverage h2",c.coverage_title);t(".coverage p",c.coverage_text);
 if(Array.isArray(c.areas)){const a=q(".cover-tags");if(a){a.replaceChildren();for(const x of c.areas){let e=document.createElement("span");e.textContent=typeof x==="string"?x:x?.area||"";a.append(e);}}}
 if(c.announcement?.trim()){let x=document.createElement("p");x.textContent=c.announcement;x.style.cssText="padding:12px 15px;background:#ffc400;color:#061d36;border-radius:10px;font-weight:bold";h?.insertAdjacentElement("afterend",x);}
+// Campaña promocional opcional, administrable con Sveltia CMS.
+if(c.christmas_campaign?.enabled===true){
+  const promo=c.christmas_campaign;
+  const container=document.createElement("section");
+  container.className="seasonal-campaign";
+  container.setAttribute("aria-label","Campaña especial de fin de año");
+  const wrap=document.createElement("div");wrap.className="container seasonal-campaign-inner";
+  const body=document.createElement("div");
+  const eyebrow=document.createElement("div");eyebrow.className="seasonal-kicker";eyebrow.textContent=promo.eyebrow||"HidroLav 507 Panamá";
+  const heading=document.createElement("h2");heading.textContent=promo.headline||"Prepara tus espacios para fin de año";
+  const description=document.createElement("p");description.textContent=promo.description||"Cotiza tu limpieza a presión.";
+  const action=document.createElement("a");action.className="seasonal-cta";
+  const phone=String(c.whatsapp||"").replace(/\D/g,"");
+  action.href="https://wa.me/"+(/^507\d{8}$/.test(phone)?phone:"50762730591")+"?text="+encodeURIComponent("Hola HidroLav 507, deseo cotizar la limpieza navideña de mi propiedad.");
+  action.target="_blank";action.rel="noopener noreferrer";action.textContent=promo.cta_label||"Cotizar por WhatsApp";
+  body.append(eyebrow,heading,description,action);wrap.append(body);
+  const visual=document.createElement("div");visual.className="seasonal-visual";
+  const fallback=()=>{visual.replaceChildren();const msg=document.createElement("span");msg.textContent="✨ Espacios listos para celebrar";visual.append(msg);};
+  if(valid(promo.photo)){
+    const img=document.createElement("img");img.src=promo.photo;
+    img.alt="Imagen ilustrativa de la campaña de fin de año de HidroLav 507";img.loading="lazy";img.decoding="async";
+    img.onerror=fallback;visual.append(img);
+  }else{fallback();}
+  wrap.append(visual);container.append(wrap);
+  q(".hero")?.insertAdjacentElement("afterend",container);
+}
+
 let wa=String(c.whatsapp||"").replace(/\D/g,"");if(/^507\d{8}$/.test(wa)){window.HIDROLAV_WA=wa;document.querySelectorAll('a[href^="https://wa.me/"]').forEach(a=>{let original=new URL(a.href);a.href="https://wa.me/"+wa+original.search;});let n=wa.slice(3),label="+507 "+n.slice(0,4)+"-"+n.slice(4);const phone=q(".phone-big");if(phone){phone.href="tel:+"+wa;phone.textContent="☎ "+label;}const top=q(".topbar a.secondary");if(top){top.href="tel:+"+wa;top.textContent="Consultas: "+label;}}
 if(c.business_name)document.title=c.business_name+" | Limpieza profesional a presión";
 })();

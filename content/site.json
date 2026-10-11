@@ -78,5 +78,13 @@
     "Ciudad de Panamá",
     "Otras zonas a consultar"
   ],
-  "announcement": "Pregunte por el plan de suscripciones Cliente Frecuente.."
+  "announcement": "Pregunte por el plan de suscripciones Cliente Frecuente..",
+  "christmas_campaign": {
+    "enabled": false,
+    "eyebrow": "NAVIDAD 2026 · HIDROLAV 507",
+    "headline": "¡Recibe la Navidad con tus espacios relucientes!",
+    "description": "Prepara aceras, patios, terrazas y estacionamientos antes de las reuniones de fin de año. Servicio a domicilio en Ciudad de Panamá y Panamá Oeste.",
+    "cta_label": "Cotizar limpieza navideña",
+    "photo": ""
+  }
 }
