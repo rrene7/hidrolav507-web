@@ -1,0 +1,40 @@
+name: Diagnóstico público de sitemap
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/diagnostico-sitemap.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnostico:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comprobar XML y respuesta HTTP real desde Internet
+        shell: bash
+        run: |
+          set -euo pipefail
+          for route in / /sitemap.xml /robots.txt /servicios/lavado-de-aceras-y-entradas.html /google443a62ce6e897c4c.html; do
+            URL="https://hidrolav507.netlify.app${route}"
+            echo "PROBANDO: $URL"
+            status=$(curl -sS -L --connect-timeout 15 --max-time 40 --retry 2 -A "Googlebot" -o /tmp/response-body -D /tmp/response-headers -w "%{http_code}" "$URL")
+            echo "STATUS: $status"
+            echo "HEADERS:"; grep -iE '^(content-type|cache-control|location|x-robots-tag|server|x-nf-request-id|x-content-type-options|HTTP/)' /tmp/response-headers || true
+            echo "BYTES: $(wc -c < /tmp/response-body)"
+            echo "FIRST_BYTES:"; head -c 160 /tmp/response-body | tr '\n' ' '; echo
+            [ "$status" = "200" ] || exit 1
+            case "$route" in
+              /sitemap.xml)
+                python3 - <<'PY'
+          from xml.etree import ElementTree as ET
+          root=ET.parse('/tmp/response-body').getroot()
+          urls=[e.text for e in root.findall('{http://www.sitemaps.org/schemas/sitemap/0.9}url/{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
+          print('ENTRADAS SITEMAP:',len(urls))
+          assert len(urls)==5,urls
+          PY
+                ;;
+              /robots.txt) grep -q 'Sitemap: https://hidrolav507.netlify.app/sitemap.xml' /tmp/response-body ;;
+            esac
+          done
+          echo "TODAS LAS RESPUESTAS PUBLICAS SON CORRECTAS"
