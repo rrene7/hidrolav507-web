@@ -3,14 +3,34 @@
 let c;try{let r=await fetch("/content/site.json",{cache:"no-store"});if(!r.ok)throw Error("Contenido no disponible");c=await r.json();}catch(err){console.warn("Contenido estático:",err);return;}
 const q=s=>document.querySelector(s);
 const t=(s,v)=>{const e=q(s);if(e&&typeof v==="string")e.textContent=v;};
-const valid=v=>typeof v==="string"&&/^\/(?:assets|images)\/[-\w./%]+$/i.test(v);
+const valid=v=>{
+  if(typeof v!=="string"||!/^\/(?:assets|images)\/[^?#]+$/u.test(v)||/[<>\\\u0000-\u001f]/u.test(v))return false;
+  let decoded;try{decoded=decodeURIComponent(v);}catch{return false;}
+  return !/[<>\\\u0000-\u001f]/u.test(decoded)&&!decoded.split("/").some(segment=>segment===".."||segment===".")
+};
 t(".brand b",c.brand_short);t(".hero .eyebrow",c.hero_eyebrow);
 const h=q(".hero h1");if(h){h.textContent=c.hero_title||"";let e=document.createElement("em");e.textContent=" "+(c.hero_highlight||"");h.append(e);}
 t(".hero h1 + p",c.hero_text);t(".hero-note strong",c.business_name);t(".hero-note small",c.tagline);
 const hero=q(".hero-media img");if(hero&&valid(c.hero_image)){hero.src=c.hero_image;hero.alt=c.hero_image_description||"";}
 t("#servicios .section-title .lead",c.intro_services);
 if(Array.isArray(c.services)){
-const p=q("#servicios .cards");if(p){p.replaceChildren();for(let s of c.services){let a=document.createElement("article");a.className="service";let i=document.createElement("div");i.className="sym";i.textContent=s.icon||"💧";let h=document.createElement("h3");h.textContent=s.title||"";let d=document.createElement("p");d.textContent=s.description||"";a.append(i,h,d);p.append(a);}}
+const p=q("#servicios .cards");if(p){p.replaceChildren();for(const s of c.services){
+  const a=document.createElement("article");a.className="service";
+  const body=document.createElement("div");body.className="service-details";
+  if(valid(s.image)){
+    a.classList.add("has-photo");
+    const photo=document.createElement("img");photo.className="service-photo";
+    photo.src=s.image;photo.alt="Fotografía del servicio: "+(s.title||"limpieza a presión");
+    photo.loading="lazy";photo.decoding="async";photo.width=960;photo.height=600;
+    photo.onerror=()=>{a.classList.remove("has-photo");photo.remove();if(!body.querySelector(".sym")){let icon=document.createElement("div");icon.className="sym";icon.textContent=s.icon||"💧";body.prepend(icon);}};
+    a.append(photo);
+  }else{
+    const icon=document.createElement("div");icon.className="sym";icon.textContent=s.icon||"💧";body.append(icon);
+  }
+  const h=document.createElement("h3");h.textContent=s.title||"";
+  const d=document.createElement("p");d.textContent=s.description||"";
+  body.append(h,d);a.append(body);p.append(a);
+}}
 const select=q("#service");if(select){select.querySelectorAll("option:not(:first-child)").forEach(o=>o.remove());for(let s of c.services){let o=document.createElement("option");o.textContent=s.title;o.value=s.title;select.append(o);}let other=document.createElement("option");other.textContent="Otro servicio";select.append(other);}}
 t("#galeria .section-title h2",c.gallery_title);t("#galeria .section-title .lead",c.gallery_intro);
 if(Array.isArray(c.gallery)){const g=q("#galeria .gallery");if(g){g.replaceChildren();for(const e of c.gallery){if(!valid(e.image))continue;let f=document.createElement("figure"),i=document.createElement("img"),p=document.createElement("figcaption");i.src=e.image;i.alt=e.description||e.title||"Fotografía";i.loading="lazy";p.textContent=e.title||"";f.append(i,p);g.append(f);}}
