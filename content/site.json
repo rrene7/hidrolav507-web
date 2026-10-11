@@ -12,31 +12,37 @@
   "intro_services": "Atención para hogares, pequeños comercios y áreas comunes, según las condiciones de cada superficie.",
   "services": [
     {
-      "icon": "🏡",
+      "image": "/assets/uploads/Limpieza profesional de entrada residencial.png",
+      "icon": "",
       "title": "Aceras y entradas",
       "description": "Retiramos lodo y suciedad acumulada de accesos peatonales y entradas vehiculares."
     },
     {
+      "image": "",
       "icon": "🌿",
       "title": "Patios y terrazas",
       "description": "Limpieza exterior de espacios de convivencia y áreas recreativas."
     },
     {
+      "image": "",
       "icon": "🚗",
       "title": "Estacionamientos",
       "description": "Lavado de pisos resistentes en áreas de estacionamiento residencial o comercial."
     },
     {
+      "image": "",
       "icon": "🧱",
       "title": "Pisos de concreto",
       "description": "Atención a manchas superficiales y suciedad adherida, según su composición."
     },
     {
+      "image": "",
       "icon": "🏢",
       "title": "Áreas comunes de PH",
       "description": "Servicio puntual o programado para aceras, pasos y otras áreas exteriores."
     },
     {
+      "image": "",
       "icon": "🏬",
       "title": "Exteriores comerciales",
       "description": "Limpieza de accesos y superficies exteriores de locales y pequeños negocios."
