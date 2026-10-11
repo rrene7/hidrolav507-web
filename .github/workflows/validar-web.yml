@@ -34,3 +34,34 @@ jobs:
           assert all(Path('.'+p).is_file() for p in (d['hero_image'], *(x['image'] for x in d['gallery'])))
           print('HTML, JS, JSON, CMS, WhatsApp y fotos OK')
           PY
+      - name: Comprobar SEO local y sitemap
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from urllib.parse import urlparse, unquote
+          import xml.etree.ElementTree as ET
+
+          base='https://hidrolav507.netlify.app'
+          root=ET.parse('sitemap.xml').getroot()
+          urls=[e.text for e in root.findall('{http://www.sitemaps.org/schemas/sitemap/0.9}url/{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
+          assert len(urls)==5 and len(set(urls))==5, urls
+          assert all(u.startswith(base+'/') for u in urls)
+          pages=[Path('index.html')]+[Path(unquote(urlparse(u).path).lstrip('/')) for u in urls[1:]]
+          assert all(f.exists() for f in pages),pages
+          class Checker(HTMLParser):
+            def __init__(self): super().__init__();self.title=0;self.h1=0;self.canon=[];self.desc=0
+            def handle_starttag(self,t,a):
+              d=dict(a)
+              if t=='h1': self.h1+=1
+              if t=='title': self.title+=1
+              if t=='meta' and d.get('name')=='description': self.desc+=1
+              if t=='link' and d.get('rel')=='canonical': self.canon.append(d.get('href'))
+          for file,url in zip(pages,urls):
+            p=Checker();p.feed(file.read_text())
+            assert p.h1==1 and p.title==1 and p.desc==1 and p.canon==[url],(file,p.__dict__)
+          text=Path('index.html').read_text()
+          for url in urls[1:]: assert urlparse(url).path in text
+          assert 'Disallow: /admin/' in Path('robots.txt').read_text()
+          print('SEO: 5 URLs, metadatos, enlaces y rutas OK')
+          PY
