@@ -41,6 +41,48 @@ jobs:
           assert all(Path('.'+p).is_file() for p in (d['hero_image'], *(x['image'] for x in d['gallery'])))
           print('HTML, JS, JSON, CMS, WhatsApp y fotos OK')
           PY
+      - name: Comprobar carrusel, plan 5+1 y solicitudes con fotos
+        run: |
+          set -euo pipefail
+          test -s content/loyalty.json
+          test -s content/carousel.json
+          test -s assets/experiencia.js
+          test -s assets/experiencia.css
+          test -s privacidad.html
+          test -s gracias.html
+          node --check assets/experiencia.js
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from html.parser import HTMLParser
+          loyalty=json.loads(Path('content/loyalty.json').read_text())
+          carousel=json.loads(Path('content/carousel.json').read_text())
+          assert loyalty['enabled'] and 'seis meses' in loyalty['terms']
+          assert carousel['enabled'] and len(carousel['slides'])>=2
+          assert all(Path('.'+s['image']).exists() for s in carousel['slides'])
+          config=Path('admin/config.yml').read_text()
+          assert 'file: content/loyalty.json' in config
+          assert 'file: content/carousel.json' in config
+          index=Path('index.html').read_text()
+          assert 'assets/experiencia.js' in index
+          assert 'assets/experiencia.css' in index
+          class FormCheck(HTMLParser):
+            def __init__(self):
+              super().__init__();self.form={};self.names=set()
+            def handle_starttag(self,tag,attrs):
+              d=dict(attrs)
+              if tag=='form' and d.get('id')=='quote-form':self.form=d
+              if tag in ('input','textarea','select') and d.get('name'):self.names.add(d['name'])
+          parser=FormCheck();parser.feed(index)
+          form=parser.form
+          assert form.get('name')=='cotizaciones-hidrolav507' and form.get('data-netlify')=='true'
+          assert form.get('enctype')=='multipart/form-data'
+          assert form.get('action')=='/gracias'
+          for field in ('form-name','name','phone','email','property_type','service','location','details','foto_1','foto_2','consent','bot-field'):
+            assert field in parser.names,field
+          assert 'document.getElementById(\'quote-form\').addEventListener' not in index
+          print('Carrusel, fidelidad, Netlify Forms y privacidad OK')
+          PY
       - name: Comprobar SEO local y sitemap
         run: |
           python3 - <<'PY'
