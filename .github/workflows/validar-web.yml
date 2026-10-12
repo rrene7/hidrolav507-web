@@ -14,7 +14,7 @@ jobs:
       - name: Validar archivos y enlaces locales
         run: |
           set -euo pipefail
-          for p in index.html admin/index.html admin/config.yml content/site.json assets/site-content.js netlify.toml assets/logo.webp assets/hero.webp assets/adoquines.webp assets/fachada.webp assets/estructura.webp; do
+          for p in index.html admin/index.html admin/config.yml content/site.json content/christmas.json assets/site-content.js netlify.toml assets/logo.webp assets/hero.webp assets/adoquines.webp assets/fachada.webp assets/estructura.webp; do
             test -s "$p" || { echo "Falta archivo $p"; exit 1; }
           done
           grep -q '/assets/site-content.js' index.html
@@ -31,11 +31,12 @@ jobs:
           d=json.loads(Path('content/site.json').read_text())
           assert d['whatsapp']=='50762730591'
           assert len(d['services'])>=4
-          promo=d['christmas_campaign']
-          assert promo['enabled'] is False, 'La campaña debe iniciar desactivada'
+          promo=json.loads(Path('content/christmas.json').read_text())
+          assert type(promo['enabled']) is bool, 'La visibilidad debe ser un booleano'
           assert promo['headline'] and promo['description'] and promo['cta_label']
-          assert 'name: christmas_campaign' in Path('admin/config.yml').read_text()
-          assert 'seasonal-campaign' in Path('assets/site-content.js').read_text()
+          assert 'name: promociones' in Path('admin/config.yml').read_text()
+          assert 'file: content/christmas.json' in Path('admin/config.yml').read_text()
+          assert '/content/christmas.json' in Path('assets/site-content.js').read_text()
           assert 'seasonal-campaign' in Path('index.html').read_text()
           assert all(Path('.'+p).is_file() for p in (d['hero_image'], *(x['image'] for x in d['gallery'])))
           print('HTML, JS, JSON, CMS, WhatsApp y fotos OK')
