@@ -1,6 +1,6 @@
 {
   "enabled": true,
   "endpoint": "https://hidrolav507-asistente.rrenys-evang0907.workers.dev/chat",
-  "greeting": "¡Hola! Soy el asistente virtual de HidroLav 507 Panamá. Puedo orientarte sobre hidrolavado, cobertura, el Plan 5+1 y cómo solicitar una cotización. ¿Qué superficie te interesa limpiar?",
-  "notice": "Asistente con IA. No ofrece precios finales ni confirma reservas. Evita compartir datos personales o sensibles en el chat."
+  "greeting": "¡Hola! Soy HidroBot 507. Te ayudo con cotizaciones y consultas. 😊",
+  "notice": "Respondo en máximo 2 o 3 frases y hago una pregunta a la vez. No compartas datos personales o sensibles en el chat."
 }
