@@ -39,8 +39,13 @@ t(".coverage h2",c.coverage_title);t(".coverage p",c.coverage_text);
 if(Array.isArray(c.areas)){const a=q(".cover-tags");if(a){a.replaceChildren();for(const x of c.areas){let e=document.createElement("span");e.textContent=typeof x==="string"?x:x?.area||"";a.append(e);}}}
 if(c.announcement?.trim()){let x=document.createElement("p");x.textContent=c.announcement;x.style.cssText="padding:12px 15px;background:#ffc400;color:#061d36;border-radius:10px;font-weight:bold";h?.insertAdjacentElement("afterend",x);}
 // Campaña promocional opcional, administrable con Sveltia CMS.
-if(c.christmas_campaign?.enabled===true){
-  const promo=c.christmas_campaign;
+let christmasCampaign;
+try {
+  const result = await fetch("/content/christmas.json", {cache:"no-store"});
+  if (result.ok) christmasCampaign = await result.json();
+} catch (err) { console.warn("No se pudo cargar la campaña de Navidad", err); }
+if(christmasCampaign?.enabled===true){
+  const promo=christmasCampaign;
   const container=document.createElement("section");
   container.className="seasonal-campaign";
   container.setAttribute("aria-label","Campaña especial de fin de año");

@@ -33,3 +33,8 @@ Luego de conectar Netlify:
 Las fotos de galería son ilustrativas hasta que agregues fotos auténticas; no se presentan como trabajos realizados por la empresa.
 
 **WhatsApp:** +507 6273-0591 · **Cobertura:** Ciudad de Panamá y Panamá Oeste.
+
+
+## Promociones desde el administrador
+
+La campaña navideña se administra en una sección **independiente** de los datos generales: `/admin/` → **Promociones y campañas** → **Navidad 2026**. Sus campos se guardan en `content/christmas.json`, para evitar que una edición de la portada o los servicios borre accidentalmente la campaña. El interruptor **Mostrar campaña navideña en la página** controla su presencia. No requiere imagen: muestra un motivo tipográfico festivo en los colores de HidroLav 507. En caso de añadir una fotografía, debe ser propia/autorizada o estar identificada como ilustrativa.
