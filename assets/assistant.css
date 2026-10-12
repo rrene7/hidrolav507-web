@@ -137,3 +137,17 @@
 .ai-chat-panel .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .ai-chat-tile .tile-symbol svg{width:23px;height:23px;fill:currentColor;display:block}
 .ai-chat-attach:focus-visible,.ai-chat-compose button:focus-visible,.ai-chat-close:focus-visible{outline:3px solid #ffe16b;outline-offset:2px}
+
+/* Tabletas: avatar a la vista y menú compacto sin desbordamiento */
+@media (min-width:741px) and (max-width:1050px){
+ .nav .ai-nav-mobile{display:inline-grid;order:1;width:48px;height:48px;margin-left:auto}
+ .nav .ai-nav-mobile .hidrobot-face{height:41px;width:41px}
+ .nav .mobile-toggle{display:block;order:2;flex:0 0 auto}
+ .navlinks{display:none;position:absolute;top:79px;left:0;right:0;background:white;
+   box-shadow:0 16px 22px #0a20301a;padding:19px 18px 24px;flex-direction:column;
+   align-items:stretch;gap:0}
+ .navlinks.open{display:flex}
+ .navlinks a{padding:11px 12px}
+ .navlinks .btn{margin-top:10px}
+ .navlinks .ai-nav-button{display:none!important}
+}
