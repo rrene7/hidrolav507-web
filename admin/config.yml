@@ -102,3 +102,16 @@ collections:
               - {label: Título corto, name: caption, widget: string}
               - {label: Descripción accesible, name: alt, widget: string}
               - {label: ¿Foto real de un trabajo nuestro?, name: is_real, widget: boolean, default: false}
+
+  - name: inteligencia_artificial
+    label: Asistente IA
+    files:
+      - name: configuracion
+        label: Conexión Cloudflare Workers AI
+        file: content/assistant.json
+        format: json
+        fields:
+          - {label: Activar asistente IA (después de desplegar Worker), name: enabled, widget: boolean, default: false, hint: "Activa únicamente después de probar tu Worker en Cloudflare. Si no se conecta, el botón no aparecerá."}
+          - {label: URL del endpoint HTTPS, name: endpoint, widget: string, required: false, hint: "Ejemplo: https://hidrolav507-asistente.TU-SUBDOMINIO.workers.dev/chat. Es una URL pública, nunca una clave."}
+          - {label: Saludo inicial, name: greeting, widget: text}
+          - {label: Aviso de privacidad del chat, name: notice, widget: text}
