@@ -140,3 +140,10 @@ body .whatsapp-float:focus-visible{outline:3px solid #ffc400;outline-offset:4px}
 /* Advertencias de carga de fotos en cotizaciones */
 #photo-feedback{font-size:12px;line-height:1.45;color:#bfedff;padding:7px 0}
 #photo-feedback.error{color:#ffe0d3;font-weight:800;outline:none}
+
+/* Correo oficial visible y legible en dispositivos móviles */
+.contact-info .business-email{display:inline-flex;align-items:center;max-width:100%;margin:13px 0 6px;padding:8px 0;color:#b5ecff;text-decoration:underline;text-underline-offset:3px;font-size:clamp(12px,1.2vw,15px);font-weight:750;overflow-wrap:anywhere}
+.contact-info .business-email:hover,.contact-info .business-email:focus-visible{color:#fff}
+footer .footer-email{margin:6px 0;font-size:13px;overflow-wrap:anywhere}
+footer .footer-email a{color:#d6edff;text-decoration:underline;text-underline-offset:3px}
+footer .footer-email a:hover,footer .footer-email a:focus-visible{color:#fff}
