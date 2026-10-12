@@ -123,7 +123,7 @@ jobs:
           set -euo pipefail
           node --check assets/assistant.js
           node --check workers/hidrolav-ai/src/index.mjs
-          node --test workers/hidrolav-ai/test/worker.test.mjs
+          node --test workers/hidrolav-ai/test/*.test.mjs
           python3 - <<'PY'
           from pathlib import Path
           import json
@@ -205,6 +205,26 @@ jobs:
           assert nav.index('href="#cotizar">Solicitar cotización ↗</a>') < nav.index('id="ai-chat-launch"')
           assert 'position:fixed;right:clamp(16px,2vw,34px);top:10px' not in botcss
           assert '"--hidrobot-right"' in script
+
+          # Chat guiado: cuatro accesos originales preservados y nuevas opciones DENTRO de mensajes.
+          assert html.count('class="ai-chat-tile')==4
+          assert 'class="ai-chat-tile plan-highlight"' in html
+          assert 'href="#cotizar" class="ai-chat-tile"' in html
+          assert 'class="ai-chat-tile whatsapp"' in html
+          assert 'Preguntar por nuestros servicios' in html
+          assert 'function contactGuide(' in script
+          assert 'function propertyGuide(' in script
+          assert 'function chooseService(' in script
+          assert 'function followupChoices(' in script
+          assert 'function guidedRequest(' in script
+          assert 'id="ai-chat-feed"' in html
+          assert 'Edificio / PH' in script and 'Plaza comercial' in script and 'Casa' in script
+          assert 'mailto:contactohidrolav507.com@gmail.com' in script
+          assert '#cotizar' in script and 'contactGmail' in script
+          assert 'const short=parts.slice(0,2)' in script
+          assert '.ai-chat-choice{' in Path('assets/assistant.css').read_text()
+          assert Path('workers/hidrolav-ai/test/chat-ui.test.mjs').exists()
+          assert 'sugiere pulsar UNA' in worker
 
           # HidroBot debe presentar el plan 5+1 como opción comercial sin suscribir al cliente.
           assert 'class="ai-chat-tile plan-highlight"' in html

@@ -246,3 +246,24 @@
  .ai-chat-tile .tile-heading{font-size:11px}
  .ai-chat-tile .tile-desc{font-size:9px}
 }
+
+
+/* Recomendaciones en la conversación: las cuatro tarjetas originales no cambian. */
+.ai-chat-message{max-width:100%}
+.ai-chat-choices{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;max-width:100%}
+.ai-chat-choice{
+ display:inline-flex;align-items:center;justify-content:center;
+ min-height:35px;max-width:100%;padding:7px 10px;
+ border:1px solid #64d3fd;background:linear-gradient(140deg,#edfaff,#d5f0ff);
+ color:#07517c!important;border-radius:11px;font:750 11px/1.3 system-ui,-apple-system,Segoe UI,sans-serif;
+ text-align:center;white-space:normal;overflow-wrap:anywhere;text-decoration:none;cursor:pointer;
+ box-shadow:0 2px 8px #001d3c29;transition:background .14s ease
+}
+.ai-chat-choice:hover{background:#b0e8ff;border-color:#00abeb}
+.ai-chat-choice:focus-visible{outline:3px solid #ffe05b;outline-offset:2px}
+.ai-chat-message .ai-chat-choices{max-width:340px}
+@media(max-width:420px){
+ .ai-chat-choices{gap:5px}
+ .ai-chat-choice{padding:7px 9px;font-size:10px;min-height:34px}
+}
+@media(prefers-reduced-motion:reduce){.ai-chat-choice{transition:none}}
