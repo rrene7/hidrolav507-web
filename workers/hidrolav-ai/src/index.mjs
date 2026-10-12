@@ -38,7 +38,7 @@ function unsafeCommitment(value){
  const t=String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
  return /\b(?:te|le|les)\s+(?:enviare|enviaremos|mandare|mandaremos|escribire|escribiremos|contactare|contactaremos|llamare|llamaremos)\b/.test(t)||
   /\b(?:voy|vamos)\s+a\s+(?:enviar|mandar|escribir|contactar|llamar)\w*/.test(t)||
-  /\b(?:he|hemos|ya)\s+(?:enviado|mandado|registrado|agendado|confirmado)\b/.test(t)||
+  /\b(?:(?:ya\s+)?(?:he|hemos)|ya)\s+(?:enviado|mandado|registrado|agendado|confirmado)\b/.test(t)||
   /\b(?:nos pondremos en contacto|te llamaremos|le llamaremos|te hare llegar)\b/.test(t)||
   /\b(?:tu|su)\s+(?:numero|telefono|celular)(?:\s+de\s+whatsapp)?\b/.test(t)||
   /\b(?:cual es|dame|dime|comparte|facilitame|indicame)\b.{0,55}\b(?:numero|telefono|whatsapp|celular)\b/.test(t)||
