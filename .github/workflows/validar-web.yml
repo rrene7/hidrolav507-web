@@ -129,7 +129,10 @@ jobs:
           import json
           from html.parser import HTMLParser
           settings=json.loads(Path('content/assistant.json').read_text())
-          assert settings['enabled'] is False and settings['endpoint']==''
+          assert settings['enabled'] is True
+          assert settings['endpoint']=='https://hidrolav507-asistente.rrenys-evang0907.workers.dev/chat'
+          assert settings['endpoint'].startswith('https://')
+          assert settings['endpoint'].endswith('.workers.dev/chat')
           assert len(settings['greeting'])>25
           wrangler=json.loads(Path('workers/hidrolav-ai/wrangler.json').read_text())
           assert wrangler['name']=='hidrolav507-asistente'
