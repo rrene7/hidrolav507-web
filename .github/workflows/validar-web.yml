@@ -295,7 +295,7 @@ jobs:
           # Los seis servicios deben ser accesibles, tener canonical y un contenido realmente distinto.
           import json,re
           head=Path('index.html').read_text()
-          schema=json.loads(re.search(r'<script type="application/ld\\+json">([\\s\\S]*?)</script>',head).group(1))
+          schema=json.loads(re.search(r'<script type="application/ld\+json">([\s\S]*?)</script>',head).group(1))
           graph=schema['@graph']
           business=next(x for x in graph if x['@type']=='ProfessionalService')
           assert business['url']==base+'/'
@@ -314,7 +314,7 @@ jobs:
             assert 'imagen' in content.lower() or 'fotografía' in content.lower()
             assert 'href="/#cotizar"' in content
             assert 'image' in content
-            structured=json.loads(re.search(r'<script type="application/ld\\+json">([\\s\\S]*?)</script>',content).group(1))
+            structured=json.loads(re.search(r'<script type="application/ld\+json">([\s\S]*?)</script>',content).group(1))
             types={x['@type'] for x in structured['@graph']}
             assert {'Service','WebPage','BreadcrumbList'}<=types
             assert 'https://wa.me/50762730591' in content
