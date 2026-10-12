@@ -274,7 +274,7 @@ jobs:
           base='https://hidrolav507.netlify.app'
           root=ET.parse('sitemap.xml').getroot()
           urls=[e.text for e in root.findall('{http://www.sitemaps.org/schemas/sitemap/0.9}url/{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
-          assert len(urls)==5 and len(set(urls))==5, urls
+          assert len(urls)==7 and len(set(urls))==7, urls
           assert all(u.startswith(base+'/') for u in urls)
           pages=[Path('index.html')]+[Path(unquote(urlparse(u).path).lstrip('/')) for u in urls[1:]]
           assert all(f.exists() for f in pages),pages
@@ -292,5 +292,36 @@ jobs:
           text=Path('index.html').read_text()
           for url in urls[1:]: assert urlparse(url).path in text
           assert 'Disallow: /admin/' in Path('robots.txt').read_text()
-          print('SEO: 5 URLs, metadatos, enlaces y rutas OK')
+          # Los seis servicios deben ser accesibles, tener canonical y un contenido realmente distinto.
+          import json,re
+          head=Path('index.html').read_text()
+          schema=json.loads(re.search(r'<script type="application/ld\+json">([\s\S]*?)</script>',head).group(1))
+          graph=schema['@graph']
+          business=next(x for x in graph if x['@type']=='ProfessionalService')
+          assert business['url']==base+'/'
+          assert business['address']['addressLocality']=='La Chorrera'
+          assert business['address']['addressRegion']=='Panamá Oeste'
+          assert business['telephone']=='+50762730591'
+          assert business['logo']==base+'/assets/logo.webp'
+          offers=business['hasOfferCatalog']['itemListElement']
+          assert len(offers)==6
+          assert {x['itemOffered']['url'] for x in offers}==set(urls[1:])
+          new_pages=['servicios/limpieza-de-pisos-de-concreto.html','servicios/limpieza-de-exteriores-comerciales.html']
+          for file in new_pages:
+            content=Path(file).read_text()
+            assert 'Lo siento' not in content
+            assert '<h2>' in content and content.count('<details>')>=3
+            assert 'imagen' in content.lower() or 'fotografía' in content.lower()
+            assert 'href="/#cotizar"' in content
+            assert 'image' in content
+            structured=json.loads(re.search(r'<script type="application/ld\+json">([\s\S]*?)</script>',content).group(1))
+            types={x['@type'] for x in structured['@graph']}
+            assert {'Service','WebPage','BreadcrumbList'}<=types
+            assert 'https://wa.me/50762730591' in content
+          for url in urls[1:5]:
+            content=Path(urlparse(url).path.lstrip('/')).read_text()
+            assert all('/'+p in content for p in new_pages)
+          descs=[re.search(r'<meta name="description" content="([^"]+)"',p.read_text()).group(1) for p in pages]
+          assert len(set(descs))==len(descs)
+          print('SEO: 7 URLs, 6 páginas de servicio, schema, enlaces y canonical OK')
           PY
