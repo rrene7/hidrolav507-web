@@ -17,6 +17,121 @@ function looksLikePhone(value){
  });
 }
 
+/* Guía interactiva: las cuatro tarjetas principales siguen intactas.
+   Sólo generamos opciones desde catálogos locales, nunca HTML de la IA. */
+const contactGmail="https://mail.google.com/mail/?view=cm&fs=1&to=contactohidrolav507.com%40gmail.com";
+const waMessage="https://wa.me/50762730591?text="+encodeURIComponent("Hola, quiero consultar un servicio de HidroLav 507.");
+const propertyCatalog=[
+ {label:"🏠 Casa",name:"Casa",form:"Casa",services:["Aceras y entradas","Patios y terrazas","Pisos de concreto","Otro servicio"]},
+ {label:"🏢 Edificio / PH",name:"Edificio / PH",form:"Apartamento / PH",services:["Áreas comunes de PH","Estacionamientos","Aceras y entradas","Otro servicio"]},
+ {label:"🏬 Plaza comercial",name:"Plaza comercial",form:"Local o plaza comercial",services:["Exteriores comerciales","Estacionamientos","Aceras y entradas","Otro servicio"]},
+ {label:"🏘️ Apartamento",name:"Apartamento",form:"Apartamento / PH",services:["Patios y terrazas","Áreas comunes de PH","Otro servicio"]},
+ {label:"🚗 Estacionamiento",name:"Estacionamiento",form:"Estacionamiento",services:["Estacionamientos","Pisos de concreto","Otro servicio"]},
+ {label:"➕ Otro",name:"Otro inmueble",form:"Otro inmueble",services:["Aceras y entradas","Patios y terrazas","Pisos de concreto","Otro servicio"]}
+];
+function norm(text){return String(text||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase()}
+function guideIntent(text){
+ const t=norm(text);
+ if(/\b(?:contactar|contacto|comunicar|comunicacion|whatsapp|telefono|correo|email|e-mail|escribir|hablar con|llamar|mensaje)\b/.test(t))return "contact";
+ if(/\b(?:servicio|servicios|limpiar|limpieza|lavan|lavado|hidrolavado|casa|casas|edificio|edificios|ph|plaza|plazas|apartamento|apartamentos|comercio|comercial|estacionamiento)\b/.test(t))return "services";
+ if(/\b(?:cotizar|cotizacion|cotizaciones|precio|costo|presupuesto|fotos|fotografias)\b/.test(t))return "quote";
+ return "";
+}
+function directProperty(text){
+ const t=norm(text);
+ if(/\b(?:edificio|edificios|ph)\b/.test(t))return propertyCatalog[1];
+ if(/\b(?:plaza|local comercial|comercio)\b/.test(t))return propertyCatalog[2];
+ if(/\b(?:apartamento|apartamentos)\b/.test(t))return propertyCatalog[3];
+ if(/\b(?:estacionamiento|parking)\b/.test(t))return propertyCatalog[4];
+ if(/\b(?:casa|casas|residencia)\b/.test(t))return propertyCatalog[0];
+ return null;
+}
+function addChoices(row,choices){
+ const dest=row.querySelector(".ai-chat-message");if(!dest)return;
+ const list=document.createElement("div");list.className="ai-chat-choices";list.setAttribute("aria-label","Opciones para continuar");
+ choices.forEach(opt=>{
+  const el=document.createElement(opt.href?"a":"button");
+  el.className="ai-chat-choice";
+  el.textContent=opt.label;
+  if(opt.href){
+   el.href=opt.href;
+   if(opt.href.startsWith("https://")){el.target="_blank";el.rel="noopener noreferrer"}
+   if(opt.href==="#cotizar"){
+    el.addEventListener("click",()=>{
+     if(opt.property){const field=q("property_type");if(field)field.value=opt.property.form}
+     if(opt.service){const field=q("service");if(field)field.value=opt.service}
+     setOpen(false,null,false);
+    });
+   }
+  }else{
+   el.type="button";el.addEventListener("click",()=>{if(!busy&&typeof opt.onClick==="function")opt.onClick()});
+  }
+  list.append(el);
+ });
+ dest.append(list);
+ q("ai-chat-feed").scrollTop=q("ai-chat-feed").scrollHeight;
+}
+function contactGuide(prompt="¿Cómo prefieres contactarnos? Elige una opción:"){
+ const row=bubble(prompt,"assistant");
+ addChoices(row,[
+  {label:"💬 WhatsApp",href:waMessage},
+  {label:"✉ Correo",href:contactGmail},
+  {label:"📷 Cotización con fotos",href:"#cotizar"}
+ ]);
+}
+function propertyGuide(){
+ const row=bubble("¿Qué tipo de propiedad necesitas limpiar?","assistant");
+ addChoices(row,propertyCatalog.map(p=>({label:p.label,onClick:()=>chooseProperty(p)})));
+}
+function chooseProperty(property,typed=""){
+ bubble(typed||property.name,"user");
+ const row=bubble("Para "+property.name.toLowerCase()+" podemos evaluar distintas áreas. ¿Cuál deseas limpiar?","assistant");
+ addChoices(row,property.services.map(service=>({label:service,onClick:()=>chooseService(property,service)})));
+}
+function chooseService(property,service){
+ bubble(service,"user");
+ const row=bubble("Perfecto. Evaluamos "+service.toLowerCase()+" según el área, el acceso y la ubicación. ¿Cómo deseas continuar?","assistant");
+ const message="Hola, quiero cotizar "+service.toLowerCase()+" para "+property.name.toLowerCase()+" con HidroLav 507.";
+ addChoices(row,[
+  {label:"📷 Cotización",href:"#cotizar",property,service},
+  {label:"💬 WhatsApp",href:"https://wa.me/50762730591?text="+encodeURIComponent(message)},
+  {label:"⭐ Plan 5+1",onClick:()=>ask("Quiero conocer las condiciones del Plan 5+1.","plan5+1")}
+ ]);
+}
+function guidedRequest(text){
+ const type=guideIntent(text);
+ if(type==="contact"){bubble(text,"user");contactGuide();return true}
+ if(type==="services"){
+  const prop=directProperty(text);
+  if(prop)chooseProperty(prop,text);
+  else {bubble(text,"user");propertyGuide()}
+  return true;
+ }
+ if(type==="quote"){
+  bubble(text,"user");
+  const row=bubble("Puedes solicitar tu cotización con fotografías o hablar con nuestro equipo. ¿Cuál prefieres?","assistant");
+  addChoices(row,[{label:"📷 Cotización con fotos",href:"#cotizar"},{label:"💬 WhatsApp",href:waMessage}]);
+  return true;
+ }
+ return false;
+}
+function followupChoices(row,text,reply){
+ const t=norm(text+" "+reply);
+ if(/\b(?:plan 5|5\s*\+\s*1|promocion|cortesia)\b/.test(t)){
+  addChoices(row,[
+   {label:"⭐ Plan 5+1",onClick:()=>ask("Explícame las condiciones del Plan 5+1.","plan5+1")},
+   {label:"📷 Cotización",href:"#cotizar"}
+  ]);
+ }else if(/\b(?:superficie|terreno|acera|patio|edificio|residencia|ph|estacionamiento|servicio)\b/.test(t)){
+  addChoices(row,[
+   {label:"🏠 Elegir propiedad",onClick:propertyGuide},
+   {label:"📷 Cotización",href:"#cotizar"}
+  ]);
+ }else{
+  addChoices(row,[{label:"📷 Cotización",href:"#cotizar"},{label:"💬 Contactar",onClick:()=>contactGuide()}]);
+ }
+}
+
 function bubble(text,role){
  const feed=q("ai-chat-feed");
  const row=document.createElement("div");row.className="ai-chat-row "+role;
@@ -69,6 +184,7 @@ async function ask(text,interest=""){
   input.value="";
   return;
  }
+ if(interest!=="plan5+1"&&guidedRequest(clean)){input.value="";return}
  const previous=history.slice(-6);
  busy=true;send.disabled=true;input.disabled=true;panel().classList.add("is-thinking");
  bubble(clean,"user");history.push({role:"user",content:clean});
@@ -92,11 +208,13 @@ async function ask(text,interest=""){
    link.title="Abre WhatsApp con un mensaje preparado; debes enviarlo tú mismo.";
    answerRow.querySelector(".ai-chat-message")?.append(link);
   }
+  if(interest!=="plan5+1")followupChoices(answerRow,clean,reply);
   history.push({role:"assistant",content:reply});history=history.slice(-12);
  }catch(err){
   progress.remove();history.pop();
   const msg=err?.name==="AbortError"?"La respuesta tardó demasiado. Inténtalo nuevamente.":String(err?.message||"No se pudo conectar");
-  bubble(msg+" También puedes cotizar con fotografías o escribir al WhatsApp +507 6273-0591.","status");
+  const failure=bubble(msg+" También puedes cotizar con fotografías o escribir por WhatsApp.","status");
+  if(interest!=="plan5+1")addChoices(failure,[{label:"📷 Cotización",href:"#cotizar"},{label:"💬 Contactar",onClick:()=>contactGuide()}]);
   if(interest==="plan5+1"){
    const link=document.createElement("a");
    link.className="ai-chat-conversion";link.href=planWaLink;
@@ -133,6 +251,7 @@ async function init(){
  const greeting=typeof config.greeting==="string"&&config.greeting.trim()?config.greeting.trim():"¡Hola! Soy HidroBot 507. Te ayudo con cotizaciones y consultas. 😊";
  bubble(concise(greeting),"assistant");
  bubble("¿Deseas cotizar una limpieza o conocer el Plan 5+1?","assistant");
+ // Los accesos fijos se conservan; los botones contextuales aparecen en las respuestas.
  buttons.forEach(el=>{
   el.hidden=false;
   el.addEventListener("click",()=>setOpen(dialog.hidden,el));
@@ -146,7 +265,10 @@ async function init(){
   if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();form.requestSubmit()}
  });
  dialog.querySelectorAll("[data-chat-question]").forEach(el=>el.addEventListener("click",()=>{
-  if(!busy)ask(el.getAttribute("data-chat-question")||el.textContent,el.classList.contains("plan-highlight")?"plan5+1":"");
+  if(busy)return;
+  if(el.classList.contains("plan-highlight"))ask(el.getAttribute("data-chat-question")||el.textContent,"plan5+1");
+  else if(el.getAttribute("aria-label")==="Preguntar por nuestros servicios"){bubble("Consultar servicio","user");propertyGuide()}
+  else ask(el.getAttribute("data-chat-question")||el.textContent);
  }));
  dialog.querySelectorAll("[data-chat-close],#ai-chat-attach").forEach(el=>
   el.addEventListener("click",()=>setOpen(false,null,false)));
