@@ -26,7 +26,7 @@ export default {
  async fetch(request,env){
   const url=new URL(request.url),origin=request.headers.get("Origin")||"";
   if(url.pathname==="/health"&&request.method==="GET"){
-    return json({ok:true,ai:!!env.AI,rate_limit:!!env.CHAT_RATE},200,origin);
+    return json({ok:true,ai:!!env.AI,rate_limit:!!env.CHAT_RATE&&!!env.CHAT_GLOBAL},200,origin);
   }
   if(url.pathname!=="/chat")return json({error:"No encontrado"},404,origin);
   if(origin!==SITE)return json({error:"Origen no autorizado"},403);
