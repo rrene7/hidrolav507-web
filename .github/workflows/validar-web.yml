@@ -47,6 +47,8 @@ jobs:
           test -s content/loyalty.json
           test -s content/carousel.json
           test -s assets/experiencia.js
+          test -s assets/validar-fotos.js
+          node --check assets/validar-fotos.js
           test -s assets/experiencia.css
           test -s privacidad.html
           test -s gracias.html
@@ -102,6 +104,11 @@ jobs:
           assert '/^507[0-9]{8}$/' in js
           assert '.offer-backup' in css
           assert 'name="cotizaciones-hidrolav507"' in index
+          assert '/assets/validar-fotos.js' in index
+          assert 'id="photo-feedback"' in index
+          validation=Path('assets/validar-fotos.js').read_text()
+          assert '7*1024*1024' in validation and 'submit' in validation
+          assert 'image/jpeg' in validation and 'image/png' in validation and 'image/webp' in validation
           assert Path('content/christmas.json').exists()
           print('Posición del plan, WhatsApp, asistente y formularios OK')
           print('Carrusel, fidelidad, Netlify Forms y privacidad OK')

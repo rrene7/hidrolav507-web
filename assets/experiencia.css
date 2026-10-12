@@ -136,3 +136,7 @@ body .whatsapp-float:focus-visible{outline:3px solid #ffc400;outline-offset:4px}
 .hero.hero-modern .hero-offer-slot .offer-backup p{margin:0;font-size:12px;font-weight:800;color:#365974}
 .hero.hero-modern .hero-offer-slot .offer-backup a{font-size:13px;color:#0074a9;text-decoration:underline;font-weight:800}
 .hero.hero-modern .hero-offer-slot .offer-backup span{font-size:12px;color:#506a7c}
+
+/* Advertencias de carga de fotos en cotizaciones */
+#photo-feedback{font-size:12px;line-height:1.45;color:#bfedff;padding:7px 0}
+#photo-feedback.error{color:#ffe0d3;font-weight:800;outline:none}

@@ -101,7 +101,8 @@
   <div class="field"><label for="details">Describe el área a limpiar</label><textarea id="details" name="details" rows="3" placeholder="Tamaño aproximado, nivel de suciedad, tipo de piso y acceso al agua..." maxlength="600"></textarea></div>
   <div class="field"><label for="foto_1">Fotografía 1 (opcional)</label><input id="foto_1" name="foto_1" type="file" accept="image/jpeg,image/png,image/webp"></div>
   <div class="field"><label for="foto_2">Fotografía 2 (opcional)</label><input id="foto_2" name="foto_2" type="file" accept="image/jpeg,image/png,image/webp"></div>
-  <p class="field-note">Máximo 8 MB en toda la solicitud. Procura enviar fotografías comprimidas. No incluyas documentos, rostros o información sensible.</p>
+  <p class="field-note">Netlify permite un máximo de 8 MB por solicitud, incluidos los datos del formulario. Recomendamos que las dos imágenes sumen menos de 7 MB. No incluyas documentos, rostros o información sensible.</p>
+  <p id="photo-feedback" class="file-info" role="status" aria-live="polite" tabindex="-1"></p>
   <label class="privacy-note"><input name="consent" type="checkbox" value="Acepto" required> <span>Autorizo usar mis datos y fotografías únicamente para atender esta solicitud. Conozco el <a href="/privacidad.html" target="_blank" rel="noopener">aviso de privacidad</a>.</span></label>
   <button class="btn btn-green" type="submit">Enviar solicitud y fotografías ↗</button>
   <small>Al enviar, recibiremos tus datos mediante Netlify Forms. También puedes <a href="https://wa.me/50762730591" target="_blank" rel="noopener">escribir por WhatsApp</a>.</small>
@@ -119,5 +120,6 @@
   </script>
   <script defer src="/assets/site-content.js"></script>
   <script defer src="/assets/experiencia.js"></script>
+  <script defer src="/assets/validar-fotos.js"></script>
 </body>
 </html>
