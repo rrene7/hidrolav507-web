@@ -151,3 +151,74 @@
  .navlinks .btn{margin-top:10px}
  .navlinks .ai-nav-button{display:none!important}
 }
+
+
+/* Corrección de nitidez y ubicación de HidroBot 507.
+   Quitamos el halo excesivo y NO estiramos la imagen del rostro. */
+.navlinks .ai-nav-button{
+  display:inline-flex;align-items:center;justify-content:flex-start;
+  width:174px;min-width:174px;height:62px;gap:8px;
+  padding:5px 11px 5px 5px;border-radius:999px;
+  border:1px solid #b8e1f5;background:linear-gradient(110deg,#f5fcff,#e4f7ff);
+  color:#084566;box-shadow:0 5px 16px #07477624;
+  isolation:isolate;overflow:visible;filter:none;transform:none;
+}
+.navlinks .ai-nav-button::before,.nav .ai-nav-mobile::before{
+  display:none!important;
+}
+.navlinks .ai-nav-button:hover{
+  background:#ddf5ff;filter:none;transform:translateY(-1px);
+  box-shadow:0 6px 18px #0877ae37;
+}
+.navlinks .ai-nav-button:focus-visible,.nav .ai-nav-mobile:focus-visible{
+  outline:3px solid #ffca25;outline-offset:3px;
+}
+.hidrobot-face{
+  flex:0 0 50px;width:50px;height:50px;
+  background:#e5faff;border:2px solid #f9fdff;
+  box-shadow:0 0 0 1px #7accea,0 2px 7px #0d63904d;
+  transform:none;filter:none;
+}
+.hidrobot-face img{
+  display:block;width:100%;height:100%;object-fit:cover;
+  object-position:center center;image-rendering:auto;
+  transform:none!important;filter:none!important;animation:none!important;
+}
+.hidrobot-face::after{box-shadow:none}
+.navlinks .hidrobot-launch-copy{
+  display:flex;flex-direction:column;gap:2px;align-items:flex-start;
+  min-width:0;white-space:nowrap;line-height:1.2;text-align:left;
+}
+.navlinks .hidrobot-launch-copy strong{font-size:13px;letter-spacing:-.15px;color:#083e62}
+.navlinks .hidrobot-launch-copy small{font-size:10px;color:#376c83;font-weight:650}
+.navlinks .hidrobot-online{
+  top:7px;right:6px;width:10px;height:10px;
+  background:#10c795;border:2px solid white;box-shadow:0 0 0 1px #a5ebcf;
+}
+.nav .ai-nav-mobile .hidrobot-face{
+  width:41px;height:41px;flex-basis:41px;box-shadow:0 1px 8px #067bb34c
+}
+.nav .ai-nav-mobile .hidrobot-online{box-shadow:none}
+@media(min-width:1051px) and (max-width:1639px){
+  .navlinks{gap:clamp(9px,1.05vw,16px)}
+  .navlinks .ai-nav-button{width:168px;min-width:168px}
+}
+/* En monitores amplios, el acceso aprovecha el espacio libre del extremo derecho
+   de la cabecera; deja de apretar el menú principal. */
+@media(min-width:1640px){
+  .navlinks .ai-nav-button{
+    position:fixed;right:clamp(16px,2vw,34px);top:10px;
+    width:183px;min-width:183px;height:66px;
+  }
+  .navlinks .ai-nav-button .hidrobot-face{
+    flex-basis:54px;width:54px;height:54px;
+  }
+  .ai-chat-panel{right:clamp(16px,2vw,34px)}
+}
+@media(max-width:1050px){
+  .nav .ai-nav-mobile{filter:none;box-shadow:none}
+  .nav .ai-nav-mobile:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .navlinks .ai-nav-button,.nav .ai-nav-mobile{transition:none!important}
+}
