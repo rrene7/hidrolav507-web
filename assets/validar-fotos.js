@@ -20,6 +20,8 @@ function init(){
   else{msg="Puedes adjuntar hasta dos fotografías. Máximo 7 MB entre ambas."}
   feedback.textContent=msg;
   feedback.classList.toggle("error",error);
+  // Ocultar aviso repetitivo hasta que se adjunte una foto o haya un error.
+  feedback.hidden=!photos.length&&!error;
   return !error;
  }
  fields.forEach(field=>field.addEventListener("change",validate));
