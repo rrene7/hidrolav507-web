@@ -32,9 +32,10 @@ const propertyCatalog=[
 function norm(text){return String(text||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase()}
 function guideIntent(text){
  const t=norm(text);
- if(/\b(?:contactar|contacto|comunicar|comunicacion|whatsapp|telefono|correo|email|e-mail|escribir|hablar con|llamar|mensaje)\b/.test(t))return "contact";
- if(/\b(?:servicio|servicios|limpiar|limpieza|lavan|lavado|hidrolavado|casa|casas|edificio|edificios|ph|plaza|plazas|apartamento|apartamentos|comercio|comercial|estacionamiento)\b/.test(t))return "services";
- if(/\b(?:cotizar|cotizacion|cotizaciones|precio|costo|presupuesto|fotos|fotografias)\b/.test(t))return "quote";
+ if(/\b(?:plan|promocion|suscripcion|cortesia)\b|5\s*\+\s*1/.test(t))return "";
+ if(/\b(?:contact\w*|comunic\w*|whatsapp|telefon\w*|correo|email|e-mail|escrib\w*|hablar con|llamar|mensaje\w*)\b/.test(t))return "contact";
+ if(/\b(?:cotiz\w*|precio\w*|costo\w*|presupuesto\w*|foto\w*|fotografia\w*)\b/.test(t))return "quote";
+ if(/\b(?:servici\w*|limpi\w*|lavan|lavad\w*|hidrolavad\w*|casa\w*|edifici\w*|ph|plaza\w*|apartamento\w*|comerci\w*|estacionamiento\w*)\b/.test(t))return "services";
  return "";
 }
 function directProperty(text){
@@ -75,7 +76,8 @@ function contactGuide(prompt="¿Cómo prefieres contactarnos? Elige una opción:
  const row=bubble(prompt,"assistant");
  addChoices(row,[
   {label:"💬 WhatsApp",href:waMessage},
-  {label:"✉ Correo",href:contactGmail},
+  {label:"✉ Gmail",href:contactGmail},
+  {label:"✉ Otra app de correo",href:"mailto:contactohidrolav507.com@gmail.com"},
   {label:"📷 Cotización con fotos",href:"#cotizar"}
  ]);
 }
@@ -171,7 +173,9 @@ function concise(text){
  const s=String(text||"").trim();
  // Respeta los enlaces y palabras, pero evita párrafos interminables.
  const parts=s.match(/[^.!?\n]+[.!?]+|[^.!?\n]+$/g)||[s];
- return parts.slice(0,3).join(" ").replace(/\s+/g," ").trim().slice(0,500);
+ const short=parts.slice(0,2).join(" ").replace(/\s+/g," ").trim();
+ if(short.length<=270)return short;
+ return short.slice(0,267).replace(/\s+\S*$/,"").trimEnd()+"…";
 }
 async function ask(text,interest=""){
  const clean=String(text||"").trim().slice(0,900);
