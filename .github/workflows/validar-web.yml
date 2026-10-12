@@ -205,6 +205,24 @@ jobs:
           assert nav.index('href="#cotizar">Solicitar cotización ↗</a>') < nav.index('id="ai-chat-launch"')
           assert 'position:fixed;right:clamp(16px,2vw,34px);top:10px' not in botcss
           assert '"--hidrobot-right"' in script
+
+          # HidroBot debe presentar el plan 5+1 como opción comercial sin suscribir al cliente.
+          assert 'class="ai-chat-tile plan-highlight"' in html
+          assert '5 limpiezas + 1 de cortesía' in html
+          assert 'Plan Cliente Frecuente 5+1' in html
+          assert '¿Deseas cotizar una limpieza o conocer el Plan 5+1?' in script
+          assert 'el.classList.contains("plan-highlight")' in script
+          assert 'planWaLink=' in script
+          assert 'link.target="_blank"' in script
+          assert 'debes enviarlo tú mismo' in script
+          assert 'ai-chat-conversion' in Path('assets/assistant.css').read_text()
+          assert 'grid-template-columns:repeat(2,minmax(0,1fr))' in Path('assets/assistant.css').read_text()
+          assert 'inscrito automáticamente' in worker
+          # Enlaces de correo: Gmail web como predeterminado y mailto como alternativa.
+          assert html.count('https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=contactohidrolav507.com%40gmail.com')==2
+          assert html.count('href="mailto:contactohidrolav507.com@gmail.com"')==2
+          assert 'business-email-fallback' in html
+          assert 'footer-email-fallback' in html
           print('Integración IA, configuración CMS y privacidad OK')
           PY
       - name: Comprobar SEO local y sitemap
