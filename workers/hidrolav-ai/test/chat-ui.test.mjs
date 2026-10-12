@@ -27,8 +27,7 @@ const injection="globalThis.__hidrobotFlows={guideIntent,directProperty,concise,
 assert.ok(script.includes("function bubble(text,role){"));
 // Leemos la exportación temporal desde el contexto aislado, no añadimos APIs a producción.
 const sandbox={document,window:{},URL,Date,encodeURIComponent};
-vm.runInNewContext(script.replace("function bubble(text,role){",injection+"
-function bubble(text,role){"),sandbox,{timeout:2500});
+vm.runInNewContext(script.replace("function bubble(text,role){",injection+"\nfunction bubble(text,role){"),sandbox,{timeout:2500});
 const {guideIntent,directProperty,concise,contactGuide,propertyGuide}=sandbox.__hidrobotFlows;
 function choicesFromLastMessage(){
  const last=feed.children.at(-1);assert.ok(last,"No hubo mensaje");
