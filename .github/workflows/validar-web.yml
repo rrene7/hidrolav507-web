@@ -168,8 +168,8 @@ jobs:
           assert 'data-chat-question="¿Qué servicios ofrece HidroLav 507?"' in html
           assert 'class="ai-chat-tile whatsapp"' in html
           assert 'ai-chat-tile' in Path('assets/assistant.css').read_text()
-          assert 'max-width:1050px' in Path('assets/assistant.css').read_text()
-          assert 'window.innerWidth<=1050' in script
+          assert 'max-width:1279px' in Path('assets/assistant.css').read_text()
+          assert 'window.innerWidth<=1279' in script
           worker=Path('workers/hidrolav-ai/src/index.mjs').read_text()
           assert 'Eres HidroBot 507' in worker and 'max_tokens:145' in worker
           assert 'Haz solo UNA pregunta' in worker
@@ -181,9 +181,14 @@ jobs:
           assert '.navlinks .ai-nav-button::before,.nav .ai-nav-mobile::before' in botcss
           assert 'animation:none!important' in botcss
           assert '.navlinks .hidrobot-launch-copy strong' in botcss
-          assert '@media(min-width:1640px)' in botcss
-          assert 'position:fixed;right:clamp(16px,2vw,34px);top:10px' in botcss
-          assert '.ai-chat-panel{right:clamp(16px,2vw,34px)}' in botcss
+          assert '@media(min-width:1280px)' in botcss
+          assert 'position:static;right:auto;top:auto;flex-shrink:0;' in botcss
+          assert '.ai-chat-panel{right:var(--hidrobot-right,18px)}' in botcss
+          # En la cabecera, primero Cotización y después HidroBot.
+          nav=html.split('<nav class="navlinks"',1)[1].split('</nav>',1)[0]
+          assert nav.index('href="#cotizar">Solicitar cotización ↗</a>') < nav.index('id="ai-chat-launch"')
+          assert 'position:fixed;right:clamp(16px,2vw,34px);top:10px' not in botcss
+          assert '"--hidrobot-right"' in script
           print('Integración IA, configuración CMS y privacidad OK')
           PY
       - name: Comprobar SEO local y sitemap

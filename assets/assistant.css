@@ -139,7 +139,7 @@
 .ai-chat-attach:focus-visible,.ai-chat-compose button:focus-visible,.ai-chat-close:focus-visible{outline:3px solid #ffe16b;outline-offset:2px}
 
 /* Tabletas: avatar a la vista y menú compacto sin desbordamiento */
-@media (min-width:741px) and (max-width:1050px){
+@media (min-width:741px) and (max-width:1279px){
  .nav .ai-nav-mobile{display:inline-grid;order:1;width:48px;height:48px;margin-left:auto}
  .nav .ai-nav-mobile .hidrobot-face{height:41px;width:41px}
  .nav .mobile-toggle{display:block;order:2;flex:0 0 auto}
@@ -199,23 +199,22 @@
   width:41px;height:41px;flex-basis:41px;box-shadow:0 1px 8px #067bb34c
 }
 .nav .ai-nav-mobile .hidrobot-online{box-shadow:none}
-@media(min-width:1051px) and (max-width:1639px){
-  .navlinks{gap:clamp(9px,1.05vw,16px)}
-  .navlinks .ai-nav-button{width:168px;min-width:168px}
-}
-/* En monitores amplios, el acceso aprovecha el espacio libre del extremo derecho
-   de la cabecera; deja de apretar el menú principal. */
-@media(min-width:1640px){
+/* En escritorio, la cotización antecede a HidroBot y ambos permanecen
+   alineados en la MISMA cabecera; sin posición fija que rompa el orden. */
+@media(min-width:1280px){
+  .nav{gap:12px}
+  .navlinks{gap:clamp(8px,.85vw,13px)}
+  .navlinks>.btn-blue{padding-inline:16px;white-space:nowrap}
   .navlinks .ai-nav-button{
-    position:fixed;right:clamp(16px,2vw,34px);top:10px;
-    width:183px;min-width:183px;height:66px;
+    position:static;right:auto;top:auto;flex-shrink:0;
+    width:169px;min-width:169px;height:59px;
   }
   .navlinks .ai-nav-button .hidrobot-face{
-    flex-basis:54px;width:54px;height:54px;
+    flex-basis:48px;width:48px;height:48px;
   }
-  .ai-chat-panel{right:clamp(16px,2vw,34px)}
+  .ai-chat-panel{right:var(--hidrobot-right,18px)}
 }
-@media(max-width:1050px){
+@media(max-width:1279px){
   .nav .ai-nav-mobile{filter:none;box-shadow:none}
   .nav .ai-nav-mobile:hover{transform:none}
 }
