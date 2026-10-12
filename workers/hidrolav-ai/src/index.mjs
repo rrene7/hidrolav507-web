@@ -24,9 +24,9 @@ function json(data,status=200,origin=""){
 function plainMessage(value,max){return typeof value==="string"?value.trim().slice(0,max):""}
 // Ningún número de contacto debe pasar a la IA. Se incluyen teléfonos panameños con y sin +507.
 function looksLikePhone(value){
- const spans=String(value||"").match(/\\+?[\\d\\s().-]{8,24}/g)||[];
+ const spans=String(value||"").match(/\+?[\d\s().-]{8,24}/g)||[];
  return spans.some(span=>{
-  const digits=span.replace(/\\D/g,"");
+  const digits=span.replace(/\D/g,"");
   return (digits.length===8&&/^[236789]/.test(digits))||
     (digits.length===11&&digits.startsWith("507")&&/^[236789]/.test(digits.slice(3)));
  });
@@ -35,14 +35,14 @@ const REAL_CONTACT="No puedo enviar mensajes ni registrar cotizaciones desde est
 const PRIVATE_CONTACT="Por tu privacidad, no compartas números telefónicos en este chat. Para que recibamos tu solicitud, utiliza «Cotización» o pulsa «Hablar por WhatsApp» y envía allí tu mensaje.";
 // Guardia adicional: los modelos generativos pueden ignorar instrucciones del sistema.
 function unsafeCommitment(value){
- const t=String(value||"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase();
- return /\\b(?:te|le|les)\\s+(?:enviare|enviaremos|mandare|mandaremos|escribire|escribiremos|contactare|contactaremos|llamare|llamaremos)\\b/.test(t)||
-  /\\b(?:voy|vamos)\\s+a\\s+(?:enviar|mandar|escribir|contactar|llamar)\\w*/.test(t)||
-  /\\b(?:he|hemos|ya)\\s+(?:enviado|mandado|registrado|agendado|confirmado)\\b/.test(t)||
-  /\\b(?:nos pondremos en contacto|te llamaremos|le llamaremos|te hare llegar)\\b/.test(t)||
-  /\\b(?:tu|su)\\s+(?:numero|telefono|celular)(?:\\s+de\\s+whatsapp)?\\b/.test(t)||
-  /\\b(?:cual es|dame|dime|comparte|facilitame|indicame)\\b.{0,55}\\b(?:numero|telefono|whatsapp|celular)\\b/.test(t)||
-  /\\b(?:recibiras|recibira)\\b.{0,60}\\b(?:mensaje|whatsapp|cotizacion|llamada)\\b/.test(t);
+ const t=String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+ return /\b(?:te|le|les)\s+(?:enviare|enviaremos|mandare|mandaremos|escribire|escribiremos|contactare|contactaremos|llamare|llamaremos)\b/.test(t)||
+  /\b(?:voy|vamos)\s+a\s+(?:enviar|mandar|escribir|contactar|llamar)\w*/.test(t)||
+  /\b(?:he|hemos|ya)\s+(?:enviado|mandado|registrado|agendado|confirmado)\b/.test(t)||
+  /\b(?:nos pondremos en contacto|te llamaremos|le llamaremos|te hare llegar)\b/.test(t)||
+  /\b(?:tu|su)\s+(?:numero|telefono|celular)(?:\s+de\s+whatsapp)?\b/.test(t)||
+  /\b(?:cual es|dame|dime|comparte|facilitame|indicame)\b.{0,55}\b(?:numero|telefono|whatsapp|celular)\b/.test(t)||
+  /\b(?:recibiras|recibira)\b.{0,60}\b(?:mensaje|whatsapp|cotizacion|llamada)\b/.test(t);
 }
 export default {
  async fetch(request,env){
