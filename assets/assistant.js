@@ -5,6 +5,17 @@ const face="/assets/hidrobot507-avatar.webp";
 let endpoint="",history=[],busy=false,activeTrigger=null;
 const launchers=()=>[q("ai-chat-launch"),q("ai-chat-launch-mobile")].filter(Boolean);
 const panel=()=>q("ai-chat-panel");
+
+/* El chat no es un canal de captura de teléfonos: no enviar números a Workers AI. */
+function looksLikePhone(value){
+ const spans=String(value||"").match(/\+?[\d\s().-]{8,24}/g)||[];
+ return spans.some(part=>{
+  const digits=part.replace(/\D/g,"");
+  return (digits.length===8&&/^[236789]/.test(digits))||
+    (digits.length===11&&digits.startsWith("507")&&/^[236789]/.test(digits.slice(3)));
+ });
+}
+
 function bubble(text,role){
  const feed=q("ai-chat-feed");
  const row=document.createElement("div");row.className="ai-chat-row "+role;
@@ -50,6 +61,13 @@ async function ask(text){
  const clean=String(text||"").trim().slice(0,900);
  if(!clean||busy||!endpoint)return;
  const input=q("ai-chat-input"),send=q("ai-chat-send");
+ if(looksLikePhone(clean)){
+  // Mensaje privado: no se muestra ni se comparte el número tecleado.
+  bubble("Quiero contactar a HidroLav 507","user");
+  bubble("Por seguridad no compartas tu teléfono aquí. Pulsa «Cotización» y envía la solicitud, o «Hablar por WhatsApp» para escribirnos directamente.","assistant");
+  input.value="";
+  return;
+ }
  const previous=history.slice(-6);
  busy=true;send.disabled=true;input.disabled=true;panel().classList.add("is-thinking");
  bubble(clean,"user");history.push({role:"user",content:clean});
