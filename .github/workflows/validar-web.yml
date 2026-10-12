@@ -155,6 +155,25 @@ jobs:
           assert 'textContent=text' in script
           assert 'credentials:"omit"' in script
           assert Path('docs/asistente-ia-cloudflare.md').exists()
+          # Avatar real del usuario, chat luminoso, acciones y charla breve.
+          avatar=Path('assets/hidrobot507-avatar.webp')
+          assert avatar.is_file() and avatar.stat().st_size>1000
+          assert avatar.read_bytes()[:4]==b'RIFF'
+          assert html.count('id="ai-chat-launch"')==1
+          assert html.count('id="ai-chat-launch-mobile"')==1
+          assert 'class="ai-chat-mini-avatar"' in script
+          assert 'assets/hidrobot507-avatar.webp' in html
+          assert 'id="ai-chat-attach"' in html
+          assert 'href="#cotizar" class="ai-chat-tile"' in html
+          assert 'data-chat-question="¿Qué servicios ofrece HidroLav 507?"' in html
+          assert 'class="ai-chat-tile whatsapp"' in html
+          assert 'ai-chat-tile' in Path('assets/assistant.css').read_text()
+          assert 'max-width:1050px' in Path('assets/assistant.css').read_text()
+          assert 'window.innerWidth<=1050' in script
+          worker=Path('workers/hidrolav-ai/src/index.mjs').read_text()
+          assert 'Eres HidroBot 507' in worker and 'max_tokens:145' in worker
+          assert 'Haz solo UNA pregunta' in worker
+          assert 'HidroBot 507' in settings['greeting']
           print('Integración IA, configuración CMS y privacidad OK')
           PY
       - name: Comprobar SEO local y sitemap
