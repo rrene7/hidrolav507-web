@@ -146,6 +146,22 @@ jobs:
           assert 'id="ai-chat-form"' in html
           assert '/assets/assistant.css' in html and '/assets/assistant.js' in html
           assert 'name="cotizaciones-hidrolav507"' in html
+
+          # Cotizador compacto sin perder datos, adjuntos ni conexión Netlify.
+          quote=html.split('<form class="form" id="quote-form"',1)[1].split('</form>',1)[0]
+          assert 'class="quote-fields-grid"' in quote
+          assert 'class="quote-photo-details"' in quote
+          assert 'class="quote-photo-fields"' in quote
+          for field in ('name','phone','email','property_type','service','location','details','foto_1','foto_2','consent','bot-field'):
+            assert quote.count('name="'+field+'"')==1,field
+          assert 'name="form-name" value="cotizaciones-hidrolav507"' in quote
+          assert 'enctype="multipart/form-data"' in html
+          assert 'type="submit"' in quote
+          quote_css=Path('assets/experiencia.css').read_text()
+          assert '#quote-form .quote-fields-grid{display:grid' in quote_css
+          assert '#quote-form .quote-photo-details' in quote_css
+          assert '@media(max-width:540px)' in quote_css
+          assert 'feedback.hidden=!photos.length&&!error' in Path('assets/validar-fotos.js').read_text()
           config=Path('admin/config.yml').read_text()
           assert 'file: content/assistant.json' in config
           script=Path('assets/assistant.js').read_text()
