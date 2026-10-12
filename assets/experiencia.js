@@ -24,19 +24,19 @@ async function initCarousel(){
 }
 async function initLoyalty(){
  const c=await get("/content/loyalty.json");if(!c?.enabled)return;
- const tab=document.createElement("button");tab.className="offer-tab";tab.type="button";tab.textContent="★ "+(c.mini_label||"Plan 5+1");tab.setAttribute("aria-expanded","false");
+ const tab=document.createElement("button");tab.className="offer-tab";tab.type="button";tab.textContent="★ "+(c.mini_label||"Planes Cliente Frecuente");tab.setAttribute("aria-expanded","false");
  const panel=document.createElement("aside");panel.id="loyalty-panel";panel.className="offer-panel";panel.hidden=true;
  tab.setAttribute("aria-controls",panel.id);
  const close=document.createElement("button");close.className="panel-close";close.type="button";close.textContent="×";close.setAttribute("aria-label","Cerrar promoción");
  const small=document.createElement("span");small.className="offer-kicker";small.textContent=c.eyebrow||"Cliente frecuente";
- const title=document.createElement("h3");title.textContent=c.headline||"Plan 5+1";
+ const title=document.createElement("h3");title.textContent=c.headline||"Elige tu plan de limpieza";
  const desc=document.createElement("p");desc.textContent=c.description||"Consulta los beneficios.";
  const details=document.createElement("details"),summary=document.createElement("summary"),terms=document.createElement("p");
  summary.textContent="Condiciones del plan";terms.textContent=c.terms||"Sujeto a evaluación y acuerdo.";details.append(summary,terms);
  const site=await get("/content/site.json");
  const configured=String(site?.whatsapp||"50762730591").replace(/[^0-9]/g,"");
  const phone=/^507[0-9]{8}$/.test(configured)?configured:"50762730591";
- const question="Hola HidroLav 507 Panamá. Quiero consultar las condiciones del Plan Cliente Frecuente 5+1 (cinco limpiezas pagadas y la sexta de cortesía). Mi propiedad está en: ";
+ const question="Hola HidroLav 507 Panamá. Quiero conocer las condiciones de los planes 2+1 (3 meses), 4+1 (5 meses) y 6+1 (6 meses). Mi propiedad está en: ";
  const primary=new URL("https://api.whatsapp.com/send");
  primary.searchParams.set("phone",phone);
  primary.searchParams.set("text",question);
@@ -48,7 +48,24 @@ async function initLoyalty(){
  direct.target="_blank";direct.rel="noopener noreferrer";direct.textContent="Abrir chat directo sin mensaje ↗";
  const number=document.createElement("span");number.textContent="Número: +507 "+phone.slice(3,7)+"-"+phone.slice(7);
  backup.append(help,direct,number);
- panel.append(close,small,title,desc,details,a,backup);
+
+ const plans=document.createElement("div");plans.className="loyalty-plans";
+ const allowed=new Set(["2+1","4+1","6+1"]);
+ const validPlans=Array.isArray(c.plans)?c.plans.filter(p=>p&&allowed.has(p.code)&&Number.isInteger(p.paid)&&Number.isInteger(p.bonus)&&Number.isInteger(p.months)&&p.paid>0&&p.bonus===1&&p.months>0):[];
+ const fallbackPlans=[{code:"2+1",paid:2,bonus:1,months:3},{code:"4+1",paid:4,bonus:1,months:5},{code:"6+1",paid:6,bonus:1,months:6}];
+ for(const plan of validPlans.length===3?validPlans:fallbackPlans){
+  const item=document.createElement("a");
+  item.className="loyalty-plan-choice";
+  const text=document.createElement("strong");text.textContent=plan.code;
+  const subtitle=document.createElement("span");subtitle.textContent=plan.months+" meses";
+  const note=document.createElement("small");note.textContent=plan.paid+" pagadas + "+plan.bonus+" de cortesía";
+  item.append(text,subtitle,note);
+  item.href="https://wa.me/"+phone+"?text="+encodeURIComponent("Hola, quiero conocer las condiciones del Plan "+plan.code+" en "+plan.months+" meses de HidroLav 507.");
+  item.target="_blank";item.rel="noopener noreferrer";
+  item.setAttribute("aria-label","Consultar Plan "+plan.code+" por WhatsApp. Tú envías el mensaje.");
+  plans.append(item);
+ }
+ panel.append(close,small,title,desc,plans,details,a,backup);
  const actions=document.querySelector(".hero .actions");
  if(!actions)return;
  const slot=document.createElement("div");slot.className="hero-offer-slot";

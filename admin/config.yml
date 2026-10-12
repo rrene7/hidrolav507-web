@@ -70,8 +70,8 @@ collections:
   - name: fidelidad
     label: Programa Cliente Frecuente
     files:
-      - name: plan51
-        label: Plan 5+1
+      - name: planes_cliente_frecuente
+        label: Planes 2+1 / 4+1 / 6+1
         file: content/loyalty.json
         format: json
         fields:
@@ -80,6 +80,15 @@ collections:
           - {label: Etiqueta de la oferta, name: eyebrow, widget: string}
           - {label: Título del programa, name: headline, widget: string}
           - {label: Explicación breve, name: description, widget: text}
+          - label: Opciones Cliente Frecuente
+            name: plans
+            widget: list
+            summary: "{{fields.code}} · {{fields.months}} meses"
+            fields:
+              - {label: Identificador del plan (ej. 2+1), name: code, widget: string}
+              - {label: Limpiezas pagadas, name: paid, widget: number, value_type: int, min: 1}
+              - {label: Limpiezas de cortesía, name: bonus, widget: number, value_type: int, min: 1}
+              - {label: Plazo en meses, name: months, widget: number, value_type: int, min: 1}
           - {label: Condiciones de la promoción, name: terms, widget: text}
           - {label: Texto del botón, name: cta, widget: string}
 

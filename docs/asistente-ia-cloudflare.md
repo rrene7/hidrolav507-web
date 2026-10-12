@@ -15,7 +15,7 @@
 4. Selecciona **Save and Deploy**. Espera a ver estado Published / Success y guarda la URL pública real `https://hidrolav507-asistente.TU-SUBDOMINIO.workers.dev`. La URL asignada la decide Cloudflare: no la adivines.
 5. Visita `https://...workers.dev/health` desde tu navegador: debe mostrar `{"ok":true,"ai":true,"rate_limit":true}`. Si `ai` o `rate_limit` es falso, revisa los bindings y vuelve a desplegar.
 6. Abre `https://hidrolav507.netlify.app/admin/` → **Asistente IA → Conexión Cloudflare Workers AI**. En **URL del endpoint HTTPS** pon la URL real + `/chat`; ejemplo `https://hidrolav507-asistente.TU-SUBDOMINIO.workers.dev/chat`. Activa **Activar asistente IA** y guarda.
-7. Comprueba que Netlify haya publicado el cambio al `content/assistant.json` (la publicación puede tardar algunos minutos), recarga con Ctrl+F5 y abre el botón **Asistente IA** en la cabecera. Haz pruebas de servicios, zona atendida, Plan 5+1, cotizaciones sin tarifas inventadas y acceso al formulario.
+7. Comprueba que Netlify haya publicado el cambio al `content/assistant.json` (la publicación puede tardar algunos minutos), recarga con Ctrl+F5 y abre el botón **Asistente IA** en la cabecera. Haz pruebas de servicios, zona atendida, planes 2+1, 4+1 y 6+1, cotizaciones sin tarifas inventadas y acceso al formulario.
 
 **Importante:** Cloudflare tiene 10.000 neuronas gratis por día en Workers AI, no 10.000 mensajes. Si se supera la cuota, las peticiones fallan; para continuar gratis, espera al siguiente día. No actives Workers Paid si quieres cero cargos. Monitorea las neuronas en el panel Workers AI.
 

@@ -46,7 +46,7 @@ jobs:
           assert all(Path('.'+p).is_file() for p in (d['hero_image'], *(x['image'] for x in d['gallery'])))
           print('HTML, JS, JSON, CMS, WhatsApp y fotos OK')
           PY
-      - name: Comprobar carrusel, plan 5+1 y solicitudes con fotos
+      - name: Comprobar carrusel, tres planes Cliente Frecuente y solicitudes con fotos
         run: |
           set -euo pipefail
           test -s content/loyalty.json
@@ -64,11 +64,18 @@ jobs:
           from html.parser import HTMLParser
           loyalty=json.loads(Path('content/loyalty.json').read_text())
           carousel=json.loads(Path('content/carousel.json').read_text())
-          assert isinstance(loyalty['enabled'], bool) and 'seis meses' in loyalty['terms']
+          assert isinstance(loyalty['enabled'], bool) and '6 meses' in loyalty['terms']
           assert isinstance(carousel['enabled'], bool) and len(carousel['slides'])>=2
           assert all(Path('.'+s['image']).exists() for s in carousel['slides'])
           config=Path('admin/config.yml').read_text()
           assert 'file: content/loyalty.json' in config
+
+          assert len(loyalty['plans'])==3
+          assert [(p['code'],p['paid'],p['bonus'],p['months']) for p in loyalty['plans']]==[
+            ('2+1',2,1,3),('4+1',4,1,5),('6+1',6,1,6)]
+          assert all(p['code'] in loyalty['terms'] for p in loyalty['plans'])
+          assert 'name: plans' in config
+          assert 'Planes 2+1 / 4+1 / 6+1' in config
           assert 'file: content/carousel.json' in config
           index=Path('index.html').read_text()
           assert 'assets/experiencia.js' in index
@@ -101,6 +108,11 @@ jobs:
           assert 'body .whatsapp-float' in css
           assert 'bottom:clamp(96px,18vh,172px)' in css
           # La oferta abre el número del negocio y ofrece un acceso alternativo.
+          assert 'className="loyalty-plans"' in js
+          assert 'className="loyalty-plan-choice"' in js
+          assert '2+1' in js and '4+1' in js and '6+1' in js
+          assert 'loyalty-plan-choice' in css
+          assert 'Plan Cliente Frecuente 5+1' not in js
           assert 'https://api.whatsapp.com/send' in js
           assert 'primary.searchParams.set("phone",phone)' in js
           assert 'primary.searchParams.set("text",question)' in js
@@ -226,18 +238,24 @@ jobs:
           assert Path('workers/hidrolav-ai/test/chat-ui.test.mjs').exists()
           assert 'sugiere pulsar UNA' in worker
 
-          # HidroBot debe presentar el plan 5+1 como opción comercial sin suscribir al cliente.
+          assert 'function showPlans()' in script and 'function choosePlan(plan)' in script
+          assert '2+1' in worker and '4+1' in worker and '6+1' in worker
+          assert '2+1 · 4+1 · 6+1' in html
+          assert 'Plan 5+1' not in html
+          assert 'Plan 5+1' not in worker
+
+          # HidroBot debe presentar las tres promociones sin inscribir automáticamente.
           assert 'class="ai-chat-tile plan-highlight"' in html
-          assert '5 limpiezas + 1 de cortesía' in html
-          assert 'Plan Cliente Frecuente 5+1' in html
-          assert '¿Deseas cotizar una limpieza o conocer el Plan 5+1?' in script
+          assert '2+1 · 4+1 · 6+1' in html
+          assert '2+1 en 3 meses' in html
+          assert 'nuestros planes 2+1, 4+1 y 6+1?' in script
           assert 'el.classList.contains("plan-highlight")' in script
-          assert 'planWaLink=' in script
+          assert 'planWaLink=' in script and 'function showPlans()' in script and 'function choosePlan(plan)' in script
           assert 'link.target="_blank"' in script
           assert 'debes enviarlo tú mismo' in script
           assert 'ai-chat-conversion' in Path('assets/assistant.css').read_text()
           assert 'grid-template-columns:repeat(2,minmax(0,1fr))' in Path('assets/assistant.css').read_text()
-          assert 'inscrito automáticamente' in worker
+          assert 'inscripción' in worker
           # Enlaces de correo: Gmail web como predeterminado y mailto como alternativa.
           assert html.count('https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=contactohidrolav507.com%40gmail.com')==2
           assert html.count('href="mailto:contactohidrolav507.com@gmail.com"')==2

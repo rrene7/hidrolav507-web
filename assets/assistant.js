@@ -2,7 +2,7 @@
 (()=>{"use strict";
 const q=id=>document.getElementById(id);
 const face="/assets/hidrobot507-avatar.webp";
-const planWaLink="https://wa.me/50762730591?text="+encodeURIComponent("Hola, quiero consultar las condiciones del Plan Cliente Frecuente 5+1 de HidroLav 507.");
+const planWaLink="https://wa.me/50762730591?text="+encodeURIComponent("Hola, quiero conocer los planes 2+1, 4+1 y 6+1 de HidroLav 507.");
 let endpoint="",history=[],busy=false,activeTrigger=null;
 const launchers=()=>[q("ai-chat-launch"),q("ai-chat-launch-mobile")].filter(Boolean);
 const panel=()=>q("ai-chat-panel");
@@ -32,7 +32,7 @@ const propertyCatalog=[
 function norm(text){return String(text||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase()}
 function guideIntent(text){
  const t=norm(text);
- if(/\b(?:plan|promocion|suscripcion|cortesia)\b|5\s*\+\s*1/.test(t))return "";
+ if(/\b(?:plan|planes|promocion|promociones|suscripcion|cortesia)\b|(?:2|4|6)\s*\+\s*1/.test(t))return "plans";
  if(/\b(?:contact\w*|comunic\w*|whatsapp|telefon\w*|correo|email|e-mail|escrib\w*|hablar con|llamar|mensaje\w*)\b/.test(t))return "contact";
  if(/\b(?:cotiz\w*|precio\w*|costo\w*|presupuesto\w*|foto\w*|fotografia\w*)\b/.test(t))return "quote";
  if(/\b(?:servici\w*|limpi\w*|lavan|lavad\w*|hidrolavad\w*|casa\w*|edifici\w*|ph|plaza\w*|apartamento\w*|comerci\w*|estacionamiento\w*)\b/.test(t))return "services";
@@ -97,11 +97,34 @@ function chooseService(property,service){
  addChoices(row,[
   {label:"📷 Cotización",href:"#cotizar",property,service},
   {label:"💬 WhatsApp",href:"https://wa.me/50762730591?text="+encodeURIComponent(message)},
-  {label:"⭐ Plan 5+1",onClick:()=>ask("Quiero conocer las condiciones del Plan 5+1.","plan5+1")}
+  {label:"⭐ Ver planes",onClick:showPlans}
+ ]);
+}
+const fidelityPlans=[
+ {code:"2+1",paid:2,months:3},
+ {code:"4+1",paid:4,months:5},
+ {code:"6+1",paid:6,months:6}
+];
+function showPlans(){
+ const row=bubble("Tenemos tres planes Cliente Frecuente. ¿Cuál deseas consultar?","assistant");
+ addChoices(row,fidelityPlans.map(plan=>({
+  label:"⭐ "+plan.code+" · "+plan.months+" meses",
+  onClick:()=>choosePlan(plan)
+ })));
+}
+function choosePlan(plan){
+ bubble("Plan "+plan.code,"user");
+ const row=bubble("Plan "+plan.code+": pagas "+plan.paid+" limpiezas y la siguiente es de cortesía, dentro de "+plan.months+" meses. Sujeto a evaluación. ¿Cómo deseas consultar?","assistant");
+ const message="Hola, quiero consultar las condiciones del Plan "+plan.code+" de "+plan.months+" meses de HidroLav 507.";
+ addChoices(row,[
+  {label:"💬 WhatsApp",href:"https://wa.me/50762730591?text="+encodeURIComponent(message)},
+  {label:"📷 Cotización",href:"#cotizar"},
+  {label:"⬅ Otros planes",onClick:showPlans}
  ]);
 }
 function guidedRequest(text){
  const type=guideIntent(text);
+ if(type==="plans"){bubble(text,"user");showPlans();return true}
  if(type==="contact"){bubble(text,"user");contactGuide();return true}
  if(type==="services"){
   const prop=directProperty(text);
@@ -119,9 +142,9 @@ function guidedRequest(text){
 }
 function followupChoices(row,text,reply){
  const t=norm(text+" "+reply);
- if(/\b(?:plan 5|5\s*\+\s*1|promocion|cortesia)\b/.test(t)){
+ if(/\b(?:plan|planes|(?:2|4|6)\s*\+\s*1|promocion|cortesia)\b/.test(t)){
   addChoices(row,[
-   {label:"⭐ Plan 5+1",onClick:()=>ask("Explícame las condiciones del Plan 5+1.","plan5+1")},
+   {label:"⭐ Ver planes",onClick:showPlans},
    {label:"📷 Cotización",href:"#cotizar"}
   ]);
  }else if(/\b(?:superficie|terreno|acera|patio|edificio|residencia|ph|estacionamiento|servicio)\b/.test(t)){
@@ -188,7 +211,7 @@ async function ask(text,interest=""){
   input.value="";
   return;
  }
- if(interest!=="plan5+1"&&guidedRequest(clean)){input.value="";return}
+ if(interest!=="loyalty"&&guidedRequest(clean)){input.value="";return}
  const previous=history.slice(-6);
  busy=true;send.disabled=true;input.disabled=true;panel().classList.add("is-thinking");
  bubble(clean,"user");history.push({role:"user",content:clean});
@@ -204,26 +227,26 @@ async function ask(text,interest=""){
   if(!reply)throw Error("Respuesta vacía. Intenta de nuevo.");
   progress.remove();
   const answerRow=bubble(reply,"assistant");
-  if(interest==="plan5+1"){
+  if(interest==="loyalty"){
    const link=document.createElement("a");
    link.className="ai-chat-conversion";link.href=planWaLink;
    link.target="_blank";link.rel="noopener noreferrer";
-   link.textContent="Consultar el Plan 5+1 por WhatsApp ↗";
+   link.textContent="Consultar los planes por WhatsApp ↗";
    link.title="Abre WhatsApp con un mensaje preparado; debes enviarlo tú mismo.";
    answerRow.querySelector(".ai-chat-message")?.append(link);
   }
-  if(interest!=="plan5+1")followupChoices(answerRow,clean,reply);
+  if(interest!=="loyalty")followupChoices(answerRow,clean,reply);
   history.push({role:"assistant",content:reply});history=history.slice(-12);
  }catch(err){
   progress.remove();history.pop();
   const msg=err?.name==="AbortError"?"La respuesta tardó demasiado. Inténtalo nuevamente.":String(err?.message||"No se pudo conectar");
   const failure=bubble(msg+" También puedes cotizar con fotografías o escribir por WhatsApp.","status");
-  if(interest!=="plan5+1")addChoices(failure,[{label:"📷 Cotización",href:"#cotizar"},{label:"💬 Contactar",onClick:()=>contactGuide()}]);
-  if(interest==="plan5+1"){
+  if(interest!=="loyalty")addChoices(failure,[{label:"📷 Cotización",href:"#cotizar"},{label:"💬 Contactar",onClick:()=>contactGuide()}]);
+  if(interest==="loyalty"){
    const link=document.createElement("a");
    link.className="ai-chat-conversion";link.href=planWaLink;
    link.target="_blank";link.rel="noopener noreferrer";
-   link.textContent="Consultar el Plan 5+1 por WhatsApp ↗";
+   link.textContent="Consultar los planes por WhatsApp ↗";
    q("ai-chat-feed").lastElementChild?.querySelector(".ai-chat-message")?.append(link);
   }
  }finally{
@@ -254,7 +277,7 @@ async function init(){
  q("ai-chat-notice").textContent=typeof config.notice==="string"?config.notice.slice(0,240):"Respondo en 2 o 3 frases. Una pregunta a la vez.";
  const greeting=typeof config.greeting==="string"&&config.greeting.trim()?config.greeting.trim():"¡Hola! Soy HidroBot 507. Te ayudo con cotizaciones y consultas. 😊";
  bubble(concise(greeting),"assistant");
- bubble("¿Deseas cotizar una limpieza o conocer el Plan 5+1?","assistant");
+ bubble("¿Quieres cotizar una limpieza o conocer nuestros planes 2+1, 4+1 y 6+1?","assistant");
  // Los accesos fijos se conservan; los botones contextuales aparecen en las respuestas.
  buttons.forEach(el=>{
   el.hidden=false;
@@ -270,7 +293,7 @@ async function init(){
  });
  dialog.querySelectorAll("[data-chat-question]").forEach(el=>el.addEventListener("click",()=>{
   if(busy)return;
-  if(el.classList.contains("plan-highlight"))ask(el.getAttribute("data-chat-question")||el.textContent,"plan5+1");
+  if(el.classList.contains("plan-highlight"))showPlans();
   else if(el.getAttribute("aria-label")==="Preguntar por nuestros servicios"){bubble("Consultar servicio","user");propertyGuide()}
   else ask(el.getAttribute("data-chat-question")||el.textContent);
  }));
