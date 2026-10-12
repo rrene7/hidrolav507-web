@@ -21,10 +21,11 @@ function bubble(text,role){
  return row;
 }
 function positionPanel(){
- const trigger=window.innerWidth<=1050?q("ai-chat-launch-mobile"):q("ai-chat-launch");
+ const trigger=window.innerWidth<=1279?q("ai-chat-launch-mobile"):q("ai-chat-launch");
  if(!trigger||!panel()||panel().hidden)return;
  const rect=trigger.getBoundingClientRect();
  panel().style.setProperty("--hidrobot-top",Math.round(Math.max(6,Math.min(rect.bottom+12,window.innerHeight-255)))+"px");
+ panel().style.setProperty("--hidrobot-right",Math.round(Math.max(12,window.innerWidth-rect.right))+"px");
 }
 function setOpen(open,trigger,restoreFocus=true){
  const dialog=panel();
@@ -32,7 +33,7 @@ function setOpen(open,trigger,restoreFocus=true){
  if(trigger)activeTrigger=trigger;
  launchers().forEach(el=>el.setAttribute("aria-expanded",String(open)));
  if(open){
-  if(window.innerWidth<=1050){
+  if(window.innerWidth<=1279){
    const nav=q("navlinks"),toggle=q("menu-toggle");
    nav?.classList.remove("open");toggle?.setAttribute("aria-expanded","false");if(toggle)toggle.textContent="☰";
   }
