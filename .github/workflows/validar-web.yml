@@ -30,6 +30,11 @@ jobs:
           import json
           d=json.loads(Path('content/site.json').read_text())
           assert d['whatsapp']=='50762730591'
+          html=Path('index.html').read_text()
+          email='contactohidrolav507.com@gmail.com'
+          assert html.count('href="mailto:'+email+'"')==2
+          assert 'class="business-email"' in html
+          assert 'class="footer-email"' in html
           assert len(d['services'])>=4
           promo=json.loads(Path('content/christmas.json').read_text())
           assert type(promo['enabled']) is bool, 'La visibilidad debe ser un booleano'
