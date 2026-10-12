@@ -118,6 +118,42 @@ jobs:
           print('Posición del plan, WhatsApp, asistente y formularios OK')
           print('Carrusel, fidelidad, Netlify Forms y privacidad OK')
           PY
+      - name: Comprobar integración real de IA con Cloudflare
+        run: |
+          set -euo pipefail
+          node --check assets/assistant.js
+          node --check workers/hidrolav-ai/src/index.mjs
+          node --test workers/hidrolav-ai/test/worker.test.mjs
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          from html.parser import HTMLParser
+          settings=json.loads(Path('content/assistant.json').read_text())
+          assert settings['enabled'] is False and settings['endpoint']==''
+          assert len(settings['greeting'])>25
+          wrangler=json.loads(Path('workers/hidrolav-ai/wrangler.json').read_text())
+          assert wrangler['name']=='hidrolav507-asistente'
+          assert wrangler['main']=='src/index.mjs'
+          assert wrangler['ai']['binding']=='AI'
+          assert {r['name'] for r in wrangler['ratelimits']}=={'CHAT_RATE','CHAT_GLOBAL'}
+          html=Path('index.html').read_text()
+          assert 'id="ai-chat-launch"' in html
+          assert 'id="ai-chat-panel"' in html
+          assert 'id="ai-chat-feed"' in html
+          assert 'id="ai-chat-form"' in html
+          assert '/assets/assistant.css' in html and '/assets/assistant.js' in html
+          assert 'name="cotizaciones-hidrolav507"' in html
+          config=Path('admin/config.yml').read_text()
+          assert 'file: content/assistant.json' in config
+          script=Path('assets/assistant.js').read_text()
+          assert '"/health"' in script
+          assert 'data?.ai' in script
+          assert 'config?.enabled!==true' in script
+          assert 'textContent=text' in script
+          assert 'credentials:"omit"' in script
+          assert Path('docs/asistente-ia-cloudflare.md').exists()
+          print('Integración IA, configuración CMS y privacidad OK')
+          PY
       - name: Comprobar SEO local y sitemap
         run: |
           python3 - <<'PY'

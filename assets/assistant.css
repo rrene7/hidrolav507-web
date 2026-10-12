@@ -1,0 +1,53 @@
+/* Asistente IA de HidroLav 507: diseño adaptado a la cabecera existente */
+#ai-chat-launch[hidden],#ai-chat-panel[hidden]{display:none!important}
+.navlinks .ai-nav-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:10px 13px;border:1px solid #9ed9ed;background:linear-gradient(140deg,#edfaff,#dff5ff);
+  color:#075379;border-radius:12px;font-size:13px;font-weight:900;white-space:nowrap;
+  box-shadow:0 4px 12px #0288be16}
+.navlinks .ai-nav-button:hover{background:#b9edff;transform:translateY(-1px)}
+.navlinks .ai-nav-button:focus-visible{outline:3px solid #ffc400;outline-offset:3px}
+.ai-chat-panel{position:fixed;z-index:60;top:116px;right:max(18px,calc((100vw - 1160px)/2));
+ width:min(410px,calc(100vw - 28px));max-height:min(690px,calc(100dvh - 132px));
+ border:1px solid #c4e2ef;background:#fff;border-radius:22px;
+ box-shadow:0 22px 65px #071c3470;display:flex;flex-direction:column;overflow:hidden;color:#0b2c47}
+.ai-chat-header{position:relative;display:flex;gap:12px;align-items:center;
+ background:linear-gradient(120deg,#063555,#096389);padding:16px 50px 16px 17px;color:#fff}
+.ai-chat-avatar{flex:0 0 42px;width:42px;height:42px;background:#ffffff1d;
+ display:grid;place-items:center;border-radius:14px;border:1px solid #ffffff39;font-size:21px}
+.ai-chat-header h2{font-size:17px;letter-spacing:-.4px;line-height:1.2;color:#fff;margin:0 0 4px}
+.ai-chat-header small{font-size:11px;color:#bde6fb}
+.ai-chat-close{position:absolute;right:12px;top:14px;width:31px;height:31px;
+ border:0;background:#ffffff27;color:white;border-radius:9px;font-size:20px}
+.ai-chat-feed{min-height:150px;max-height:330px;overflow-y:auto;overscroll-behavior:contain;
+ background:linear-gradient(160deg,#f0faff,#fff 55%);padding:16px;display:flex;flex-direction:column;gap:11px}
+.ai-chat-bubble{padding:10px 12px;border-radius:14px;max-width:95%;font-size:13px;
+ line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.ai-chat-bubble.assistant{align-self:flex-start;background:#fff;color:#173f59;
+ box-shadow:0 4px 16px #09345311;border:1px solid #e0edf4;border-bottom-left-radius:4px}
+.ai-chat-bubble.user{align-self:flex-end;background:#006fa5;color:white;border-bottom-right-radius:4px}
+.ai-chat-bubble.status{align-self:flex-start;color:#315e72;background:#e4f5fc}
+.ai-chat-quick{padding:11px 14px 2px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
+.ai-chat-quick button{font-size:11px;font-weight:700;color:#08648e;background:#f1faff;
+ border:1px solid #b6e0ee;border-radius:999px;padding:7px 10px}
+.ai-chat-quick button:hover{background:#d8f3ff}
+.ai-chat-compose{display:flex;gap:8px;align-items:end;padding:12px 14px 7px;background:#fff}
+.ai-chat-compose textarea{flex:1;min-height:44px;max-height:110px;resize:vertical;
+ border:1px solid #cce1eb;border-radius:12px;padding:11px;background:#fff;
+ font-size:13px;color:#092f49;line-height:1.4}
+.ai-chat-compose textarea:focus{outline:2px solid #0ba6d7;outline-offset:0}
+.ai-chat-compose button{background:#04a968;color:#fff;border:0;border-radius:12px;
+ font-weight:850;padding:10px 13px;min-height:44px}
+.ai-chat-compose button:disabled{opacity:.55;cursor:not-allowed}
+.ai-chat-notice{color:#567083;font-size:10px;line-height:1.4;margin:0 14px 9px}
+.ai-chat-footer{display:flex;gap:12px;flex-wrap:wrap;border-top:1px solid #eef3f7;
+ padding:10px 14px;background:#f8fcff}
+.ai-chat-footer a{font-size:12px;font-weight:850;color:#006e9d;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:980px){.navlinks{gap:12px}.navlinks .ai-nav-button{font-size:12px;padding:9px 11px}}
+@media(max-width:740px){
+ .navlinks .ai-nav-button{display:flex;width:100%;margin:8px 0;text-align:center;padding:13px}
+ .ai-chat-panel{top:81px;right:10px;left:10px;width:auto;max-height:calc(100dvh - 94px);
+   border-radius:18px}
+ .ai-chat-feed{max-height:min(43dvh,380px)}
+ .ai-chat-footer a{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.navlinks .ai-nav-button:hover{transform:none}}
