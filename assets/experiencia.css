@@ -42,3 +42,91 @@
 @media(max-width:980px){.hero-carousel{height:340px}}
 @media(max-width:740px){.hero-carousel{height:270px}.offer-tab{left:10px;bottom:12px;padding:10px 12px;font-size:12px}.offer-panel{left:10px;bottom:67px}.assistant-panel{right:10px;bottom:80px}}
 @media(prefers-reduced-motion:reduce){.hero-carousel .slide{transition:none}.offer-tab:hover{transform:none}}
+
+
+/* Fase UX: controles visibles en la portada, no pegados al borde de pantalla */
+.hero.hero-modern{background:
+  radial-gradient(ellipse at 87% 12%,rgba(23,160,219,.30),transparent 44%),
+  radial-gradient(ellipse at 15% 88%,rgba(0,86,139,.35),transparent 50%),
+  linear-gradient(120deg,#03182d 0%,#082f50 56%,#075278 100%)!important}
+.hero.hero-modern::after{background-image:
+  linear-gradient(to right,rgba(116,221,255,.05) 1px,transparent 1px),
+  linear-gradient(to bottom,rgba(116,221,255,.05) 1px,transparent 1px);
+  background-size:65px 65px;opacity:.45}
+.hero.hero-modern .hero-grid{padding:70px 0 76px;gap:42px}
+.hero.hero-modern .hero-media .frame{transform:none;border-radius:26px;border:5px solid #b1e3f333;
+  box-shadow:0 26px 65px #0005,0 0 0 1px #7ed6f019}
+.hero.hero-modern .hero-media .hero-note{
+  left:auto;right:14px;bottom:13px;border-radius:13px;padding:9px 12px;
+  gap:9px;box-shadow:0 8px 24px #001b3566;max-width:225px;
+  background:rgba(246,252,255,.95);backdrop-filter:blur(16px)}
+.hero.hero-modern .hero-note .icon{width:32px;height:32px;font-size:19px;border-radius:10px}
+.hero.hero-modern .hero-note strong{font-size:12px;line-height:1.2}
+.hero.hero-modern .hero-note small{font-size:10px;line-height:1.35}
+.hero.hero-modern .benefits{margin-top:23px}
+.hero.hero-modern .hero-offer-slot{margin-top:18px;max-width:480px;position:relative}
+.hero.hero-modern .hero-offer-slot .offer-tab{
+  position:relative;bottom:auto;left:auto;z-index:1;
+  border-radius:999px;box-shadow:0 8px 26px #001c344f;
+  padding:10px 16px;font-size:13px;
+  background:linear-gradient(120deg,#ffe786,#ffc400)}
+.hero.hero-modern .hero-offer-slot .offer-tab::after{
+  content:" · Conoce el beneficio";font-size:12px;font-weight:600}
+.hero.hero-modern .hero-offer-slot .offer-panel{
+  position:relative;left:auto;bottom:auto;z-index:10;display:block;
+  max-height:none;max-width:480px;width:100%;overflow:visible;
+  margin-top:12px;padding:20px;box-shadow:0 14px 34px #011a3080;
+  text-align:left;background:#fff;color:#082642}
+.hero.hero-modern .hero-offer-slot .offer-panel[hidden]{display:none!important}
+.hero.hero-modern .hero-offer-slot .offer-panel p{margin:8px 0 12px;font-size:14px;line-height:1.65;color:#46647a}
+.hero.hero-modern .hero-offer-slot .offer-panel details{color:#46647a}
+.hero.hero-modern .hero-offer-slot .offer-panel .offer-cta{color:#fff}
+body .whatsapp-float{
+  right:22px;bottom:clamp(96px,18vh,172px);z-index:42;
+  width:auto;min-width:56px;height:54px;border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:0 14px;background:linear-gradient(135deg,#10c571,#079b59);
+  box-shadow:0 14px 28px #003d2873,0 0 0 3px #fff8;
+  font-size:13px;line-height:1;white-space:nowrap}
+body .whatsapp-float .whatsapp-icon{width:29px;height:29px;display:grid;place-items:center}
+body .whatsapp-float svg{width:27px;height:27px;display:block;fill:currentColor}
+body .whatsapp-float .whatsapp-label{font-weight:850;letter-spacing:.1px}
+body .whatsapp-float:hover{transform:translateY(-3px);filter:brightness(1.05)}
+body .whatsapp-float:focus-visible{outline:3px solid #ffc400;outline-offset:4px}
+/* Ayuda guiada dentro de la sección de contacto */
+.contact-info .quick-assistant{margin-top:26px;width:min(100%,500px);
+  padding:15px 18px;background:rgba(255,255,255,.09);
+  border:1px solid rgba(194,232,249,.37);border-radius:15px;
+  color:#fff}
+.contact-info .quick-assistant summary{cursor:pointer;font-weight:850;font-size:15px}
+.contact-info .quick-assistant summary::marker{color:#ffc400}
+.contact-info .quick-assistant-body{padding-top:14px}
+.contact-info .quick-assistant-body>p{color:#c7e4f3;font-size:13px;line-height:1.55}
+.contact-info .quick-assistant-body details{padding:12px 0;border-top:1px solid #ffffff2c}
+.contact-info .quick-assistant-body details summary{font-size:13px;color:#f6fbff}
+.contact-info .quick-assistant-body details p{margin:9px 0 2px;font-size:13px;color:#d1eaf6}
+.contact-info .quick-assistant-body a{display:inline-block;margin:12px 0 2px;
+  color:#05273e;background:#ffc400;border-radius:10px;
+  padding:10px 14px;font-weight:850;font-size:13px}
+@media(max-width:980px){
+  .hero.hero-modern .hero-grid{gap:25px;padding:54px 0 64px}
+  .hero.hero-modern .hero-media .hero-note{right:9px;bottom:9px}
+}
+@media(max-width:740px){
+  .hero.hero-modern .hero-grid{grid-template-columns:1fr;gap:30px;padding:52px 0 54px}
+  .hero.hero-modern .hero-offer-slot{margin-top:16px}
+  .hero.hero-modern .hero-offer-slot .offer-tab{padding:10px 13px}
+  .hero.hero-modern .hero-offer-slot .offer-tab::after{content:""}
+  .hero.hero-modern .hero-media .frame{border-radius:20px}
+  .hero.hero-modern .hero-media .hero-note{left:auto;right:8px;bottom:8px;
+    max-width:185px;padding:7px 9px;gap:7px}
+  .hero.hero-modern .hero-note .icon{width:27px;height:27px;font-size:16px}
+  .hero.hero-modern .hero-note strong{font-size:11px}
+  .hero.hero-modern .hero-note small{font-size:9px}
+  body .whatsapp-float{right:15px;bottom:clamp(94px,16vh,140px);
+    width:54px;min-width:54px;height:54px;padding:0;border-radius:50%}
+  body .whatsapp-float .whatsapp-label{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  body .whatsapp-float:hover{transform:none}
+}
