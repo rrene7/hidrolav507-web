@@ -66,3 +66,39 @@ collections:
           - {label: Descripción comercial, name: description, widget: text}
           - {label: Texto del botón, name: cta_label, widget: string}
           - {label: Fotografía navideña (opcional), name: photo, widget: image, required: false, hint: "Si no tienes fotos reales, conserva este campo vacío; aparecerá un diseño festivo sin fotografía."}
+
+  - name: fidelidad
+    label: Programa Cliente Frecuente
+    files:
+      - name: plan51
+        label: Plan 5+1
+        file: content/loyalty.json
+        format: json
+        fields:
+          - {label: Mostrar anuncio flotante, name: enabled, widget: boolean, default: true}
+          - {label: Texto corto de la burbuja, name: mini_label, widget: string}
+          - {label: Etiqueta de la oferta, name: eyebrow, widget: string}
+          - {label: Título del programa, name: headline, widget: string}
+          - {label: Explicación breve, name: description, widget: text}
+          - {label: Condiciones de la promoción, name: terms, widget: text}
+          - {label: Texto del botón, name: cta, widget: string}
+
+  - name: portada
+    label: Imágenes de portada
+    files:
+      - name: carrusel
+        label: Carrusel principal
+        file: content/carousel.json
+        format: json
+        fields:
+          - {label: Activar carrusel, name: enabled, widget: boolean, default: true}
+          - {label: Segundos por imagen, name: interval_seconds, widget: number, default: 6, min: 4, max: 15, value_type: int}
+          - label: Fotografías de portada
+            name: slides
+            widget: list
+            summary: "{{fields.caption}}"
+            fields:
+              - {label: Fotografía, name: image, widget: image}
+              - {label: Título corto, name: caption, widget: string}
+              - {label: Descripción accesible, name: alt, widget: string}
+              - {label: ¿Foto real de un trabajo nuestro?, name: is_real, widget: boolean, default: false}
