@@ -2,5 +2,5 @@
   "enabled": true,
   "endpoint": "https://hidrolav507-asistente.rrenys-evang0907.workers.dev/chat",
   "greeting": "¡Hola! Soy HidroBot 507. Te ayudo con cotizaciones y consultas. 😊",
-  "notice": "Respondo en máximo 2 o 3 frases y hago una pregunta a la vez. No compartas datos personales o sensibles en el chat."
+  "notice": "HidroBot no envía mensajes ni pide teléfonos aquí. Para contactar: «Cotización» (formulario) o «Hablar por WhatsApp» (envías tú el mensaje)."
 }
