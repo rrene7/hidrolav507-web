@@ -161,7 +161,7 @@ jobs:
           assert avatar.read_bytes()[:4]==b'RIFF'
           assert html.count('id="ai-chat-launch"')==1
           assert html.count('id="ai-chat-launch-mobile"')==1
-          assert 'class="ai-chat-mini-avatar"' in script
+          assert 'className="ai-chat-mini-avatar"' in script
           assert 'assets/hidrobot507-avatar.webp' in html
           assert 'id="ai-chat-attach"' in html
           assert 'href="#cotizar" class="ai-chat-tile"' in html
