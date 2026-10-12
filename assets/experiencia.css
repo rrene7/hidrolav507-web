@@ -215,3 +215,31 @@ footer .footer-email a:hover,footer .footer-email a:focus-visible{color:#fff}
 .contact-info .business-email-fallback:hover,.contact-info .business-email-fallback:focus-visible{color:white}
 footer .footer-email-fallback{font-size:11px;margin-left:6px;color:#bfdcee}
 footer .footer-email a:hover{text-decoration-thickness:2px}
+
+
+/* Tres opciones Cliente Frecuente: visibles sin agrandar demasiado la portada. */
+.hero.hero-modern .hero-offer-slot .loyalty-plans{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:13px 0;
+}
+.hero.hero-modern .hero-offer-slot .loyalty-plan-choice{
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+ min-height:88px;gap:3px;padding:9px 5px;border-radius:12px;text-decoration:none;
+ background:linear-gradient(145deg,#e6f7ff,#fff);
+ border:1px solid #87cfea;color:#084368;text-align:center;transition:background .16s ease;
+}
+.hero.hero-modern .hero-offer-slot .loyalty-plan-choice:hover,
+.hero.hero-modern .hero-offer-slot .loyalty-plan-choice:focus-visible{
+ background:#c9efff;outline:2px solid #027ebd;outline-offset:1px
+}
+.hero.hero-modern .hero-offer-slot .loyalty-plan-choice strong{font-size:22px;line-height:1.1;color:#006fa1}
+.hero.hero-modern .hero-offer-slot .loyalty-plan-choice span{font-size:12px;font-weight:850}
+.hero.hero-modern .hero-offer-slot .loyalty-plan-choice small{font-size:10px;line-height:1.28;color:#53758b}
+@media(max-width:420px){
+ .hero.hero-modern .hero-offer-slot .loyalty-plans{gap:5px}
+ .hero.hero-modern .hero-offer-slot .loyalty-plan-choice{padding:8px 3px;min-height:83px}
+ .hero.hero-modern .hero-offer-slot .loyalty-plan-choice strong{font-size:19px}
+ .hero.hero-modern .hero-offer-slot .loyalty-plan-choice small{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero.hero-modern .hero-offer-slot .loyalty-plan-choice{transition:none}
+}
