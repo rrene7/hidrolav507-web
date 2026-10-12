@@ -1,9 +1,29 @@
 {
   "enabled": true,
   "eyebrow": "Plan Cliente Frecuente",
-  "headline": "5 limpiezas pagadas + sexta de cortesía",
-  "mini_label": "Plan 5+1",
-  "description": "Un beneficio para quienes desean mantener sus áreas exteriores limpias durante el año. Consulta si tu propiedad califica antes de contratar.",
-  "terms": "Promoción propuesta sujeta a evaluación y confirmación por escrito: cinco servicios pagados elegibles y el sexto de cortesía dentro de los seis meses posteriores a la primera limpieza, en el mismo inmueble y para una superficie de igual o menor alcance. Disponibilidad según el terreno, acceso, tipo de propiedad y condiciones de limpieza. No acumulable con otras promociones. No se cobra ni se confirma una suscripción automáticamente en esta página.",
-  "cta": "Preguntar por el plan 5+1"
+  "headline": "¡Más limpiezas, más beneficios!",
+  "mini_label": "Planes 2+1 · 4+1 · 6+1",
+  "description": "Elige entre tres opciones Cliente Frecuente: 2+1 en 3 meses, 4+1 en 5 meses y 6+1 en 6 meses. Consulta si tu propiedad califica.",
+  "terms": "Promociones sujetas a evaluación y confirmación por escrito. Plan 2+1: dos limpiezas pagadas elegibles y la tercera de cortesía en un plazo de 3 meses. Plan 4+1: cuatro limpiezas pagadas elegibles y la quinta de cortesía en 5 meses. Plan 6+1: seis limpiezas pagadas elegibles y la séptima de cortesía en 6 meses. Para un mismo inmueble y una superficie de igual o menor alcance. La disponibilidad depende del terreno, acceso, tipo de propiedad y condiciones de limpieza. No acumulables entre sí ni con otras promociones. No se cobra ni se confirma la contratación automáticamente en esta página.",
+  "cta": "Consultar los planes por WhatsApp",
+  "plans": [
+    {
+      "code": "2+1",
+      "paid": 2,
+      "bonus": 1,
+      "months": 3
+    },
+    {
+      "code": "4+1",
+      "paid": 4,
+      "bonus": 1,
+      "months": 5
+    },
+    {
+      "code": "6+1",
+      "paid": 6,
+      "bonus": 1,
+      "months": 6
+    }
+  ]
 }
