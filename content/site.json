@@ -7,7 +7,7 @@
   "hero_title": "Espacios más limpios.",
   "hero_highlight": "Mejor impresión.",
   "hero_text": "Servicio de limpieza a alta presión para residencias, PH y áreas comerciales. Atendemos Ciudad de Panamá y Panamá Oeste con cotizaciones rápidas por WhatsApp.",
-  "hero_image": "/assets/uploads/Imagen de ChatGPT 11 oct 2026, 02_16_49 p.m.png",
+  "hero_image": "/assets/uploads/Limpieza profesional de entrada residencial.png",
   "hero_image_description": "Imagen ilustrativa de limpieza con hidrolavadora",
   "intro_services": "Atención para hogares, pequeños comercios y áreas comunes, según las condiciones de cada superficie.",
   "services": [
@@ -78,13 +78,5 @@
     "Ciudad de Panamá",
     "Otras zonas a consultar"
   ],
-  "announcement": "Pregunte por el plan de suscripciones Cliente Frecuente..",
-  "christmas_campaign": {
-    "enabled": false,
-    "eyebrow": "NAVIDAD 2026 · HIDROLAV 507",
-    "headline": "¡Recibe la Navidad con tus espacios relucientes!",
-    "description": "Prepara aceras, patios, terrazas y estacionamientos antes de las reuniones de fin de año. Servicio a domicilio en Ciudad de Panamá y Panamá Oeste.",
-    "cta_label": "Cotizar limpieza navideña",
-    "photo": ""
-  }
+  "announcement": "Pregunte por el plan de suscripciones Cliente Frecuente.."
 }
