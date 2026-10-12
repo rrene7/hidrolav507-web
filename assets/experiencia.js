@@ -34,7 +34,13 @@ async function initLoyalty(){
  const details=document.createElement("details"),summary=document.createElement("summary"),terms=document.createElement("p");
  summary.textContent="Condiciones del plan";terms.textContent=c.terms||"Sujeto a evaluación y acuerdo.";details.append(summary,terms);
  const a=document.createElement("a");a.href="https://wa.me/50762730591?text="+encodeURIComponent("Hola, quiero consultar el plan de cinco limpiezas y la sexta de cortesía.");a.className="offer-cta";a.target="_blank";a.rel="noopener noreferrer";a.textContent=c.cta||"Consultar por WhatsApp";
- panel.append(close,small,title,desc,details,a);document.body.append(tab,panel);
+ panel.append(close,small,title,desc,details,a);
+ const actions=document.querySelector(".hero .actions");
+ if(!actions)return;
+ const slot=document.createElement("div");slot.className="hero-offer-slot";
+ slot.setAttribute("aria-label","Programa de fidelidad");
+ slot.append(tab,panel);
+ actions.insertAdjacentElement("afterend",slot);
  const set=open=>{panel.hidden=!open;tab.setAttribute("aria-expanded",String(open));if(open)close.focus();else tab.focus()};
  tab.onclick=()=>set(panel.hidden);close.onclick=()=>set(false);document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!panel.hidden)set(false)});
 }
