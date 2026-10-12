@@ -2,6 +2,7 @@
 (()=>{"use strict";
 const q=id=>document.getElementById(id);
 const face="/assets/hidrobot507-avatar.webp";
+const planWaLink="https://wa.me/50762730591?text="+encodeURIComponent("Hola, quiero consultar las condiciones del Plan Cliente Frecuente 5+1 de HidroLav 507.");
 let endpoint="",history=[],busy=false,activeTrigger=null;
 const launchers=()=>[q("ai-chat-launch"),q("ai-chat-launch-mobile")].filter(Boolean);
 const panel=()=>q("ai-chat-panel");
@@ -57,7 +58,7 @@ function concise(text){
  const parts=s.match(/[^.!?\n]+[.!?]+|[^.!?\n]+$/g)||[s];
  return parts.slice(0,3).join(" ").replace(/\s+/g," ").trim().slice(0,500);
 }
-async function ask(text){
+async function ask(text,interest=""){
  const clean=String(text||"").trim().slice(0,900);
  if(!clean||busy||!endpoint)return;
  const input=q("ai-chat-input"),send=q("ai-chat-send");
@@ -81,12 +82,28 @@ async function ask(text){
   if(!response.ok||typeof payload?.reply!=="string")throw Error(payload?.error||"No se recibió una respuesta.");
   const reply=concise(payload.reply);
   if(!reply)throw Error("Respuesta vacía. Intenta de nuevo.");
-  progress.remove();bubble(reply,"assistant");
+  progress.remove();
+  const answerRow=bubble(reply,"assistant");
+  if(interest==="plan5+1"){
+   const link=document.createElement("a");
+   link.className="ai-chat-conversion";link.href=planWaLink;
+   link.target="_blank";link.rel="noopener noreferrer";
+   link.textContent="Consultar el Plan 5+1 por WhatsApp ↗";
+   link.title="Abre WhatsApp con un mensaje preparado; debes enviarlo tú mismo.";
+   answerRow.querySelector(".ai-chat-message")?.append(link);
+  }
   history.push({role:"assistant",content:reply});history=history.slice(-12);
  }catch(err){
   progress.remove();history.pop();
   const msg=err?.name==="AbortError"?"La respuesta tardó demasiado. Inténtalo nuevamente.":String(err?.message||"No se pudo conectar");
   bubble(msg+" También puedes cotizar con fotografías o escribir al WhatsApp +507 6273-0591.","status");
+  if(interest==="plan5+1"){
+   const link=document.createElement("a");
+   link.className="ai-chat-conversion";link.href=planWaLink;
+   link.target="_blank";link.rel="noopener noreferrer";
+   link.textContent="Consultar el Plan 5+1 por WhatsApp ↗";
+   q("ai-chat-feed").lastElementChild?.querySelector(".ai-chat-message")?.append(link);
+  }
  }finally{
   clearTimeout(timer);busy=false;send.disabled=false;input.disabled=false;
   panel().classList.remove("is-thinking");input.value="";
@@ -115,7 +132,7 @@ async function init(){
  q("ai-chat-notice").textContent=typeof config.notice==="string"?config.notice.slice(0,240):"Respondo en 2 o 3 frases. Una pregunta a la vez.";
  const greeting=typeof config.greeting==="string"&&config.greeting.trim()?config.greeting.trim():"¡Hola! Soy HidroBot 507. Te ayudo con cotizaciones y consultas. 😊";
  bubble(concise(greeting),"assistant");
- bubble("¿Qué área deseas limpiar?","assistant");
+ bubble("¿Deseas cotizar una limpieza o conocer el Plan 5+1?","assistant");
  buttons.forEach(el=>{
   el.hidden=false;
   el.addEventListener("click",()=>setOpen(dialog.hidden,el));
@@ -129,7 +146,7 @@ async function init(){
   if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();form.requestSubmit()}
  });
  dialog.querySelectorAll("[data-chat-question]").forEach(el=>el.addEventListener("click",()=>{
-  if(!busy)ask(el.getAttribute("data-chat-question")||el.textContent);
+  if(!busy)ask(el.getAttribute("data-chat-question")||el.textContent,el.classList.contains("plan-highlight")?"plan5+1":"");
  }));
  dialog.querySelectorAll("[data-chat-close],#ai-chat-attach").forEach(el=>
   el.addEventListener("click",()=>setOpen(false,null,false)));
