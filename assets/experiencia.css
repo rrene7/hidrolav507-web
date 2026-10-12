@@ -206,3 +206,12 @@ footer .footer-email a:hover,footer .footer-email a:focus-visible{color:#fff}
 @media(prefers-reduced-motion:reduce){
   #quote-form .quote-photo-chevron{transition:none}
 }
+
+
+/* Enlace de correo funcional en navegador: Gmail web con respaldo de app local. */
+.contact-info .business-email-action{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin:7px 0}
+.contact-info .business-email-action .business-email{margin:0;padding:7px 0;max-width:100%;word-break:break-word}
+.contact-info .business-email-fallback{font-size:11px;font-weight:750;color:#bfe6f9;text-decoration:underline;text-underline-offset:2px}
+.contact-info .business-email-fallback:hover,.contact-info .business-email-fallback:focus-visible{color:white}
+footer .footer-email-fallback{font-size:11px;margin-left:6px;color:#bfdcee}
+footer .footer-email a:hover{text-decoration-thickness:2px}
