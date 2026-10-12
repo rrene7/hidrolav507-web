@@ -60,8 +60,9 @@
   <header>
     <div class="container nav">
       <a href="#inicio" class="brand" aria-label="HidroLav 507 Panamá, inicio"><img src="assets/logo.webp" alt="Logotipo HidroLav 507"><span><b>HidroLav 507</b><small>Limpieza profesional a presión</small></span></a>
+      <button id="ai-chat-launch-mobile" type="button" class="ai-nav-mobile" aria-label="Abrir HidroBot 507" aria-haspopup="dialog" aria-controls="ai-chat-panel" aria-expanded="false" title="Conversar con HidroBot 507" hidden><span class="hidrobot-face"><img src="/assets/hidrobot507-avatar.webp" alt="" width="40" height="40"></span><span class="hidrobot-online" aria-hidden="true"></span></button>
       <button class="mobile-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navlinks">☰</button>
-      <nav class="navlinks" id="navlinks" aria-label="Navegación principal"><a href="#servicios">Servicios</a><a href="#nosotros">Nosotros</a><a href="#galeria">Galería</a><a href="#preguntas">Preguntas</a><button class="ai-nav-button" id="ai-chat-launch" type="button" aria-haspopup="dialog" aria-controls="ai-chat-panel" aria-expanded="false" hidden>✦ Asistente IA</button><a class="btn btn-blue" href="#cotizar">Solicitar cotización ↗</a></nav>
+      <nav class="navlinks" id="navlinks" aria-label="Navegación principal"><a href="#servicios">Servicios</a><a href="#nosotros">Nosotros</a><a href="#galeria">Galería</a><a href="#preguntas">Preguntas</a><button class="ai-nav-button" id="ai-chat-launch" type="button" aria-label="Abrir HidroBot 507, asistente de inteligencia artificial" aria-haspopup="dialog" aria-controls="ai-chat-panel" aria-expanded="false" title="Conversar con HidroBot 507" hidden><span class="hidrobot-face"><img src="/assets/hidrobot507-avatar.webp" alt="" width="52" height="52"></span><span class="hidrobot-online" aria-hidden="true"></span><span class="hidrobot-accessible-label">HidroBot 507</span></button><a class="btn btn-blue" href="#cotizar">Solicitar cotización ↗</a></nav>
     </div>
   </header>
   <main>
@@ -112,27 +113,24 @@
   <footer><div class="container footer-grid"><div><strong>HidroLav 507 Panamá</strong><p>Hidrolavado profesional · Ciudad de Panamá y Panamá Oeste</p><p class="footer-email">Correo: <a href="mailto:contactohidrolav507.com@gmail.com">contactohidrolav507.com@gmail.com</a></p><p>© <span id="year">2026</span> HidroLav 507 Panamá</p></div><div class="footlinks"><a href="#servicios">Servicios</a><a href="#galeria">Galería</a><a href="#cotizar">Contacto</a><a href="https://wa.me/50762730591" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a></div></div></footer>
   <section id="ai-chat-panel" class="ai-chat-panel" role="dialog" aria-modal="false" aria-labelledby="ai-chat-heading" hidden>
     <div class="ai-chat-header">
-      <span class="ai-chat-avatar" aria-hidden="true">✦</span>
-      <div><h2 id="ai-chat-heading">Asistente IA HidroLav 507</h2><small>Atención virtual · Orientación comercial</small></div>
-      <button id="ai-chat-close" class="ai-chat-close" type="button" aria-label="Cerrar asistente">×</button>
+      <span class="ai-chat-avatar" aria-hidden="true"><img src="/assets/hidrobot507-avatar.webp" alt="" width="48" height="48"></span>
+      <div><h2 id="ai-chat-heading">HidroBot 507</h2><small class="ai-chat-online">Asistente virtual en línea</small></div>
+      <button id="ai-chat-close" class="ai-chat-close" type="button" aria-label="Cerrar conversación">×</button>
     </div>
-    <div id="ai-chat-feed" class="ai-chat-feed" role="log" aria-label="Mensajes del asistente" aria-live="polite" aria-relevant="additions text"></div>
-    <div class="ai-chat-quick" aria-label="Consultas frecuentes">
-      <button type="button" data-chat-question="¿Qué servicios de limpieza ofrecen?">Servicios</button>
-      <button type="button" data-chat-question="¿En qué zonas atiende HidroLav 507?">Cobertura</button>
-      <button type="button" data-chat-question="Explícame el Plan Cliente Frecuente 5+1.">Plan 5+1</button>
-      <button type="button" data-chat-question="¿Cómo solicito una cotización con fotografías?">Cotización con fotos</button>
+    <div id="ai-chat-feed" class="ai-chat-feed" role="log" aria-label="Mensajes con HidroBot" aria-live="polite" aria-relevant="additions text"></div>
+    <div class="ai-chat-quick" aria-label="Opciones de HidroBot">
+      <a href="#cotizar" class="ai-chat-tile" data-chat-close="true"><span class="tile-symbol" aria-hidden="true">▤</span><span class="tile-heading">Cotización</span><span class="tile-desc">Solicita tu cotización</span></a>
+      <button type="button" class="ai-chat-tile" data-chat-question="¿Qué servicios ofrece HidroLav 507?" aria-label="Preguntar por nuestros servicios"><span class="tile-symbol" aria-hidden="true">⚙</span><span class="tile-heading">Consultar servicio</span><span class="tile-desc">Conoce más información</span></button>
+      <a href="https://wa.me/50762730591" target="_blank" rel="noopener noreferrer" class="ai-chat-tile whatsapp"><span class="tile-symbol" aria-hidden="true">◉</span><span class="tile-heading">Hablar por WhatsApp</span><span class="tile-desc">Chatea con nuestro equipo</span></a>
     </div>
     <form id="ai-chat-form" class="ai-chat-compose">
-      <label for="ai-chat-input" class="sr-only">Escribe tu pregunta</label>
-      <textarea id="ai-chat-input" rows="2" maxlength="900" required placeholder="¿Qué deseas saber sobre nuestros servicios?"></textarea>
-      <button id="ai-chat-send" type="submit" aria-label="Enviar pregunta">Enviar</button>
+      <a class="ai-chat-attach" id="ai-chat-attach" href="#foto_1" aria-label="Adjuntar fotografías desde el formulario de cotización" title="Enviar fotos desde el formulario de cotización">♧</a>
+      <label for="ai-chat-input" class="sr-only">Escribe tu mensaje para HidroBot</label>
+      <textarea id="ai-chat-input" rows="1" maxlength="900" required placeholder="Escribe tu mensaje aquí..." aria-label="Escribe tu mensaje"></textarea>
+      <button id="ai-chat-send" type="submit" aria-label="Enviar mensaje">➤</button>
     </form>
-    <p class="ai-chat-notice" id="ai-chat-notice">No compartas información sensible en este chat.</p>
-    <div class="ai-chat-footer">
-      <a href="#cotizar" onclick="document.getElementById('ai-chat-close').click()">Enviar fotos y solicitar cotización</a>
-      <a href="https://wa.me/50762730591" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
-    </div>
+    <p class="ai-chat-notice" id="ai-chat-notice">Respondo en máximo dos o tres frases y hago una pregunta a la vez. No envíes datos sensibles.</p>
+    <div class="ai-chat-footer" aria-hidden="true"></div>
   </section>
   <a class="whatsapp-float" href="https://wa.me/50762730591?text=Hola%2C%20deseo%20cotizar%20un%20hidrolavado." target="_blank" rel="noopener noreferrer" aria-label="Escribir a HidroLav 507 por WhatsApp" title="Cotizar por WhatsApp"><span class="whatsapp-icon" aria-hidden="true"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4C12.9 4 4 12.8 4 23.7c0 3.7 1.1 7.2 3.1 10.2L4.5 44l10.4-2.7c2.8 1.6 5.9 2.4 9.1 2.4 11.1 0 20-8.9 20-19.8C44 12.8 35.1 4 24 4zm0 35.9c-2.8 0-5.6-.8-8.1-2.3l-.6-.4-5.5 1.4 1.5-5.3-.4-.7c-1.7-2.6-2.6-5.7-2.6-8.9 0-8.8 7.1-16 15.8-16 8.8 0 15.8 7.2 15.8 16s-7 16.2-15.8 16.2zm9.1-11.9c-.5-.2-2.9-1.4-3.3-1.6-.4-.1-.7-.2-1 .2-.3.4-1.2 1.6-1.5 1.9-.3.3-.6.3-1.1.1-.5-.2-2-1-3.9-2.6-1.4-1.3-2.3-2.8-2.6-3.3-.3-.5 0-.8.2-1 .2-.2.5-.6.8-.9.2-.3.3-.5.5-.8.2-.3.1-.6 0-.9-.1-.2-1-2.4-1.4-3.3-.4-.9-.8-.8-1.1-.8h-1c-.4 0-.9.1-1.4.6s-1.8 1.7-1.8 4.1 1.8 4.8 2.2 4.4 4.9 6.9 6.3c.9.6 1.6.9 2.1 1.1 1.2.4 2.3.3 3.1.2.9-.1 2.9-1.2 3.3-2.4.4-1.2.4-2.3.3-2.4-.1-.1-.4-.2-.9-.4z"/></svg></span><span class="whatsapp-label">WhatsApp</span></a>
   <script>
