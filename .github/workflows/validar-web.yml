@@ -57,8 +57,8 @@ jobs:
           from html.parser import HTMLParser
           loyalty=json.loads(Path('content/loyalty.json').read_text())
           carousel=json.loads(Path('content/carousel.json').read_text())
-          assert loyalty['enabled'] and 'seis meses' in loyalty['terms']
-          assert carousel['enabled'] and len(carousel['slides'])>=2
+          assert isinstance(loyalty['enabled'], bool) and 'seis meses' in loyalty['terms']
+          assert isinstance(carousel['enabled'], bool) and len(carousel['slides'])>=2
           assert all(Path('.'+s['image']).exists() for s in carousel['slides'])
           config=Path('admin/config.yml').read_text()
           assert 'file: content/loyalty.json' in config
@@ -81,6 +81,21 @@ jobs:
           for field in ('form-name','name','phone','email','property_type','service','location','details','foto_1','foto_2','consent','bot-field'):
             assert field in parser.names,field
           assert 'document.getElementById(\'quote-form\').addEventListener' not in index
+          # La campaña navideña y el cotizador permanecen independientes del rediseño.
+          assert 'class="hero hero-modern"' in index
+          assert 'id="asistente-hidrolav"' in index
+          assert 'class="whatsapp-label"' in index
+          assert 'whatsapp-float' in index
+          js=Path('assets/experiencia.js').read_text()
+          css=Path('assets/experiencia.css').read_text()
+          assert 'actions.insertAdjacentElement("afterend",slot)' in js
+          assert 'actions.insertAdjacentElement' in js and 'document.body.append(tab,panel)' not in js
+          assert '.hero.hero-modern .hero-offer-slot .offer-tab' in css
+          assert 'body .whatsapp-float' in css
+          assert 'bottom:clamp(96px,18vh,172px)' in css
+          assert 'name="cotizaciones-hidrolav507"' in index
+          assert Path('content/christmas.json').exists()
+          print('Posición del plan, WhatsApp, asistente y formularios OK')
           print('Carrusel, fidelidad, Netlify Forms y privacidad OK')
           PY
       - name: Comprobar SEO local y sitemap
