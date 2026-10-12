@@ -25,8 +25,6 @@ const document={
 const script=readFileSync("assets/assistant.js","utf8");
 const injection="globalThis.__hidrobotFlows={guideIntent,directProperty,concise,contactGuide,propertyGuide,chooseProperty,chooseService};";
 assert.ok(script.includes("function bubble(text,role){"));
-vm.runInNewContext(script.replace("function bubble(text,role){",injection+"\nfunction bubble(text,role){"),
- {document,window:{},URL,Date,encodeURIComponent},{timeout:2500});
 // Leemos la exportación temporal desde el contexto aislado, no añadimos APIs a producción.
 const sandbox={document,window:{},URL,Date,encodeURIComponent};
 vm.runInNewContext(script.replace("function bubble(text,role){",injection+"
