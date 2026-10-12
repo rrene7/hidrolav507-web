@@ -1,0 +1,24 @@
+{
+  "enabled": true,
+  "interval_seconds": 6,
+  "slides": [
+    {
+      "image": "/assets/uploads/Limpieza profesional de entrada residencial.png",
+      "caption": "Entradas y accesos",
+      "alt": "Imagen ilustrativa de lavado profesional de una entrada residencial",
+      "is_real": false
+    },
+    {
+      "image": "/assets/adoquines.webp",
+      "caption": "Patios y pisos exteriores",
+      "alt": "Imagen referencial de limpieza de superficies exteriores",
+      "is_real": false
+    },
+    {
+      "image": "/assets/fachada.webp",
+      "caption": "Residencias y PH",
+      "alt": "Imagen ilustrativa de servicios de limpieza residencial exterior",
+      "is_real": false
+    }
+  ]
+}
