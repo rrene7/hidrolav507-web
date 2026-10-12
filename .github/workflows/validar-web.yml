@@ -93,6 +93,14 @@ jobs:
           assert '.hero.hero-modern .hero-offer-slot .offer-tab' in css
           assert 'body .whatsapp-float' in css
           assert 'bottom:clamp(96px,18vh,172px)' in css
+          # La oferta abre el número del negocio y ofrece un acceso alternativo.
+          assert 'https://api.whatsapp.com/send' in js
+          assert 'primary.searchParams.set("phone",phone)' in js
+          assert 'primary.searchParams.set("text",question)' in js
+          assert 'direct.href="https://wa.me/"+phone' in js
+          assert 'replace(/[^0-9]/g,"")' in js
+          assert '/^507[0-9]{8}$/' in js
+          assert '.offer-backup' in css
           assert 'name="cotizaciones-hidrolav507"' in index
           assert Path('content/christmas.json').exists()
           print('Posición del plan, WhatsApp, asistente y formularios OK')

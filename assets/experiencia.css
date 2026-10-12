@@ -130,3 +130,9 @@ body .whatsapp-float:focus-visible{outline:3px solid #ffc400;outline-offset:4px}
 @media(prefers-reduced-motion:reduce){
   body .whatsapp-float:hover{transform:none}
 }
+
+/* Opción de respaldo para abrir WhatsApp si falla el mensaje preescrito */
+.hero.hero-modern .hero-offer-slot .offer-backup{margin-top:12px;padding-top:12px;border-top:1px solid #dbe7ee;display:grid;gap:5px}
+.hero.hero-modern .hero-offer-slot .offer-backup p{margin:0;font-size:12px;font-weight:800;color:#365974}
+.hero.hero-modern .hero-offer-slot .offer-backup a{font-size:13px;color:#0074a9;text-decoration:underline;font-weight:800}
+.hero.hero-modern .hero-offer-slot .offer-backup span{font-size:12px;color:#506a7c}
