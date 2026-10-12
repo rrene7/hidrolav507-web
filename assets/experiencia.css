@@ -1,0 +1,44 @@
+/* HidroLav 507: experiencia interactiva sin framework ni servicios externos */
+.hero-media .frame{position:relative;isolation:isolate;background:#0c3151;overflow:hidden}
+.hero-carousel{position:relative;width:100%;height:410px;overflow:hidden}
+.hero-carousel .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .65s ease;z-index:0}
+.hero-carousel .slide.active{opacity:1;z-index:1}
+.hero-carousel .slider-caption{position:absolute;z-index:3;left:16px;right:16px;bottom:14px;display:flex;gap:8px;justify-content:space-between;align-items:center;color:#fff;font-size:11px;font-weight:750;text-shadow:0 1px 5px #000b;pointer-events:none}
+.slider-caption span{background:#061d36ba;border:1px solid #ffffff45;border-radius:8px;padding:5px 8px}
+.slider-controls{position:absolute;z-index:4;top:50%;left:8px;right:8px;display:flex;justify-content:space-between;transform:translateY(-50%);pointer-events:none}
+.slider-btn{pointer-events:auto;width:37px;height:37px;border-radius:50%;border:1px solid #ffffffba;background:#061d36b0;color:#fff;display:grid;place-items:center;font-size:25px;box-shadow:0 6px 14px #0017}
+.slider-btn:hover,.slider-btn:focus-visible{background:#007eaf}
+.slider-dots{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:4}
+.slider-dots button{width:10px;height:10px;border:1px solid white;border-radius:50%;background:#ffffff80;padding:0;cursor:pointer}
+.slider-dots button[aria-current="true"]{background:#ffc400;box-shadow:0 0 0 3px #ffc40055}
+.offer-tab{position:fixed;bottom:18px;left:16px;z-index:48;background:linear-gradient(130deg,#ffc400,#ffe27d);color:#08243f;border:1px solid #ffe581;padding:11px 16px;border-radius:16px;font-weight:900;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 10px 30px #061d3661}
+.offer-tab:hover{transform:translateY(-2px)}.offer-tab:focus-visible{outline:3px solid #1295d6}
+.offer-panel{position:fixed;bottom:76px;left:16px;z-index:49;max-height:min(75vh,540px);overflow-y:auto;width:min(360px,calc(100vw - 32px));padding:22px 22px 19px;border-radius:20px;border:1px solid #d9e8f3;box-shadow:0 25px 70px #031b36a8;background:white;color:#082642}
+.offer-panel[hidden],.assistant-panel[hidden]{display:none!important}
+.offer-kicker{color:#0079b5;font-size:11px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}
+.offer-panel h3{line-height:1.2;font-size:23px;margin:6px 34px 11px 0}
+.offer-panel p,.offer-panel details{color:#46647a;font-size:14px;line-height:1.6}
+.offer-panel details{margin:11px 0 18px;border-top:1px solid #e4eaf2;padding-top:12px}
+.offer-panel summary{cursor:pointer;font-weight:800;color:#092f4d}
+.offer-cta{display:block;border-radius:11px;padding:11px 15px;background:#05a95c;color:#fff;text-decoration:none;font-weight:800;text-align:center}
+.panel-close{position:absolute;top:13px;right:13px;border:0;background:#eaf3f8;width:32px;height:32px;border-radius:10px;color:#123a55;font-weight:900;font-size:19px}
+.cta-assistant{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:9px 14px;border:1px solid #add7ed;border-radius:12px;color:#fff;background:#ffffff1c;font-weight:800}
+.assistant-panel{position:fixed;z-index:55;right:16px;bottom:86px;width:min(370px,calc(100vw - 32px));max-height:min(80vh,640px);overflow-y:auto;border-radius:19px;padding:22px;background:#fff;color:#092d4d;box-shadow:0 24px 68px #02182f9c}
+.assistant-panel header{background:transparent;border:0;position:static;display:block;padding-right:35px}
+.assistant-panel h3{font-size:22px;line-height:1.2;margin:0 0 8px}.assistant-panel p{font-size:13px;color:#57738a}
+.assistant-choices{display:grid;gap:8px;margin:16px 0}
+.assistant-choices button{border:1px solid #d9eaf4;background:#f6fbff;border-radius:11px;text-align:left;padding:12px;color:#0c496c;font-weight:750}
+.assistant-answer{border-left:4px solid #00a3de;background:#eaf8ff;border-radius:8px;padding:12px;font-size:14px;min-height:50px;margin:12px 0}
+.assistant-cta{display:block;color:#006c9f;font-size:14px;font-weight:850;margin-top:12px}
+.form-status{margin:12px 0 0;padding:12px;border-radius:12px;background:#eaf6fc;color:#07496f;font-size:14px}
+.form-status.error{background:#fff1eb;color:#8d2d14}
+.field-note{font-size:12px;color:#59778a;margin:0 0 8px}
+.file-info{font-size:12px;color:#235978;margin:5px 0 9px}
+.hp-field{position:absolute!important;left:-9999px!important;height:1px!important;opacity:0!important}
+.privacy-note{display:flex;gap:9px;align-items:start;color:#496579;font-size:12px;margin:9px 0 14px}
+.privacy-note input{width:18px;height:18px;flex-shrink:0;margin-top:4px}.privacy-note a{color:#006fa9;text-decoration:underline}
+.hero{background:linear-gradient(119deg,#031629,#073657 54%,#074b78 100%)!important}
+.service,.hero-media .frame,.card{backdrop-filter:saturate(1.05)}
+@media(max-width:980px){.hero-carousel{height:340px}}
+@media(max-width:740px){.hero-carousel{height:270px}.offer-tab{left:10px;bottom:12px;padding:10px 12px;font-size:12px}.offer-panel{left:10px;bottom:67px}.assistant-panel{right:10px;bottom:80px}}
+@media(prefers-reduced-motion:reduce){.hero-carousel .slide{transition:none}.offer-tab:hover{transform:none}}
