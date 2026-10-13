@@ -108,7 +108,6 @@ collections:
           - label: Frases que pueden escribir para encontrarnos
             name: search_phrases
             widget: list
-            summary: "{{fields.phrase}}"
             field: {label: Frase de búsqueda, name: phrase, widget: string}
             hint: "Referencia para contenido, publicaciones y medición en Search Console. Google no usa la antigua meta keywords y estas frases no garantizan posiciones."
 
