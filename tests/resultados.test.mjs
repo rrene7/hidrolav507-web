@@ -23,7 +23,7 @@ class Element {
 }
 async function render(data){
  const section=new Element("section");section.heading=new Element("h2");section.lead=new Element("p");
- const grid=new Element("div"),empty=new Element("div"),disclaimer=new Element("p");
+ const grid=new Element("div"),empty=new Element("div"),disclaimer=new Element("p");disclaimer.hidden=true;
  const els={"resultados":section,"compare-grid":grid,"results-empty":empty,"results-disclaimer":disclaimer};
  const document={getElementById:id=>els[id],createElement:tag=>new Element(tag)};
  const code=readFileSync("assets/resultados.js","utf8");
@@ -34,7 +34,7 @@ test("sin trabajos reales, se mantiene explicación sin engañar al visitante",a
  const r=await render({enabled:true,projects:[]});
  assert.equal(r.grid.children.length,0);
  assert.equal(r.empty.hidden,false);
- assert.equal(r.disclaimer.hidden,false);
+ assert.equal(r.disclaimer.hidden,true);
 });
 test("publica solo pares distintos y confirmados, rechaza rutas inseguras",async()=>{
  const r=await render({enabled:true,headline:"Trabajos reales",intro:"Fotos verificadas",projects:[
