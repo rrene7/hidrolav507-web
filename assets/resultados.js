@@ -33,14 +33,31 @@ function build(project,index){
  const range=document.createElement("input");range.type="range";range.className="compare-range";
  range.min="0";range.max="100";range.step="1";range.value="50";
  range.setAttribute("aria-label","Comparar antes y después: "+project.title);
- range.setAttribute("aria-valuetext","50% del resultado después");
- range.addEventListener("input",()=>{
-  const value=Math.max(0,Math.min(100,Number(range.value)||0));
+ function setSplit(nextValue){
+  const value=Math.max(0,Math.min(100,Number(nextValue)||0));
+  range.value=String(value);
   visual.style.setProperty("--split",value+"%");
-  range.setAttribute("aria-valuetext",value+"% del resultado después");
- });
+  const percentAfter=100-value;
+  const description=value===100?"Solo ANTES: superficie sin limpiar":
+   value===0?"Solo DESPUÉS: superficie limpia":
+   value+"% de ANTES y "+percentAfter+"% de DESPUÉS";
+  range.setAttribute("aria-valuetext",description);
+ }
+ range.addEventListener("input",()=>setSplit(range.value));
+ setSplit(50);
  visual.append(before,after,split,left,right,range);
+ const quick=document.createElement("div");quick.className="compare-quick-actions";
+ const beforeOnly=document.createElement("button");beforeOnly.type="button";
+ beforeOnly.className="compare-quick-btn";beforeOnly.textContent="Ver solo Antes";
+ beforeOnly.setAttribute("aria-label","Mostrar completamente la superficie antes de limpiar: "+project.title);
+ beforeOnly.addEventListener("click",()=>setSplit(100));
+ const afterOnly=document.createElement("button");afterOnly.type="button";
+ afterOnly.className="compare-quick-btn";afterOnly.textContent="Ver solo Después";
+ afterOnly.setAttribute("aria-label","Mostrar completamente la superficie después de limpiar: "+project.title);
+ afterOnly.addEventListener("click",()=>setSplit(0));
+ quick.append(beforeOnly,afterOnly);
  const content=document.createElement("div");content.className="compare-caption";
+ content.append(quick);
  const title=document.createElement("h3");title.textContent=project.title;
  content.append(title);
  if(project.area){const place=document.createElement("span");place.className="compare-area";place.textContent=project.area;content.append(place)}
