@@ -323,5 +323,32 @@ jobs:
             assert all('/'+p in content for p in new_pages)
           descs=[re.search(r'<meta name="description" content="([^"]+)"',p.read_text()).group(1) for p in pages]
           assert len(set(descs))==len(descs)
+          # Las tarjetas visibles y sus versiones generadas por CMS tienen enlaces internos.
+          site_data=json.loads(Path('content/site.json').read_text())
+          cards=site_data['services']
+          assert len(cards)==6
+          destinations=[x['url'] for x in cards]
+          assert len(set(destinations))==6
+          assert {base+dest for dest in destinations}==set(urls[1:])
+          assert text.count('class="service-more"')==6
+          for dest in destinations: assert 'class="service-more" href="'+dest+'"' in text
+          content_script=Path('assets/site-content.js').read_text()
+          assert 'if(validServicePage(s.url))' in content_script
+          assert 'link.href=s.url' in content_script
+          assert 'link.className="service-more"' in content_script
+          assert 'document.title=' not in content_script, 'No sobrescribir el título SEO con un valor genérico'
+          assert 'name: url, widget: string' in Path('admin/config.yml').read_text()
+          assert 'service .service-more' in Path('assets/experiencia.css').read_text()
+          # En todas las páginas de servicio debe existir la ruta de navegación.
+          for page,url in zip(pages[1:],urls[1:]):
+            body=page.read_text()
+            assert 'class="breadcrumbs"' in body,(page,'sin ruta visible')
+            assert 'href="/#servicios"' in body,(page,'sin enlace hacia el listado')
+            schema=json.loads(re.search(r'<script type="application/ld\+json">([\s\S]*?)</script>',body).group(1))
+            trail=next((x for x in schema['@graph'] if x['@type']=='BreadcrumbList'),None)
+            assert trail is not None,(page,'faltan migas estructuradas')
+            assert trail['itemListElement'][-1]['item']==url,(page,'breadcrumb incorrecto')
+          commercial=Path('servicios/limpieza-de-exteriores-comerciales.html').read_text()
+          assert '<title>Limpieza de plazas comerciales en Panamá | HidroLav 507</title>' in commercial
           print('SEO: 7 URLs, 6 páginas de servicio, schema, enlaces y canonical OK')
           PY

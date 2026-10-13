@@ -35,6 +35,7 @@ collections:
               - {label: Fotografía del servicio (reemplaza al icono), name: image, widget: image, required: false, hint: "Sube una foto horizontal JPG, PNG o WebP."}
               - {label: Icono si todavía no hay fotografía, name: icon, widget: string, required: false, default: "💧"}
               - {label: Servicio, name: title, widget: string}
+              - {label: Página informativa del servicio (enlace interno /servicios/...), name: url, widget: string, required: false, hint: "Utiliza sólo una URL interna ya existente, por ejemplo /servicios/lavado-de-aceras-y-entradas.html. La tarjeta mostrará el enlace Conocer el servicio."}
               - {label: Descripción, name: description, widget: text}
           - {label: Título de galería, name: gallery_title, widget: string}
           - {label: Introducción de galería, name: gallery_intro, widget: text}
