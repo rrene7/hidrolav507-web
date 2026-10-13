@@ -370,7 +370,9 @@ jobs:
           for section in ('servicios','nosotros','galeria','resultados','preguntas','cotizar'):
             assert 'id="'+section+'"' in page
           assert 'history.pushState' in script and 'popstate' in script and 'hashchange' in script
-          assert 'prefers-reduced-motion' in script and 'interactive-panel-off' in css
+          assert 'prefers-reduced-motion' in css and 'interactive-panel-off' in css
+          assert 'window.scrollTo(' not in script, 'No desplazar el documento al abrir paneles'
+          assert 'position:fixed' in css and 'panel-home-action' in script
           assert 'id="quote-form"' in page and 'id="ai-chat-panel"' in page
           assert 'href="/servicios/lavado-de-aceras-y-entradas.html"' in page
           print('Navegación progresiva y secciones preservadas')
