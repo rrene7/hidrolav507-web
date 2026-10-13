@@ -30,10 +30,10 @@ async function render(data){
  await vm.runInNewContext(code,{document,fetch:async()=>({ok:true,json:async()=>data}),decodeURIComponent,console},{timeout:2500});
  return {section,grid,empty,disclaimer};
 }
-test("sin trabajos reales, se mantiene explicación sin engañar al visitante",async()=>{
+test("sin comparaciones reales, se oculta toda la sección hasta que se publiquen fotos",async()=>{
  const r=await render({enabled:true,projects:[]});
  assert.equal(r.grid.children.length,0);
- assert.equal(r.empty.hidden,false);
+ assert.equal(r.section.hidden,true);
  assert.equal(r.disclaimer.hidden,true);
 });
 test("publica solo pares distintos y confirmados, rechaza rutas inseguras",async()=>{
@@ -44,6 +44,7 @@ test("publica solo pares distintos y confirmados, rechaza rutas inseguras",async
   {title:"Ruta insegura",before:"/assets/../privacidad.html",after:"/assets/after.jpg",is_real:true}
  ]});
  assert.equal(r.grid.children.length,1);
+ assert.equal(r.section.hidden,false);
  assert.equal(r.empty.hidden,true);
  assert.equal(r.disclaimer.hidden,false);
  assert.equal(r.section.heading.textContent,"Trabajos reales");
