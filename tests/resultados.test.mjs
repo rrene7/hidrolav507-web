@@ -57,6 +57,21 @@ test("publica solo pares distintos y confirmados, rechaza rutas inseguras",async
  input.value="83";input.events.input();
  assert.equal(visual.style.values["--split"],"83%");
  assert.match(input.attributes["aria-valuetext"],/83%/);
+ // También debe poder mostrarse por completo una sola fotografía.
+ const actions=text.children.find(x=>x.className==="compare-quick-actions");
+ assert.ok(actions,"Faltan botones para los extremos");
+ assert.equal(actions.children.length,2);
+ actions.children[0].events.click();
+ assert.equal(input.value,"100");
+ assert.equal(visual.style.values["--split"],"100%");
+ assert.match(input.attributes["aria-valuetext"],/Solo ANTES/);
+ actions.children[1].events.click();
+ assert.equal(input.value,"0");
+ assert.equal(visual.style.values["--split"],"0%");
+ assert.match(input.attributes["aria-valuetext"],/Solo DESPUÉS/);
+ // Sigue funcionando el arrastre tras seleccionar un extremo.
+ input.value="45";input.events.input();
+ assert.equal(visual.style.values["--split"],"45%");
 });
 test("sección de resultados puede desactivarse desde CMS",async()=>{
  const r=await render({enabled:false,projects:[]});
