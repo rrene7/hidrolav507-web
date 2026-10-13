@@ -5,6 +5,9 @@ const section=document.getElementById("resultados");
 const grid=document.getElementById("compare-grid");
 const empty=document.getElementById("results-empty");
 const disclaimer=document.getElementById("results-disclaimer");
+const more=document.getElementById("results-load-more");
+const counter=document.getElementById("results-count");
+const PAGE_SIZE=6;
 if(!section||!grid||!empty)return;
 function safeAsset(value){
  if(typeof value!=="string"||!value.startsWith("/assets/")||/[<>"'\\?#\u0000-\u001f]/.test(value))return false;
@@ -76,12 +79,32 @@ try{
  if(typeof content?.intro==="string"&&content.intro.trim())section.querySelector(".results-heading .lead").textContent=content.intro.slice(0,350);
  const projects=Array.isArray(content.projects)?content.projects.filter(p=>
   p&&p.is_real===true&&typeof p.title==="string"&&p.title.trim()&&safeAsset(p.before)&&safeAsset(p.after)&&p.before!==p.after
- ).slice(0,9):[];
- for(let i=0;i<projects.length;i++)grid.append(build(projects[i],i));
+ ):[];
+
  // Una sección vacía confunde al visitante: solo mostramos resultados documentados.
  if(!projects.length){section.hidden=true;return}
  section.hidden=false;
  empty.hidden=true;
  disclaimer.hidden=false;
+
+ // Cada elemento del listado CMS genera SU PROPIO comparador. No hay límite de nueve.
+ // Para evitar cargar muchas fotografías simultáneamente, mostramos seis por lote.
+ let visible=0;
+ function showMore(){
+  const next=Math.min(visible+PAGE_SIZE,projects.length);
+  for(let i=visible;i<next;i++)grid.append(build(projects[i],i));
+  visible=next;
+  if(counter){
+   counter.textContent="Mostrando "+visible+" de "+projects.length+" trabajos documentados";
+   counter.hidden=projects.length<=1;
+  }
+  if(more){
+   const remaining=projects.length-visible;
+   more.hidden=remaining===0;
+   if(remaining>0)more.textContent="Ver "+Math.min(PAGE_SIZE,remaining)+" trabajos más ↓";
+  }
+ }
+ more?.addEventListener("click",showMore);
+ showMore();
 }catch(error){section.hidden=true;console.warn("Resultados: no se pudo comprobar el contenido; se oculta el comparador.",error)}
 })();
