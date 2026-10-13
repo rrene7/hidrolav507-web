@@ -381,5 +381,14 @@ jobs:
             assert trail['itemListElement'][-1]['item']==url,(page,'breadcrumb incorrecto')
           commercial=Path('servicios/limpieza-de-exteriores-comerciales.html').read_text()
           assert '<title>Limpieza de plazas comerciales en Panamá | HidroLav 507</title>' in commercial
+          # Búsquedas sobre verdín/musgo: contenido local, enlaces útiles y sin promesas engañosas.
+          acera=Path('servicios/lavado-de-aceras-y-entradas.html').read_text()
+          home=Path('index.html').read_text()
+          for word in ('verdín','limo','musgo','La Chorrera','Panamá Oeste'):
+            assert word in acera,word
+          assert '¿Pueden limpiar una acera con verdín o musgo?' in acera
+          assert 'no garantiza eliminar manchas profundas' in acera
+          assert '¿Pueden limpiar aceras con verdín o musgo?' in home
+          assert 'href="/servicios/lavado-de-aceras-y-entradas.html"' in home
           print('SEO: 7 URLs, 6 páginas de servicio, schema, enlaces y canonical OK')
           PY
