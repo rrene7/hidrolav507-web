@@ -304,7 +304,20 @@ jobs:
           assert 'is_real===true' in js and 'p.before!==p.after' in js
           assert 'aria-valuetext' in js and 'range.addEventListener("input"' in js
           assert 'encodeURIComponent(txt)' in fast and 'window.open(' not in fast
-          assert len([x for x in content['projects'] if x.get('is_real')])==0
+          # Las fotos marcadas Antes/Resultados deben quedar emparejadas en Resultados,
+          # no publicarse como dos imágenes de galería sin comparación.
+          assert len(content['projects'])==1
+          project=content['projects'][0]
+          assert project['title']=='Aceras y pasillos'
+          assert project['is_real'] is True
+          assert project['before']!=project['after']
+          assert all(Path('.'+project[k]).exists() for k in ('before','after'))
+          assert project['before'].endswith('Sendero de Concreto Cubierto de Musgo.png')
+          assert project['after'].endswith('Limpieza a presión de la acera.png')
+          assert not any(entry['image'] in (project['before'],project['after']) for entry in gallery['gallery'])
+          assert 'Galería de fotos individuales' in cms
+          assert 'Antes y después · Comparador de trabajos' in cms
+          assert len(gallery['gallery'])>=2
           print('Comparador accesible, CMS seguro y cotizaciones preservadas')
           PY
       - name: Comprobar SEO local y sitemap
