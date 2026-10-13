@@ -280,6 +280,19 @@ jobs:
           assert isinstance(content['enabled'],bool)
           assert 'projects' in content and isinstance(content['projects'],list)
           assert 'name: resultados' in cms and 'file: content/resultados.json' in cms
+          assert 'name: galeria' in cms and 'file: content/galeria.json' in cms
+          assert 'media_folder: assets/uploads' in cms
+          assert 'public_folder: /assets/uploads' in cms
+          gallery=json.loads(Path('content/galeria.json').read_text())
+          assert isinstance(gallery['gallery'],list)
+          assert gallery['title'] and gallery['intro']
+          assert all(e['image'].startswith('/assets/') and Path('.'+e['image']).exists() and type(e['is_real']) is bool for e in gallery['gallery'])
+          main=Path('assets/site-content.js').read_text()
+          assert '/content/galeria.json' in main and 'gallery-caption-kind' in main
+          assert '#galeria .gallery figcaption .gallery-caption-kind' in Path('assets/experiencia.css').read_text()
+          assert 'id="resultados" aria-labelledby="results-heading" hidden' in site
+          assert 'if(!projects.length){section.hidden=true;return}' in js
+          assert 'if(projects.length)' not in js
           assert 'name: is_real, widget: boolean' in cms
           assert 'id="resultados"' in site and 'id="compare-grid"' in site
           assert 'id="results-empty"' in site
