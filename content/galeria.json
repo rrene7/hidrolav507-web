@@ -1,23 +1,23 @@
 {
-  "title": "La diferencia que hace el hidrolavado",
-  "intro": "Ejemplos del tipo de limpieza que puede realizarse a presión; cada trabajo requiere evaluar la superficie y el equipo.",
+  "title": "Galería de superficies y servicios",
+  "intro": "Imágenes de referencia de los tipos de superficies que podemos evaluar. Los trabajos documentados con ANTES y DESPUÉS aparecen juntos en la sección de resultados.",
   "gallery": [
-    {
-      "image": "/assets/uploads/Sendero de Concreto Cubierto de Musgo.png",
-      "title": "aceras y pasillos",
-      "description": "Antes",
-      "is_real": true
-    },
-    {
-      "image": "/assets/uploads/Limpieza a presión de la acera.png",
-      "title": "aceras y pasillos",
-      "description": "Resultados",
-      "is_real": true
-    },
     {
       "image": "/assets/fachada.webp",
       "title": "Áreas residenciales",
       "description": "Imagen ilustrativa de limpieza exterior de vivienda",
+      "is_real": false
+    },
+    {
+      "image": "/assets/hero.webp",
+      "title": "Adoquines y accesos",
+      "description": "Imagen ilustrativa de superficies exteriores",
+      "is_real": false
+    },
+    {
+      "image": "/assets/adoquines.webp",
+      "title": "Pisos exteriores",
+      "description": "Fotografía referencial de un piso exterior",
       "is_real": false
     }
   ]
