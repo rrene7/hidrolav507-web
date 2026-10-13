@@ -357,6 +357,24 @@ jobs:
           assert len(gallery['gallery'])>=2
           print('Comparador accesible, CMS seguro y cotizaciones preservadas')
           PY
+      - name: Comprobar navegación por paneles accesible
+        run: |
+          set -euo pipefail
+          node --check assets/paneles.js
+          python3 - <<'PY'
+          from pathlib import Path
+          page=Path('index.html').read_text()
+          script=Path('assets/paneles.js').read_text()
+          css=Path('assets/experiencia.css').read_text()
+          assert '<script defer src="/assets/paneles.js"></script>' in page
+          for section in ('servicios','nosotros','galeria','resultados','preguntas','cotizar'):
+            assert 'id="'+section+'"' in page
+          assert 'history.pushState' in script and 'popstate' in script and 'hashchange' in script
+          assert 'prefers-reduced-motion' in script and 'interactive-panel-off' in css
+          assert 'id="quote-form"' in page and 'id="ai-chat-panel"' in page
+          assert 'href="/servicios/lavado-de-aceras-y-entradas.html"' in page
+          print('Navegación progresiva y secciones preservadas')
+          PY
       - name: Comprobar SEO local y sitemap
         run: |
           python3 - <<'PY'
