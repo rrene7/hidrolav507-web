@@ -326,3 +326,15 @@ footer .footer-email a:hover{text-decoration-thickness:2px}
 
 .hero-result-link{display:inline-flex;align-items:center;padding:10px 6px;color:#006ca2;font-size:13px;font-weight:850;text-decoration:underline;text-underline-offset:3px}
 .hero-result-link:hover,.hero-result-link:focus-visible{color:#003a5c}
+
+
+/* Controles alternativos al arrastre: útiles en móviles y teclado. */
+.compare-quick-actions{display:flex;flex-wrap:wrap;gap:8px;margin:11px 0 13px}
+.compare-quick-btn{
+ background:#113f60;color:#d4f2ff;border:1px solid #5c93b5;border-radius:9px;
+ padding:8px 10px;font:750 12px/1.25 system-ui,-apple-system,"Segoe UI",sans-serif;
+ cursor:pointer;flex:1;min-width:112px
+}
+.compare-quick-btn:hover{background:#145577;color:#fff;border-color:#b5e8ff}
+.compare-quick-btn:focus-visible{outline:3px solid #ffe366;outline-offset:2px}
+@media(max-width:420px){.compare-quick-actions{gap:6px}.compare-quick-btn{font-size:11px;min-width:100px}}

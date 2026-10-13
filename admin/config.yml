@@ -57,7 +57,7 @@ collections:
     label: Antes y después
     files:
       - name: comparaciones
-        label: Comparaciones reales de trabajos
+        label: Subir fotos ANTES y DESPUÉS
         file: content/resultados.json
         format: json
         fields:
@@ -69,13 +69,13 @@ collections:
             widget: list
             required: false
             summary: "{{fields.title}}"
-            hint: "Carga dos fotos auténticas del mismo proyecto y marca la casilla de verificación para publicarlas."
+            hint: "Pulsa Añadir un proyecto. Sube ANTES (sucia) y DESPUÉS (limpia), del mismo lugar y encuadre; verifica que sean imágenes reales. En la web se publicará un comparador interactivo que puede mostrar cada imagen al 100 %."
             fields:
               - {label: Nombre del proyecto, name: title, widget: string}
               - {label: Zona o tipo de propiedad (opcional), name: area, widget: string, required: false}
               - {label: Breve explicación (opcional), name: description, widget: text, required: false}
-              - {label: Fotografía ANTES, name: before, widget: image, hint: "Foto original antes de limpiar; idealmente mismo encuadre de la foto después."}
-              - {label: Fotografía DESPUÉS, name: after, widget: image, hint: "Foto del mismo lugar después del trabajo."}
+              - {label: Foto ANTES (superficie sucia), name: before, widget: image, hint: "Sube foto original de la superficie SUCIA, antes del lavado. Debe ser del mismo encuadre y orientación que la foto DESPUÉS."}
+              - {label: Foto DESPUÉS (superficie limpia), name: after, widget: image, hint: "Sube foto original del mismo lugar ya LIMPIO. Usa el mismo encuadre y proporción para que las imágenes coincidan cuando muevas la división."}
               - {label: Descripción accesible del antes, name: alt_before, widget: string, required: false}
               - {label: Descripción accesible del después, name: alt_after, widget: string, required: false}
               - {label: Confirmo que ambas fotos son reales y del mismo trabajo de HidroLav 507, name: is_real, widget: boolean, default: false, hint: "Si no está marcada, el proyecto no se publica."}
