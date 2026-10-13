@@ -53,6 +53,33 @@ collections:
           - {label: Zonas atendidas, name: areas, widget: list, field: {label: Zona, name: area, widget: string}}
           - {label: Promoción o aviso, name: announcement, widget: string, required: false}
 
+  - name: resultados
+    label: Antes y después
+    files:
+      - name: comparaciones
+        label: Comparaciones reales de trabajos
+        file: content/resultados.json
+        format: json
+        fields:
+          - {label: Mostrar sección de resultados, name: enabled, widget: boolean, default: true}
+          - {label: Título, name: headline, widget: string}
+          - {label: Introducción, name: intro, widget: text}
+          - label: Proyectos con antes y después
+            name: projects
+            widget: list
+            required: false
+            summary: "{{fields.title}}"
+            hint: "Carga dos fotos auténticas del mismo proyecto y marca la casilla de verificación para publicarlas."
+            fields:
+              - {label: Nombre del proyecto, name: title, widget: string}
+              - {label: Zona o tipo de propiedad (opcional), name: area, widget: string, required: false}
+              - {label: Breve explicación (opcional), name: description, widget: text, required: false}
+              - {label: Fotografía ANTES, name: before, widget: image, hint: "Foto original antes de limpiar; idealmente mismo encuadre de la foto después."}
+              - {label: Fotografía DESPUÉS, name: after, widget: image, hint: "Foto del mismo lugar después del trabajo."}
+              - {label: Descripción accesible del antes, name: alt_before, widget: string, required: false}
+              - {label: Descripción accesible del después, name: alt_after, widget: string, required: false}
+              - {label: Confirmo que ambas fotos son reales y del mismo trabajo de HidroLav 507, name: is_real, widget: boolean, default: false, hint: "Si no está marcada, el proyecto no se publica."}
+
   - name: promociones
     label: Promociones y campañas
     files:
