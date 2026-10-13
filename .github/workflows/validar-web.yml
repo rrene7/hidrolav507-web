@@ -263,6 +263,37 @@ jobs:
           assert 'footer-email-fallback' in html
           print('Integración IA, configuración CMS y privacidad OK')
           PY
+      - name: Validar comparadores de resultados y cotización interactiva
+        run: |
+          set -euo pipefail
+          node --check assets/resultados.js
+          node --check assets/cotizacion-rapida.js
+          node --test tests/resultados.test.mjs
+          python3 - <<'PY'
+          import json,re
+          from pathlib import Path
+          site=Path('index.html').read_text()
+          js=Path('assets/resultados.js').read_text()
+          cms=Path('admin/config.yml').read_text()
+          fast=Path('assets/cotizacion-rapida.js').read_text()
+          content=json.loads(Path('content/resultados.json').read_text())
+          assert isinstance(content['enabled'],bool)
+          assert 'projects' in content and isinstance(content['projects'],list)
+          assert 'name: resultados' in cms and 'file: content/resultados.json' in cms
+          assert 'name: is_real, widget: boolean' in cms
+          assert 'id="resultados"' in site and 'id="compare-grid"' in site
+          assert 'id="results-empty"' in site
+          assert 'id="clientes"' in site and site.count('data-quote-property=')>=4
+          assert '/assets/resultados.js' in site and '/assets/cotizacion-rapida.js' in site
+          assert 'id="quote-whatsapp"' in site and 'id="quote-whatsapp-feedback"' in site
+          assert 'id="quote-form" name="cotizaciones-hidrolav507"' in site
+          assert 'enctype="multipart/form-data"' in site and 'name="foto_1"' in site and 'name="foto_2"' in site
+          assert 'is_real===true' in js and 'p.before!==p.after' in js
+          assert 'aria-valuetext' in js and 'range.addEventListener("input"' in js
+          assert 'encodeURIComponent(txt)' in fast and 'window.open(' not in fast
+          assert len([x for x in content['projects'] if x.get('is_real')])==0
+          print('Comparador accesible, CMS seguro y cotizaciones preservadas')
+          PY
       - name: Comprobar SEO local y sitemap
         run: |
           python3 - <<'PY'
