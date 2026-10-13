@@ -255,3 +255,74 @@ footer .footer-email a:hover{text-decoration-thickness:2px}
 #servicios .service .service-more:hover{background:#d4f0ff;border-color:#62bee7}
 #servicios .service .service-more:focus-visible{outline:3px solid #ffca2c;outline-offset:2px}
 #servicios .service.has-photo .service-more{margin-top:16px}
+
+
+/* Resultados auténticos Antes/Después: comparar sin fabricar resultados. */
+.results-section{background:linear-gradient(155deg,#031321 0%,#071c31 57%,#082d4d 100%);color:#f6fbff;padding:clamp(45px,6vw,78px) 0}
+.results-section[hidden]{display:none!important}
+.results-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:25px}
+.results-heading h2{font-size:clamp(30px,4.7vw,58px);line-height:1.08;letter-spacing:-.04em;margin:8px 0 12px;color:#fff}
+.results-heading .tag{color:#9be3ff}
+.results-heading .lead{color:#b7d0e3;font-size:15px;line-height:1.65;max-width:670px;margin:0}
+.results-cta{flex:0 0 auto;background:#0089cb;color:#fff;border-radius:13px;padding:12px 16px;font-size:13px;font-weight:850;text-decoration:none}
+.results-cta:hover,.results-cta:focus-visible{background:#10a6df;color:#fff}
+.compare-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.compare-grid:empty{display:none}
+.compare-card{background:#0e2b45;border:1px solid #335771;border-radius:20px;overflow:hidden;min-width:0;box-shadow:0 15px 35px #0005}
+.compare-visual{position:relative;aspect-ratio:5/5.2;isolation:isolate;overflow:hidden;background:#07213b;--split:50%;touch-action:pan-y}
+.compare-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none}
+.compare-visual .compare-after{clip-path:inset(0 0 0 var(--split))}
+.compare-divider{position:absolute;z-index:3;top:0;bottom:0;left:var(--split);width:3px;background:white;transform:translateX(-50%);pointer-events:none;box-shadow:0 0 12px #02172fbb}
+.compare-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:49px;height:49px;background:white;color:#082c50;font-size:25px;font-weight:900;border-radius:50%;box-shadow:0 4px 19px #00142baa}
+.compare-label{position:absolute;z-index:2;top:13px;padding:6px 12px;border-radius:999px;font-size:11px;font-weight:850;letter-spacing:.1px;pointer-events:none}
+.compare-before-label{left:12px;background:#091b2ebd;color:#fff}
+.compare-after-label{right:12px;background:#ffffffeb;color:#112b46}
+.compare-range{position:absolute;z-index:4;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize}
+.compare-visual:focus-within{outline:3px solid #ffe366;outline-offset:-3px}
+.compare-caption{padding:17px 17px 19px}
+.compare-caption h3{font-size:19px;margin:0 0 4px;line-height:1.25;color:#fff}
+.compare-area{display:block;font-size:12px;color:#80cff1}
+.compare-caption p{color:#c2d6e5;font-size:13px;margin:7px 0 11px}
+.compare-quote{color:#91e7ff;font-weight:750;font-size:12px;text-decoration:underline;text-underline-offset:3px}
+.results-disclaimer{font-size:12px;color:#bad6e8;margin:15px 0 0}
+.results-empty{background:#12334eb3;border:1px dashed #588bac;display:flex;align-items:center;gap:22px;border-radius:18px;padding:22px 24px}
+.results-empty[hidden],.results-disclaimer[hidden]{display:none!important}
+.results-empty-icon{font-size:44px;color:#84d4f9;line-height:1}
+.results-empty strong{color:#fff;font-size:17px}
+.results-empty p{font-size:13px;line-height:1.55;color:#c6dbea;margin:5px 0 0}
+.results-empty a{margin-left:auto;white-space:nowrap;border:1px solid #86d6fb;border-radius:12px;padding:9px 12px;color:#fff;font-size:12px;font-weight:850}
+.results-empty a:hover{background:#15628d}
+/* Elige propiedad y pasa a la cotización sin duplicar formularios. */
+.audience-section{background:#f4f9fd}
+.audience-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.audience-card{display:flex;flex-direction:column;gap:9px;padding:21px 18px;min-width:0;background:#fff;border:1px solid #d4e3ee;border-radius:17px;box-shadow:0 7px 22px #052a4310;text-decoration:none;transition:border-color .15s,transform .15s}
+.audience-card:hover{border-color:#007fc0;transform:translateY(-2px)}
+.audience-card:focus-visible{outline:3px solid #007fc0;outline-offset:2px}
+.audience-icon{font-size:31px;line-height:1.3}
+.audience-card strong{color:#0a2c4a;font-size:16px;line-height:1.25}
+.audience-card>span:not(.audience-icon){color:#517188;font-size:12px;line-height:1.45}
+.audience-card b{color:#006ca2;font-size:12px;margin-top:auto;padding-top:5px}
+.quick-quote-option{border:1px solid #c9e7f5;background:#f2faff;padding:13px;margin-top:12px;border-radius:12px;display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+.quick-quote-option>span{font-size:13px;font-weight:750;color:#163d57}
+.quote-whatsapp-action{display:inline-flex;align-items:center;gap:6px;padding:10px 13px;background:#08795b;border-radius:10px;color:#fff!important;font-weight:850;font-size:13px;text-decoration:none}
+.quote-whatsapp-action:hover,.quote-whatsapp-action:focus-visible{background:#05a473}
+#quote-whatsapp-feedback{font-size:12px;font-weight:700;color:#a4332c;margin:0}
+#quote-whatsapp-feedback:empty{display:none}
+.quick-quote-option small{font-size:11px;color:#45657b;line-height:1.45}
+@media(max-width:980px){.compare-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.audience-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){
+ .results-heading{align-items:flex-start;flex-direction:column}
+ .results-heading h2{font-size:34px}
+ .results-empty{flex-direction:column;align-items:flex-start;gap:10px;padding:18px}
+ .results-empty a{margin-left:0}
+ .compare-grid{grid-template-columns:1fr;gap:16px}
+ .compare-visual{aspect-ratio:5/4.6}
+ .audience-grid{gap:10px}
+ .audience-card{padding:14px 12px}
+ .audience-icon{font-size:25px}
+ .audience-card strong{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){.audience-card{transition:none}.audience-card:hover{transform:none}}
+
+.hero-result-link{display:inline-flex;align-items:center;padding:10px 6px;color:#006ca2;font-size:13px;font-weight:850;text-decoration:underline;text-underline-offset:3px}
+.hero-result-link:hover,.hero-result-link:focus-visible{color:#003a5c}
