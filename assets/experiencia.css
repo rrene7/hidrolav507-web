@@ -338,3 +338,12 @@ footer .footer-email a:hover{text-decoration-thickness:2px}
 .compare-quick-btn:hover{background:#145577;color:#fff;border-color:#b5e8ff}
 .compare-quick-btn:focus-visible{outline:3px solid #ffe366;outline-offset:2px}
 @media(max-width:420px){.compare-quick-actions{gap:6px}.compare-quick-btn{font-size:11px;min-width:100px}}
+
+
+/* Identifica claramente fotografías reales y material meramente referencial. */
+#galeria .gallery figcaption .gallery-caption-kind{
+ display:block;max-width:100%;margin-top:4px;font-size:11px;line-height:1.35;
+ font-weight:650;color:#b9edff;letter-spacing:.01em;
+}
+#galeria .gallery figcaption{max-width:100%}
+#resultados[hidden]{display:none!important}
