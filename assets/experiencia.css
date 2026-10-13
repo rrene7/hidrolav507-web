@@ -347,3 +347,15 @@ footer .footer-email a:hover{text-decoration-thickness:2px}
 }
 #galeria .gallery figcaption{max-width:100%}
 #resultados[hidden]{display:none!important}
+
+
+/* Múltiples proyectos auténticos con carga progresiva (sin alterar comparadores). */
+.results-load-wrap{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:22px}
+.results-count{font-size:12px;color:#bad6e8}
+.results-load-more{cursor:pointer;background:#0b527d;border:1px solid #8edcff;color:#fff;
+ border-radius:12px;padding:11px 18px;min-height:42px;font:800 13px/1.3 system-ui,-apple-system,"Segoe UI",sans-serif}
+.results-load-more:hover{background:#0974a6;border-color:#fff}
+.results-load-more:focus-visible{outline:3px solid #ffe366;outline-offset:3px}
+.results-load-more[hidden],.results-count[hidden]{display:none!important}
+@media(max-width:740px){.results-load-wrap{flex-direction:column;gap:10px}
+ .results-load-more{width:100%;max-width:320px}}

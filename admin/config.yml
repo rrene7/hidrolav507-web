@@ -68,19 +68,19 @@ collections:
     label: Antes y después · Comparador de trabajos
     files:
       - name: comparaciones
-        label: Añadir trabajo con fotos ANTES y DESPUÉS
+        label: Administrar bloques ANTES y DESPUÉS
         file: content/resultados.json
         format: json
         fields:
           - {label: Activar publicación de comparaciones cuando haya fotos reales (se oculta si está vacía), name: enabled, widget: boolean, default: true, hint: "Esta sección no aparecerá en la web hasta que subas al menos un proyecto con ANTES y DESPUÉS, ambas fotos diferentes y la casilla de verificación marcada."}
           - {label: Título, name: headline, widget: string}
           - {label: Introducción, name: intro, widget: text}
-          - label: Proyectos con antes y después
+          - label: Bloques ANTES y DESPUÉS · agrega todos los trabajos que necesites
             name: projects
             widget: list
             required: false
             summary: "{{fields.title}}"
-            hint: "POR CADA TRABAJO: pulsa Añadir un proyecto, escribe su nombre, selecciona Foto ANTES y Foto DESPUÉS del mismo lugar, y marca la casilla de fotos reales. Las dos imágenes se mostrarán juntas en un comparador deslizable. No las cargues por separado en Galería de fotos individuales."
+            hint: "CADA ELEMENTO ES UN BLOQUE INDEPENDIENTE. Para publicar otro, ve al final de esta lista y pulsa + Agregar (o Añadir proyecto), sube DOS fotos del mismo trabajo: Foto ANTES y Foto DESPUÉS, completa el título y activa la confirmación de fotos reales. Repite para 2, 3, 10 o más trabajos. Guarda y publica los cambios. Puedes reordenarlos desde la lista. No los cargues como fotografías sueltas en Galería."
             fields:
               - {label: Nombre del proyecto, name: title, widget: string}
               - {label: Zona o tipo de propiedad (opcional), name: area, widget: string, required: false}

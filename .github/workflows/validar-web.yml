@@ -306,15 +306,24 @@ jobs:
           assert 'encodeURIComponent(txt)' in fast and 'window.open(' not in fast
           # Las fotos marcadas Antes/Resultados deben quedar emparejadas en Resultados,
           # no publicarse como dos imágenes de galería sin comparación.
-          assert len(content['projects'])==1
-          project=content['projects'][0]
-          assert project['title']=='Aceras y pasillos'
-          assert project['is_real'] is True
-          assert project['before']!=project['after']
-          assert all(Path('.'+project[k]).exists() for k in ('before','after'))
-          assert project['before'].endswith('Sendero de Concreto Cubierto de Musgo.png')
-          assert project['after'].endswith('Limpieza a presión de la acera.png')
-          assert not any(entry['image'] in (project['before'],project['after']) for entry in gallery['gallery'])
+          # El CMS puede publicar cero, uno o múltiples pares, sin límite artificial.
+          for project in content['projects']:
+            assert isinstance(project,dict) and isinstance(project.get('title'),str) and project['title'].strip()
+            assert isinstance(project.get('is_real'),bool)
+            before=project.get('before')
+            after=project.get('after')
+            # Si está marcado como real, sus fotos deben existir, ser distintas y del mismo proyecto.
+            if project['is_real']:
+              assert isinstance(before,str) and isinstance(after,str) and before!=after
+              assert before.startswith('/assets/') and after.startswith('/assets/') and '..' not in before and '..' not in after
+              assert all(Path('.'+p).is_file() for p in (before,after))
+              assert not any(entry['image'] in (before,after) for entry in gallery['gallery'])
+          assert 'slice(0,9)' not in js
+          assert 'const PAGE_SIZE=6' in js and 'more?.addEventListener("click",showMore)' in js
+          assert 'id="results-load-more"' in site and 'id="results-count"' in site
+          assert 'name: projects' in cms and 'widget: list' in cms
+          assert 'Bloques ANTES y DESPUÉS' in cms
+          assert '.results-load-more' in Path('assets/experiencia.css').read_text()
           assert 'Galería de fotos individuales' in cms
           assert 'Antes y después · Comparador de trabajos' in cms
           assert len(gallery['gallery'])>=2
