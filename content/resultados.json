@@ -2,5 +2,16 @@
   "enabled": true,
   "headline": "Antes. Después. Resultados reales.",
   "intro": "Desliza para comparar el estado de una superficie antes y después de una limpieza realizada por HidroLav 507. Publicaremos aquí únicamente proyectos documentados.",
-  "projects": []
+  "projects": [
+    {
+      "title": "Aceras y pasillos",
+      "area": "",
+      "description": "Comparación del estado de la superficie antes y después de la limpieza a presión.",
+      "before": "/assets/uploads/Sendero de Concreto Cubierto de Musgo.png",
+      "after": "/assets/uploads/Limpieza a presión de la acera.png",
+      "alt_before": "Antes: sendero de concreto con acumulación de musgo y suciedad.",
+      "alt_after": "Después: resultado de limpieza a presión de la acera.",
+      "is_real": true
+    }
+  ]
 }
