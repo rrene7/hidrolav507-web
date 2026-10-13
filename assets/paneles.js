@@ -14,6 +14,8 @@ const selectedFromHash=()=>{
 function activate(id,{focus=false}={}){
  if(!sections.has(id))id="inicio";
  const home=id==="inicio";
+ const header=document.querySelector("header");
+ if(header)document.body.style.setProperty("--panel-header-height",Math.ceil(header.getBoundingClientRect().height)+"px");
  if(!home && !main.querySelector(".panel-home-action")){
   const back=document.createElement("a");back.className="panel-home-action";back.href="#inicio";back.textContent="← Volver al inicio";main.prepend(back);
  }
