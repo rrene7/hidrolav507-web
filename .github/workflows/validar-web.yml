@@ -322,7 +322,9 @@ jobs:
           assert 'name: is_real, widget: boolean' in cms
           assert 'id="resultados"' in site and 'id="compare-grid"' in site
           assert 'id="results-empty"' in site
-          assert 'id="clientes"' in site and site.count('data-quote-property=')>=4
+          assert 'id="clientes"' not in site and 'audience-section' not in site
+          assert 'id="property_type"' in site and 'name="property_type"' in site
+          assert 'id="preguntas"' in site and 'id="cotizar"' in site
           assert '/assets/resultados.js' in site and '/assets/cotizacion-rapida.js' in site
           assert 'id="quote-whatsapp"' in site and 'id="quote-whatsapp-feedback"' in site
           assert 'id="quote-form" name="cotizaciones-hidrolav507"' in site
