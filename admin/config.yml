@@ -37,31 +37,42 @@ collections:
               - {label: Servicio, name: title, widget: string}
               - {label: Página informativa del servicio (enlace interno /servicios/...), name: url, widget: string, required: false, hint: "Utiliza sólo una URL interna ya existente, por ejemplo /servicios/lavado-de-aceras-y-entradas.html. La tarjeta mostrará el enlace Conocer el servicio."}
               - {label: Descripción, name: description, widget: text}
-          - {label: Título de galería, name: gallery_title, widget: string}
-          - {label: Introducción de galería, name: gallery_intro, widget: text}
-          - label: Fotografías y trabajos
-            name: gallery
-            widget: list
-            summary: "{{fields.title}}"
-            fields:
-              - {label: Fotografía, name: image, widget: image}
-              - {label: Título, name: title, widget: string}
-              - {label: Descripción accesible, name: description, widget: string}
-              - {label: ¿Trabajo real de HidroLav 507?, name: is_real, widget: boolean, default: false}
           - {label: Título de cobertura, name: coverage_title, widget: string}
           - {label: Texto de cobertura, name: coverage_text, widget: text}
           - {label: Zonas atendidas, name: areas, widget: list, field: {label: Zona, name: area, widget: string}}
           - {label: Promoción o aviso, name: announcement, widget: string, required: false}
 
+  - name: galeria
+    label: Galería de fotos
+    files:
+      - name: mis_fotos
+        label: Subir mis fotografías de trabajos
+        file: content/galeria.json
+        format: json
+        fields:
+          - {label: Título de la galería, name: title, widget: string}
+          - {label: Texto introductorio, name: intro, widget: text}
+          - label: Mis fotografías
+            name: gallery
+            widget: list
+            required: false
+            summary: "{{fields.title}}"
+            hint: "Pulsa Añadir una fotografía. Sube fotos JPG, PNG o WebP de tus trabajos, asigna un título y marca si son reales. Si no pertenece a tu empresa, deja la marca desactivada y aparecerá como imagen de referencia."
+            fields:
+              - {label: Subir fotografía, name: image, widget: image, hint: "Selecciona o arrastra una foto desde tu equipo. Se guardará en la carpeta de medios de la web."}
+              - {label: Título que verán los clientes, name: title, widget: string}
+              - {label: Descripción breve de la foto (accesibilidad y SEO), name: description, widget: string, hint: "Describe lo que aparece realmente en la imagen, por ejemplo: Limpieza a presión de acera en La Chorrera."}
+              - {label: Confirmo que es una foto real de HidroLav 507, name: is_real, widget: boolean, default: false, hint: "Márcalo solo si la imagen pertenece a un trabajo real realizado por tu empresa."}
+
   - name: resultados
-    label: Antes y después
+    label: Antes y después (mis trabajos)
     files:
       - name: comparaciones
-        label: Subir fotos ANTES y DESPUÉS
+        label: Añadir comparaciones ANTES y DESPUÉS
         file: content/resultados.json
         format: json
         fields:
-          - {label: Mostrar sección de resultados, name: enabled, widget: boolean, default: true}
+          - {label: Activar publicación de comparaciones cuando haya fotos reales (se oculta si está vacía), name: enabled, widget: boolean, default: true, hint: "Esta sección no aparecerá en la web hasta que subas al menos un proyecto con ANTES y DESPUÉS, ambas fotos diferentes y la casilla de verificación marcada."}
           - {label: Título, name: headline, widget: string}
           - {label: Introducción, name: intro, widget: text}
           - label: Proyectos con antes y después
