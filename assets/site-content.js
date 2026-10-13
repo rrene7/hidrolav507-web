@@ -3,6 +3,7 @@
 let c;try{let r=await fetch("/content/site.json",{cache:"no-store"});if(!r.ok)throw Error("Contenido no disponible");c=await r.json();}catch(err){console.warn("Contenido estático:",err);return;}
 const q=s=>document.querySelector(s);
 const t=(s,v)=>{const e=q(s);if(e&&typeof v==="string")e.textContent=v;};
+const validServicePage=v=>typeof v==="string"&&/^\/servicios\/[a-z0-9-]+\.html$/.test(v);
 const valid=v=>{
   if(typeof v!=="string"||!/^\/(?:assets|images)\/[^?#]+$/u.test(v)||/[<>\\\u0000-\u001f]/u.test(v))return false;
   let decoded;try{decoded=decodeURIComponent(v);}catch{return false;}
@@ -29,7 +30,17 @@ const p=q("#servicios .cards");if(p){p.replaceChildren();for(const s of c.servic
   }
   const h=document.createElement("h3");h.textContent=s.title||"";
   const d=document.createElement("p");d.textContent=s.description||"";
-  body.append(h,d);a.append(body);p.append(a);
+  body.append(h,d);
+  // Enlace interno real a la ficha: visible y navegable también con teclado.
+  if(validServicePage(s.url)){
+    const link=document.createElement("a");
+    link.className="service-more";
+    link.href=s.url;
+    link.textContent="Conocer el servicio ↗";
+    link.setAttribute("aria-label","Ver detalles: "+(s.title||"servicio de limpieza"));
+    body.append(link);
+  }
+  a.append(body);p.append(a);
 }}
 const select=q("#service");if(select){select.querySelectorAll("option:not(:first-child)").forEach(o=>o.remove());for(let s of c.services){let o=document.createElement("option");o.textContent=s.title;o.value=s.title;select.append(o);}let other=document.createElement("option");other.textContent="Otro servicio";select.append(other);}}
 t("#galeria .section-title h2",c.gallery_title);t("#galeria .section-title .lead",c.gallery_intro);
@@ -71,5 +82,5 @@ if(christmasCampaign?.enabled===true){
 }
 
 let wa=String(c.whatsapp||"").replace(/\D/g,"");if(/^507\d{8}$/.test(wa)){window.HIDROLAV_WA=wa;document.querySelectorAll('a[href^="https://wa.me/"]').forEach(a=>{let original=new URL(a.href);a.href="https://wa.me/"+wa+original.search;});let n=wa.slice(3),label="+507 "+n.slice(0,4)+"-"+n.slice(4);const phone=q(".phone-big");if(phone){phone.href="tel:+"+wa;phone.textContent="☎ "+label;}const top=q(".topbar a.secondary");if(top){top.href="tel:+"+wa;top.textContent="Consultas: "+label;}}
-if(c.business_name)document.title=c.business_name+" | Limpieza profesional a presión";
+// El título SEO definido en index.html permanece estable al cargar el CMS.
 })();
