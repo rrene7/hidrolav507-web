@@ -32,3 +32,11 @@ Sitio: https://hidrolav507.netlify.app
 - Comprobar estado de cobertura y problemas de datos estructurados con [Rich Results Test](https://search.google.com/test/rich-results) y herramientas de inspección.
 - Google Business Profile debe reflejar solo categorías, zonas de servicio y horarios reales; no inventar una dirección de atención pública si el negocio es a domicilio.
 - Priorizar fotos reales, reseñas auténticas y un perfil verificado de Google Maps. El código no puede confirmar por sí solo impresiones o posiciones en Google.
+
+## Editar posicionamiento desde el administrador
+- Abre https://hidrolav507.netlify.app/admin/ y entra a **Posicionamiento en Google (SEO)** → **Qué escribir para encontrarnos en Google**.
+- El título, descripción y previsualización social se guardan en `content/seo.json` y se aplican al **HTML estático** en cada publicación de Netlify mediante `scripts/generar-seo.mjs`. Se debe esperar a que termine el deploy, no se aplican al instante.
+- El encabezado y párrafo informativo de los servicios también se publican como texto visible y editado, con enlaces a las seis páginas.
+- La lista «Frases que pueden escribir para encontrarnos» sirve como **guía editorial y de medición**, no como etiqueta `meta keywords` (Google no utiliza esta etiqueta para posicionar).
+- **No son los datos de Google Maps**: el Perfil de Empresa se administra aparte y los cambios aquí no actualizan Maps.
+- Evita repetir palabras mecánicamente; describe solo los servicios y localidades realmente atendidos. Los resultados se medirán en Search Console con GSC Wizard de solo lectura.
