@@ -91,6 +91,27 @@ collections:
               - {label: Descripción accesible del después, name: alt_after, widget: string, required: false}
               - {label: Confirmo que ambas fotos son reales y del mismo trabajo de HidroLav 507, name: is_real, widget: boolean, default: false, hint: "Si no está marcada, el proyecto no se publica."}
 
+  - name: seo
+    label: Posicionamiento en Google (SEO)
+    files:
+      - name: posicionamiento
+        label: Qué escribir para encontrarnos en Google
+        file: content/seo.json
+        format: json
+        fields:
+          - {label: Título que muestra Google (portada), name: title, widget: string, hint: "Entre 40 y 60 caracteres suele ser cómodo. Se aplica al HTML al publicar, no hace falta tocar el código."}
+          - {label: Descripción de Google (portada), name: description, widget: text, hint: "Explica qué limpias y dónde trabajas de forma natural. No repitas frases."}
+          - {label: Título al compartir el enlace, name: og_title, widget: string}
+          - {label: Descripción al compartir el enlace, name: og_description, widget: text}
+          - {label: Encabezado de servicios y zona, name: section_heading, widget: string, hint: "Texto visible sobre el listado de los seis servicios."}
+          - {label: Explicación junto a los servicios, name: section_intro, widget: text, hint: "Párrafo visible que ayuda a los clientes a entender qué ofrecemos."}
+          - label: Frases que pueden escribir para encontrarnos
+            name: search_phrases
+            widget: list
+            summary: "{{fields.phrase}}"
+            field: {label: Frase de búsqueda, name: phrase, widget: string}
+            hint: "Referencia para contenido, publicaciones y medición en Search Console. Google no usa la antigua meta keywords y estas frases no garantizan posiciones."
+
   - name: promociones
     label: Promociones y campañas
     files:
