@@ -11,6 +11,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Generar y verificar SEO editable desde Sveltia
+        run: |
+          set -euo pipefail
+          node --check scripts/generar-seo.mjs
+          node scripts/generar-seo.mjs
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, html
+          config=Path('admin/config.yml').read_text()
+          seo=json.loads(Path('content/seo.json').read_text())
+          index=Path('index.html').read_text()
+          netlify=Path('netlify.toml').read_text()
+          assert 'label: Posicionamiento en Google (SEO)' in config
+          assert 'label: Qué escribir para encontrarnos en Google' in config
+          assert 'file: content/seo.json' in config
+          assert 'name: search_phrases' in config
+          assert 'node scripts/generar-seo.mjs' in netlify
+          assert len(seo['search_phrases'])>=6
+          assert 'HidroLav 507 Panamá' in seo['search_phrases']
+          assert '<title>'+html.escape(seo['title'],quote=True).replace('&#x27;','&#39;')+'</title>' in index
+          assert 'content="'+html.escape(seo['description'],quote=True).replace('&#x27;','&#39;')+'"' in index
+          assert html.escape(seo['section_heading']) in index
+          assert html.escape(seo['section_intro']) in index
+          assert '<meta name="keywords"' not in index, 'Google no utiliza la etiqueta meta keywords'
+          print('SEO editable en CMS y HTML generado OK')
+          PY
       - name: Validar archivos y enlaces locales
         run: |
           set -euo pipefail
