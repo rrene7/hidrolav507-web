@@ -78,9 +78,10 @@ try{
   p&&p.is_real===true&&typeof p.title==="string"&&p.title.trim()&&safeAsset(p.before)&&safeAsset(p.after)&&p.before!==p.after
  ).slice(0,9):[];
  for(let i=0;i<projects.length;i++)grid.append(build(projects[i],i));
- if(projects.length){
-  empty.hidden=true;
-  disclaimer.hidden=false;
- }
-}catch(error){console.warn("Resultados: se conserva la sección informativa.",error)}
+ // Una sección vacía confunde al visitante: solo mostramos resultados documentados.
+ if(!projects.length){section.hidden=true;return}
+ section.hidden=false;
+ empty.hidden=true;
+ disclaimer.hidden=false;
+}catch(error){section.hidden=true;console.warn("Resultados: no se pudo comprobar el contenido; se oculta el comparador.",error)}
 })();
