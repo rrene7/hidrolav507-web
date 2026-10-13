@@ -24,11 +24,12 @@ class Element {
 async function render(data){
  const section=new Element("section");section.heading=new Element("h2");section.lead=new Element("p");
  const grid=new Element("div"),empty=new Element("div"),disclaimer=new Element("p");disclaimer.hidden=true;
- const els={"resultados":section,"compare-grid":grid,"results-empty":empty,"results-disclaimer":disclaimer};
+ const more=new Element("button"),counter=new Element("span");more.hidden=true;counter.hidden=true;
+ const els={"resultados":section,"compare-grid":grid,"results-empty":empty,"results-disclaimer":disclaimer,"results-load-more":more,"results-count":counter};
  const document={getElementById:id=>els[id],createElement:tag=>new Element(tag)};
  const code=readFileSync("assets/resultados.js","utf8");
  await vm.runInNewContext(code,{document,fetch:async()=>({ok:true,json:async()=>data}),decodeURIComponent,console},{timeout:2500});
- return {section,grid,empty,disclaimer};
+ return {section,grid,empty,disclaimer,more,counter};
 }
 test("sin comparaciones reales, se oculta toda la sección hasta que se publiquen fotos",async()=>{
  const r=await render({enabled:true,projects:[]});
@@ -73,6 +74,47 @@ test("publica solo pares distintos y confirmados, rechaza rutas inseguras",async
  // Sigue funcionando el arrastre tras seleccionar un extremo.
  input.value="45";input.events.input();
  assert.equal(visual.style.values["--split"],"45%");
+});
+test("permite publicar 2, 3 o muchos bloques independientes, sin límite de nueve",async()=>{
+ const projects=Array.from({length:14},(_,i)=>({
+  title:"Trabajo documentado "+(i+1),
+  before:"/assets/uploads/antes-"+(i+1)+".png",
+  after:"/assets/uploads/despues-"+(i+1)+".png",
+  description:"Limpieza confirmada",
+  is_real:true
+ }));
+ const r=await render({enabled:true,projects});
+ assert.equal(r.grid.children.length,6,"Al principio muestra seis comparadores");
+ assert.equal(r.more.hidden,false);
+ assert.match(r.more.textContent,/Ver 6 trabajos más/);
+ assert.match(r.counter.textContent,/6 de 14/);
+ // Cada tarjeta debe controlar su propio deslizador y mantener sus fotos distintas.
+ const first=r.grid.children[0],second=r.grid.children[1];
+ const firstRange=first.children[0].children.at(-1),secondRange=second.children[0].children.at(-1);
+ firstRange.value="90";firstRange.events.input();
+ assert.equal(first.children[0].style.values["--split"],"90%");
+ assert.equal(second.children[0].style.values["--split"],"50%");
+ r.more.events.click();
+ assert.equal(r.grid.children.length,12);
+ assert.match(r.more.textContent,/Ver 2 trabajos más/);
+ assert.match(r.counter.textContent,/12 de 14/);
+ r.more.events.click();
+ assert.equal(r.grid.children.length,14);
+ assert.equal(r.more.hidden,true);
+ assert.equal(r.grid.children.at(-1).children[1].children[0].textContent,"Trabajo documentado 14");
+ assert.equal(r.grid.children.at(-1).children[0].children[0].src,"/assets/uploads/antes-14.png");
+ assert.equal(r.counter.textContent,"Mostrando 14 de 14 trabajos documentados");
+});
+
+test("con dos proyectos aparecen dos comparadores completos sin botón de más",async()=>{
+ const items=[1,2].map(i=>({
+  title:"Concreto "+i,before:"/assets/uploads/b-"+i+".webp",
+  after:"/assets/uploads/a-"+i+".webp",is_real:true
+ }));
+ const r=await render({enabled:true,projects:items});
+ assert.equal(r.grid.children.length,2);
+ assert.equal(r.more.hidden,true);
+ assert.equal(r.counter.hidden,false);
 });
 test("sección de resultados puede desactivarse desde CMS",async()=>{
  const r=await render({enabled:false,projects:[]});
