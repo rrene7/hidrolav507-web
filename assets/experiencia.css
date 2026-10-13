@@ -323,3 +323,6 @@ footer .footer-email a:hover{text-decoration-thickness:2px}
  .audience-card strong{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){.audience-card{transition:none}.audience-card:hover{transform:none}}
+
+.hero-result-link{display:inline-flex;align-items:center;padding:10px 6px;color:#006ca2;font-size:13px;font-weight:850;text-decoration:underline;text-underline-offset:3px}
+.hero-result-link:hover,.hero-result-link:focus-visible{color:#003a5c}
