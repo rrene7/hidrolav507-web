@@ -43,13 +43,23 @@ const p=q("#servicios .cards");if(p){p.replaceChildren();for(const s of c.servic
   a.append(body);p.append(a);
 }}
 const select=q("#service");if(select){select.querySelectorAll("option:not(:first-child)").forEach(o=>o.remove());for(let s of c.services){let o=document.createElement("option");o.textContent=s.title;o.value=s.title;select.append(o);}let other=document.createElement("option");other.textContent="Otro servicio";select.append(other);}}
-t("#galeria .section-title h2",c.gallery_title);t("#galeria .section-title .lead",c.gallery_intro);
-if(Array.isArray(c.gallery)){const g=q("#galeria .gallery");if(g){g.replaceChildren();for(const e of c.gallery){if(!valid(e.image))continue;let f=document.createElement("figure"),i=document.createElement("img"),p=document.createElement("figcaption");i.src=e.image;i.alt=e.description||e.title||"Fotografía";i.loading="lazy";p.textContent=e.title||"";
+// La galería tiene menú propio en el CMS. Mantener compatibilidad con el contenido anterior.
+let galeria={title:c.gallery_title,intro:c.gallery_intro,gallery:c.gallery};
+try{
+ const result=await fetch("/content/galeria.json",{cache:"no-store"});
+ if(result.ok){
+  const fresh=await result.json();
+  if(fresh&&Array.isArray(fresh.gallery))galeria=fresh;
+ }
+}catch(err){console.warn("Galería: se mostrará el contenido de respaldo.",err)}
+t("#galeria .section-title h2",galeria.title||c.gallery_title);
+t("#galeria .section-title .lead",galeria.intro||c.gallery_intro);
+if(Array.isArray(galeria.gallery)){const g=q("#galeria .gallery");if(g){g.replaceChildren();for(const e of galeria.gallery){if(!valid(e.image))continue;let f=document.createElement("figure"),i=document.createElement("img"),p=document.createElement("figcaption");i.src=e.image;i.alt=e.description||e.title||"Fotografía";i.loading="lazy";p.textContent=e.title||"";
 const kind=document.createElement("span");kind.className="gallery-caption-kind";
 const named=typeof e.description==="string"&&/^(?:antes|despu[eé]s|resultado[s]?|durante)$/i.test(e.description.trim())?e.description.trim():"";
 kind.textContent=e.is_real===true?(named||"Trabajo publicado"):"Imagen de referencia";
 p.append(kind);f.append(i,p);g.append(f);}}
-const note=q("#galeria .fineprint"),anyReal=c.gallery.some(x=>x.is_real),anyDemo=c.gallery.some(x=>!x.is_real);if(note)note.textContent=anyDemo?"Algunas imágenes son ilustrativas y no corresponden necesariamente a trabajos de HidroLav 507.":"Fotografías de trabajos compartidas por HidroLav 507.";t("#galeria .tag",anyReal&&anyDemo?"Trabajos y referencias":anyReal?"Nuestros trabajos":"Referencias visuales");}
+const note=q("#galeria .fineprint"),anyReal=galeria.gallery.some(x=>x.is_real===true),anyDemo=galeria.gallery.some(x=>x.is_real!==true);if(note)note.textContent=anyDemo?"Algunas imágenes son ilustrativas y no corresponden necesariamente a trabajos de HidroLav 507.":"Fotografías de trabajos compartidas por HidroLav 507.";t("#galeria .tag",anyReal&&anyDemo?"Trabajos y referencias":anyReal?"Nuestros trabajos":"Referencias visuales");}
 t(".coverage h2",c.coverage_title);t(".coverage p",c.coverage_text);
 if(Array.isArray(c.areas)){const a=q(".cover-tags");if(a){a.replaceChildren();for(const x of c.areas){let e=document.createElement("span");e.textContent=typeof x==="string"?x:x?.area||"";a.append(e);}}}
 if(c.announcement?.trim()){let x=document.createElement("p");x.textContent=c.announcement;x.style.cssText="padding:12px 15px;background:#ffc400;color:#061d36;border-radius:10px;font-weight:bold";h?.insertAdjacentElement("afterend",x);}
