@@ -15,37 +15,43 @@
       "image": "/assets/uploads/Limpieza profesional de entrada residencial.png",
       "icon": "",
       "title": "Aceras y entradas",
-      "description": "Retiramos lodo y suciedad acumulada de accesos peatonales y entradas vehiculares."
+      "description": "Retiramos lodo y suciedad acumulada de accesos peatonales y entradas vehiculares.",
+      "url": "/servicios/lavado-de-aceras-y-entradas.html"
     },
     {
       "image": "",
       "icon": "🌿",
       "title": "Patios y terrazas",
-      "description": "Limpieza exterior de espacios de convivencia y áreas recreativas."
+      "description": "Limpieza exterior de espacios de convivencia y áreas recreativas.",
+      "url": "/servicios/limpieza-de-patios-y-terrazas.html"
     },
     {
       "image": "",
       "icon": "🚗",
       "title": "Estacionamientos",
-      "description": "Lavado de pisos resistentes en áreas de estacionamiento residencial o comercial."
+      "description": "Lavado de pisos resistentes en áreas de estacionamiento residencial o comercial.",
+      "url": "/servicios/lavado-de-estacionamientos.html"
     },
     {
       "image": "",
       "icon": "🧱",
       "title": "Pisos de concreto",
-      "description": "Atención a manchas superficiales y suciedad adherida, según su composición."
+      "description": "Atención a manchas superficiales y suciedad adherida, según su composición.",
+      "url": "/servicios/limpieza-de-pisos-de-concreto.html"
     },
     {
       "image": "",
       "icon": "🏢",
       "title": "Áreas comunes de PH",
-      "description": "Servicio puntual o programado para aceras, pasos y otras áreas exteriores."
+      "description": "Servicio puntual o programado para aceras, pasos y otras áreas exteriores.",
+      "url": "/servicios/limpieza-de-areas-comunes-ph.html"
     },
     {
       "image": "",
       "icon": "🏬",
       "title": "Exteriores comerciales",
-      "description": "Limpieza de accesos y superficies exteriores de locales y pequeños negocios."
+      "description": "Limpieza de accesos y superficies exteriores de locales y pequeños negocios.",
+      "url": "/servicios/limpieza-de-exteriores-comerciales.html"
     }
   ],
   "gallery_title": "La diferencia que hace el hidrolavado",
