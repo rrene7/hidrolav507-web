@@ -43,10 +43,10 @@ collections:
           - {label: Promoción o aviso, name: announcement, widget: string, required: false}
 
   - name: galeria
-    label: Galería de fotos
+    label: Galería de fotos individuales
     files:
       - name: mis_fotos
-        label: Subir mis fotografías de trabajos
+        label: Fotos sueltas (sin comparación)
         file: content/galeria.json
         format: json
         fields:
@@ -57,7 +57,7 @@ collections:
             widget: list
             required: false
             summary: "{{fields.title}}"
-            hint: "Pulsa Añadir una fotografía. Sube fotos JPG, PNG o WebP de tus trabajos, asigna un título y marca si son reales. Si no pertenece a tu empresa, deja la marca desactivada y aparecerá como imagen de referencia."
+            hint: "Úsala para fotos individuales. Si tienes una foto ANTES y otra DESPUÉS del mismo trabajo, NO las subas separadas aquí: entra en «Antes y después (mis trabajos)» y crea un único proyecto con ambas imágenes."
             fields:
               - {label: Subir fotografía, name: image, widget: image, hint: "Selecciona o arrastra una foto desde tu equipo. Se guardará en la carpeta de medios de la web."}
               - {label: Título que verán los clientes, name: title, widget: string}
@@ -65,10 +65,10 @@ collections:
               - {label: Confirmo que es una foto real de HidroLav 507, name: is_real, widget: boolean, default: false, hint: "Márcalo solo si la imagen pertenece a un trabajo real realizado por tu empresa."}
 
   - name: resultados
-    label: Antes y después (mis trabajos)
+    label: Antes y después · Comparador de trabajos
     files:
       - name: comparaciones
-        label: Añadir comparaciones ANTES y DESPUÉS
+        label: Añadir trabajo con fotos ANTES y DESPUÉS
         file: content/resultados.json
         format: json
         fields:
@@ -80,7 +80,7 @@ collections:
             widget: list
             required: false
             summary: "{{fields.title}}"
-            hint: "Pulsa Añadir un proyecto. Sube ANTES (sucia) y DESPUÉS (limpia), del mismo lugar y encuadre; verifica que sean imágenes reales. En la web se publicará un comparador interactivo que puede mostrar cada imagen al 100 %."
+            hint: "POR CADA TRABAJO: pulsa Añadir un proyecto, escribe su nombre, selecciona Foto ANTES y Foto DESPUÉS del mismo lugar, y marca la casilla de fotos reales. Las dos imágenes se mostrarán juntas en un comparador deslizable. No las cargues por separado en Galería de fotos individuales."
             fields:
               - {label: Nombre del proyecto, name: title, widget: string}
               - {label: Zona o tipo de propiedad (opcional), name: area, widget: string, required: false}
