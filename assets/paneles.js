@@ -4,7 +4,7 @@ if(!main||!nav)return;
 const ids=["inicio","servicios","nosotros","galeria","resultados","preguntas","cotizar"];
 const sections=new Map(ids.map(id=>[id,document.getElementById(id)]).filter(([,el])=>el));
 const direct=[...main.children].filter(el=>el.matches("section,aside"));
-const motion=()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 const selectedFromHash=()=>{
  const id=decodeURIComponent(location.hash.slice(1));
  if(sections.has(id))return id;
@@ -14,6 +14,10 @@ const selectedFromHash=()=>{
 function activate(id,{focus=false}={}){
  if(!sections.has(id))id="inicio";
  const home=id==="inicio";
+ if(!home && !main.querySelector(".panel-home-action")){
+  const back=document.createElement("a");back.className="panel-home-action";back.href="#inicio";back.textContent="← Volver al inicio";main.prepend(back);
+ }
+ const back=main.querySelector(".panel-home-action");if(back)back.hidden=home;
  document.body.classList.toggle("interactive-panel-mode",!home);
  for(const el of direct){
   const show=home||el.id===id||(id==="galeria"&&el.id==="resultados");
@@ -31,10 +35,10 @@ function activate(id,{focus=false}={}){
  if(!home){
   const target=sections.get(id);
   if(target){
-   window.scrollTo({top:Math.max(0,main.getBoundingClientRect().top+window.scrollY-82),behavior:motion()?"instant":"smooth"});
+   main.scrollTop=0;
    if(focus){target.setAttribute("tabindex","-1");target.focus({preventScroll:true});}
   }
- }else if(focus)window.scrollTo({top:0,behavior:motion()?"instant":"smooth"});
+ }
 }
 document.addEventListener("click",event=>{
  const link=event.target.closest('a[href^="#"]');
