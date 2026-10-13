@@ -57,11 +57,11 @@ function build(project,index){
  afterOnly.addEventListener("click",()=>setSplit(0));
  quick.append(beforeOnly,afterOnly);
  const content=document.createElement("div");content.className="compare-caption";
- content.append(quick);
  const title=document.createElement("h3");title.textContent=project.title;
  content.append(title);
  if(project.area){const place=document.createElement("span");place.className="compare-area";place.textContent=project.area;content.append(place)}
  if(project.description){const detail=document.createElement("p");detail.textContent=project.description;content.append(detail)}
+ content.append(quick);
  const cta=document.createElement("a");cta.className="compare-quote";cta.href="#cotizar";cta.textContent="Cotizar una limpieza similar ↗";
  content.append(cta);
  card.append(visual,content);
