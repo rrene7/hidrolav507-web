@@ -359,3 +359,12 @@ footer .footer-email a:hover{text-decoration-thickness:2px}
 .results-load-more[hidden],.results-count[hidden]{display:none!important}
 @media(max-width:740px){.results-load-wrap{flex-direction:column;gap:10px}
  .results-load-more{width:100%;max-width:320px}}
+
+/* Navegación interactiva progresiva: el contenido sigue en HTML para SEO y sin JS. */
+.interactive-panel-mode main > .interactive-panel-off{display:none!important}
+.interactive-panel-mode main > section:not(.interactive-panel-off){min-height:min(58vh,570px)}
+.interactive-panel-mode main > .interactive-panel-enter{animation:panel-reveal .38s cubic-bezier(.2,.75,.3,1) both}
+.interactive-panel-mode #navlinks a[aria-current="page"]{color:#0079b5;text-decoration:underline;text-underline-offset:7px}
+.interactive-panel-mode main > section:focus{outline:none}
+@keyframes panel-reveal{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.interactive-panel-mode main > .interactive-panel-enter{animation:none!important}}
