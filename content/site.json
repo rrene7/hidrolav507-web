@@ -15,59 +15,59 @@
       "image": "/assets/uploads/Limpieza profesional de entrada residencial.png",
       "icon": "",
       "title": "Aceras y entradas",
-      "description": "Retiramos lodo y suciedad acumulada de accesos peatonales y entradas vehiculares.",
-      "url": "/servicios/lavado-de-aceras-y-entradas.html"
+      "url": "/servicios/lavado-de-aceras-y-entradas.html",
+      "description": "Retiramos lodo y suciedad acumulada de accesos peatonales y entradas vehiculares."
     },
     {
       "image": "",
       "icon": "🌿",
       "title": "Patios y terrazas",
-      "description": "Limpieza exterior de espacios de convivencia y áreas recreativas.",
-      "url": "/servicios/limpieza-de-patios-y-terrazas.html"
+      "url": "/servicios/limpieza-de-patios-y-terrazas.html",
+      "description": "Limpieza exterior de espacios de convivencia y áreas recreativas."
     },
     {
       "image": "",
       "icon": "🚗",
       "title": "Estacionamientos",
-      "description": "Lavado de pisos resistentes en áreas de estacionamiento residencial o comercial.",
-      "url": "/servicios/lavado-de-estacionamientos.html"
+      "url": "/servicios/lavado-de-estacionamientos.html",
+      "description": "Lavado de pisos resistentes en áreas de estacionamiento residencial o comercial."
     },
     {
       "image": "",
       "icon": "🧱",
       "title": "Pisos de concreto",
-      "description": "Atención a manchas superficiales y suciedad adherida, según su composición.",
-      "url": "/servicios/limpieza-de-pisos-de-concreto.html"
+      "url": "/servicios/limpieza-de-pisos-de-concreto.html",
+      "description": "Atención a manchas superficiales y suciedad adherida, según su composición."
     },
     {
       "image": "",
       "icon": "🏢",
       "title": "Áreas comunes de PH",
-      "description": "Servicio puntual o programado para aceras, pasos y otras áreas exteriores.",
-      "url": "/servicios/limpieza-de-areas-comunes-ph.html"
+      "url": "/servicios/limpieza-de-areas-comunes-ph.html",
+      "description": "Servicio puntual o programado para aceras, pasos y otras áreas exteriores."
     },
     {
       "image": "",
       "icon": "🏬",
       "title": "Exteriores comerciales",
-      "description": "Limpieza de accesos y superficies exteriores de locales y pequeños negocios.",
-      "url": "/servicios/limpieza-de-exteriores-comerciales.html"
+      "url": "/servicios/limpieza-de-exteriores-comerciales.html",
+      "description": "Limpieza de accesos y superficies exteriores de locales y pequeños negocios."
     }
   ],
   "gallery_title": "La diferencia que hace el hidrolavado",
   "gallery_intro": "Ejemplos del tipo de limpieza que puede realizarse a presión; cada trabajo requiere evaluar la superficie y el equipo.",
   "gallery": [
     {
-      "image": "/assets/hero.webp",
-      "title": "Adoquines y accesos",
-      "description": "Imagen ilustrativa de adoquines limpiados a presión",
-      "is_real": false
+      "image": "/assets/uploads/Sendero de Concreto Cubierto de Musgo.png",
+      "title": "aceras y pasillos",
+      "description": "Antes",
+      "is_real": true
     },
     {
-      "image": "/assets/adoquines.webp",
-      "title": "Pisos exteriores",
-      "description": "Fotografía referencial de limpieza de piso",
-      "is_real": false
+      "image": "/assets/uploads/Limpieza a presión de la acera.png",
+      "title": "aceras y pasillos",
+      "description": "Resultados",
+      "is_real": true
     },
     {
       "image": "/assets/fachada.webp",
