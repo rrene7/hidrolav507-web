@@ -388,3 +388,15 @@ main > .seasonal-campaign .seasonal-visual img{display:block;width:100%;height:a
 /* No aplicar el alto de un panel a la campaña insertada por el CMS. */
 body.interactive-panel-mode main > section.seasonal-campaign{display:none!important;min-height:0!important}
 body:not(.interactive-panel-mode) main > section.seasonal-campaign{min-height:0!important;max-height:none!important;align-self:auto}
+
+/* Espaciado contenido de paneles: evita bloques de altura artificial. */
+body.interactive-panel-mode main > section:not(.interactive-panel-off):not(.seasonal-campaign){min-height:0}
+body.interactive-panel-mode main > section:not(.interactive-panel-off) > .container{max-width:1160px}
+@media(max-width:740px){
+  body.interactive-panel-mode main{overflow-x:hidden;overflow-y:auto}
+  body.interactive-panel-mode main > .panel-home-action{margin:12px 18px;padding:10px 14px;min-height:44px;align-items:center}
+  body.interactive-panel-mode main > section:not(.interactive-panel-off):not(.seasonal-campaign){min-height:0;padding-top:clamp(18px,4vw,28px);padding-bottom:clamp(22px,5vw,34px)}
+  body.interactive-panel-mode main > section:not(.interactive-panel-off) > .container{width:min(100% - 32px,1160px)}
+  body.interactive-panel-mode #cotizar .contact-grid{gap:14px}
+  body.interactive-panel-mode #cotizar .contact-info{min-height:0}
+}
