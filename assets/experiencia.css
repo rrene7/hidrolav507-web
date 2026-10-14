@@ -382,7 +382,7 @@ main > .seasonal-campaign .seasonal-campaign-inner{align-items:center;gap:clamp(
 main > .seasonal-campaign h2{font-size:clamp(25px,3vw,36px);margin:6px 0 10px}
 main > .seasonal-campaign p{margin-bottom:14px}
 main > .seasonal-campaign .seasonal-visual{min-height:100px;padding:12px}
-main > .seasonal-campaign .seasonal-visual img{width:100%;max-height:210px;object-fit:cover}
+main > .seasonal-campaign .seasonal-visual img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;border-radius:12px}
 @media(max-width:740px){main > .seasonal-campaign{padding:20px 0!important}main > .seasonal-campaign .seasonal-visual{min-height:84px}}
 
 /* No aplicar el alto de un panel a la campaña insertada por el CMS. */
