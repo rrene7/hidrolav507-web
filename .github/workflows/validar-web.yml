@@ -37,6 +37,21 @@ jobs:
           assert '<meta name="keywords"' not in index, 'Google no utiliza la etiqueta meta keywords'
           print('SEO editable en CMS y HTML generado OK')
           PY
+      - name: Verificar cabeceras de seguridad Netlify
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import tomllib
+          data=tomllib.loads(Path('netlify.toml').read_text(encoding='utf-8'))
+          rules={rule['for']:rule['values'] for rule in data['headers']}
+          global_headers=rules['/*']
+          assert global_headers['X-Content-Type-Options']=='nosniff'
+          assert global_headers['Referrer-Policy']=='strict-origin-when-cross-origin'
+          assert global_headers['X-Frame-Options']=='SAMEORIGIN'
+          assert global_headers['Permissions-Policy']=='geolocation=(), microphone=()'
+          assert rules['/admin/*']['X-Robots-Tag']=='noindex, nofollow'
+          print('Cabeceras conservadoras y protección noindex del CMS: OK')
+          PY
       - name: Validar archivos y enlaces locales
         run: |
           set -euo pipefail
