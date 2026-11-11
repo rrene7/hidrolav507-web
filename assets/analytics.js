@@ -1,6 +1,7 @@
 /* HidroLav 507 — GA4: se carga solo tras aceptación explícita. */
 (()=>{'use strict';
 const ID='G-JWL583NRP8', KEY='hidrolav507_analytics_consent_v1';
+const QUOTE_KEY='hidrolav507_quote_pending_v1';
 let active=false;
 function read(){try{return localStorage.getItem(KEY)}catch{return null}}
 function save(value){try{localStorage.setItem(KEY,value)}catch{}}
@@ -35,6 +36,20 @@ function banner(){
 }
 function init(){
  const consent=read();
+ // Un envío solo se cuenta al llegar a la confirmación de Netlify; nunca al pulsar el botón.
+ const quoteForm=document.getElementById('quote-form');
+ if(quoteForm){quoteForm.addEventListener('submit',(event)=>{
+  if(!active||event.defaultPrevented||!quoteForm.checkValidity())return;
+  try{sessionStorage.setItem(QUOTE_KEY,String(Date.now()))}catch{}
+ });}
+ if(location.pathname==='/gracias'||location.pathname==='/gracias.html'){
+  let submitted=0;
+  try{submitted=Number(sessionStorage.getItem(QUOTE_KEY)||0);sessionStorage.removeItem(QUOTE_KEY)}catch{}
+  if(consent==='accept'&&submitted>0&&Date.now()-submitted<10*60*1000){
+   start();
+   window.gtag('event','quote_form_submitted',{event_category:'lead',transport_type:'beacon'});
+  }
+ }
  if(consent==='accept')start();else if(consent!== 'reject')banner();
  const footer=document.querySelector('footer');
  if(footer){
@@ -42,7 +57,7 @@ function init(){
   btn.addEventListener('click',banner);footer.appendChild(btn);
  }
  document.addEventListener('click',(e)=>{
-  if(!active||typeof window.gtag!=='function')return;
+  if(!active||typeof window.gtag!=='function'||e.defaultPrevented)return;
   const link=e.target.closest?.('a[href]');
   if(!link)return;
   try{if(new URL(link.href,location.href).hostname==='wa.me')window.gtag('event','contact_whatsapp_click',{event_category:'contact',transport_type:'beacon'});}catch{}
