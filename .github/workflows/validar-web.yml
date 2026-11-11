@@ -73,6 +73,28 @@ jobs:
           assert 'localStorage.setItem' in analytics
           print('GA4 consentido en 7 páginas, sin carga directa duplicada')
           PY
+      - name: Validar evento de cotización confirmada GA4
+        run: |
+          set -euo pipefail
+          node --check assets/analytics.js
+          python3 - <<'PY'
+          from pathlib import Path
+          analytics=Path('assets/analytics.js').read_text()
+          homepage=Path('index.html').read_text()
+          thanks=Path('gracias.html').read_text()
+          privacy=Path('privacidad.html').read_text()
+          assert 'action="/gracias"' in homepage
+          assert thanks.count('src="/assets/analytics.js"')==1
+          assert "quote_form_submitted" in analytics
+          assert "sessionStorage.setItem(QUOTE_KEY" in analytics
+          assert "sessionStorage.removeItem(QUOTE_KEY)" in analytics
+          assert "event.defaultPrevented" in analytics
+          assert "quoteForm.checkValidity()" in analytics
+          assert "consent==='accept'&&submitted>0" in analytics
+          assert 'nombre, teléfono, correo, ubicación' in privacy
+          assert 'transport_type:\'beacon\'' in analytics
+          print('GA4: cotización confirmada y consentimiento OK')
+          PY
       - name: Validar archivos y enlaces locales
         run: |
           set -euo pipefail
