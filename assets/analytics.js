@@ -9,6 +9,8 @@ function start(){
  active=true;
  window.dataLayer=window.dataLayer||[];
  window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+ window.gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+ window.gtag('consent','update',{analytics_storage:'granted'});
  window.gtag('js',new Date());
  window.gtag('config',ID,{send_page_view:true,anonymize_ip:true});
  const script=document.createElement('script');
@@ -26,7 +28,7 @@ function banner(){
  const actions=document.createElement('div');actions.className='hl-privacy-actions';
  [['reject','No aceptar'],['accept','Aceptar estadísticas']].forEach(([choice,label])=>{
    const btn=document.createElement('button');btn.type='button';btn.dataset.choice=choice;btn.textContent=label;
-   btn.addEventListener('click',()=>{save(choice);box.remove();if(choice==='accept')start();else if(active&&typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});});
+   btn.addEventListener('click',()=>{save(choice);box.remove();if(choice==='accept')start();else if(active){if(typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});location.reload();}});
    actions.appendChild(btn);
  });
  box.append(p,actions);document.body.appendChild(box);
