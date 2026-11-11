@@ -52,6 +52,27 @@ jobs:
           assert rules['/admin/*']['X-Robots-Tag']=='noindex, nofollow'
           print('Cabeceras conservadoras y protección noindex del CMS: OK')
           PY
+      - name: Comprobar GA4 con consentimiento en las siete URLs
+        run: |
+          set -euo pipefail
+          node --check assets/analytics.js
+          python3 - <<'PY'
+          from pathlib import Path
+          paths=[Path('index.html'),*sorted(Path('servicios').glob('*.html'))]
+          assert len(paths)==7, paths
+          for page in paths:
+            s=page.read_text(encoding='utf-8')
+            assert s.count('src="/assets/analytics.js"')==1, page
+            assert 'googletagmanager.com/gtag/js' not in s, page
+          analytics=Path('assets/analytics.js').read_text(encoding='utf-8')
+          assert "G-JWL583NRP8" in analytics
+          assert "if(consent==='accept')start()" in analytics
+          assert "if(choice==='accept')start()" in analytics
+          assert "analytics_storage:'denied'" in analytics
+          assert 'contact_whatsapp_click' in analytics
+          assert 'localStorage.setItem' in analytics
+          print('GA4 consentido en 7 páginas, sin carga directa duplicada')
+          PY
       - name: Validar archivos y enlaces locales
         run: |
           set -euo pipefail
